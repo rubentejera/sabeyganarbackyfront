@@ -153,3 +153,7 @@ function application() {
         start: start
     }
 }
+
+if (typeof(module) != 'undefined'){
+    module.exports = application;
+}
