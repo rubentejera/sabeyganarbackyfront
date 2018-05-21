@@ -9,6 +9,7 @@
     "pug": "^2.0.3"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start":"nodemon src/server.js"
   }
 }
