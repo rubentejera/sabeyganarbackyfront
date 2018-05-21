@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const application = require('../src/main');
 const chai = require('chai');
+const application = require('../src/main');
 chai.expect();
 
 function loadTemplate(filepath, onLoad) {
@@ -16,11 +17,37 @@ function loadTemplate(filepath, onLoad) {
 }
 
 describe("the game", function(){
-    let app;
+   var app;
+   var questions = [
+        {
+            id: 10,
+            title: 'Foo',
+            answers: [
+                {id: 0, answer: '25'},
+                {id: 1, answer: '33'},
+                {id: 2, answer: '37'}
+            ],
+            correctAnswer: {id: 2}
+        },
+        {
+            id: 11,
+            title: 'Pero que dices muchacho?',
+            answers: [
+                {id: 0, answer: 'Lusaka'},
+                {id: 1, answer: 'Harare'},
+                {id: 2, answer: 'Canarias'}
+            ],
+            correctAnswer: {id: 2}
+        }
+   ];
+
+
    beforeEach(function(done){
        loadTemplate('../views/body.html', function(text){
            document.body.innerHTML = text;
            app = application();
+           app.setServerData(questions);
+           app.start();
            done();
        });
    });
@@ -30,27 +57,45 @@ describe("the game", function(){
            document.getElementById('start--button'))
            .not.toBeNull();
    });
-   xit('should press start button', function (done) {
-        // This test is not going to work because jsdom does not implement
-        // the MutationObserver object. It would work with a real browser.
 
-        // let buttonStart = document.getElementById('start--button');
-        // buttonStart.click();
-        expect(true).toBeTruthy();
-   //      let questionsBox = document.getElementById('questions');
-   //      var config = { attributes: true, childList: true };
-   //      var callback = function(mutationsList) {
-   //          let answer = document.getElementById('3');
-   //          answer.click();
-   //          let dale = document.getElementById('btn');
-   //          dale.click();
-   //          let score = document.getElementById('scoreUI');
-   //          expect(score.innerText).toBe('2');
-   //          done();
-   //      };
-   //      var observer = new MutationObserver(callback);
-   //      observer.observe(questionsBox, config);
-   //      observer.disconnect();
-       done();
+    function getQuestionTitleElement() {
+        let questionTitle = document.querySelector('.question--title');
+        return questionTitle;
+    }
+
+    function expectFirstQuestionToBeRendered() {
+        let questionTitle = getQuestionTitleElement();
+        expect(Number(questionTitle.id)).toEqual(Number(questions[0].id));
+    }
+
+    function startGame() {
+        let buttonStart = document.getElementById('start--button');
+        buttonStart.click();
+        expectFirstQuestionToBeRendered();
+    }
+
+    function selectFirstAnswer() {
+        let firstAnswer = document.getElementsByTagName('input')[0];
+        firstAnswer.click();
+    }
+
+    function goToNextQuestion() {
+        let nextQuestionButton = document.getElementById('next--question--button');
+        nextQuestionButton.click();
+    }
+
+    function assertThatSecondQuestionIsRendered() {
+        let questionTitle = getQuestionTitleElement();
+        expect(Number(questionTitle.id)).toEqual(Number(questions[1].id));
+        expect(questionTitle.innerHTML).toEqual(questions[1].title);
+    }
+
+    it('answers a question', function () {
+        startGame();
+        selectFirstAnswer();
+
+        goToNextQuestion();
+
+        assertThatSecondQuestionIsRendered();
    });
 });
