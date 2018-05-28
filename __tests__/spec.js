@@ -107,11 +107,17 @@ describe("the game", function () {
         setTimeout(onTimeout, 1000);
     });
 
-    it("should have any selected question at the beginning of the game", function(){
+    it("should not have any selected question at the beginning of the game", function(){
         startGame();
         expect(getSelectedAnswer()).toBe(undefined);
     });
 
+    it("should not have any selected question when go to next questions", function(){
+        startGame();
+        selectFirstAnswer();
+        goToNextQuestion();
+        expect(getSelectedAnswer()).toBe(undefined);
+    });
 
 
 
