@@ -31,7 +31,9 @@ export default function createGame(createQuestionsNavigator, client) {
         resetCountdown();
         updateTimerUI();
         startTimer();
+        theQuestionNavigator.restartQuestions();
         loadNextQuestion();
+        hideStartButton();
     }
     function onNextQuestion(){
         loadNextQuestion();
@@ -49,6 +51,7 @@ export default function createGame(createQuestionsNavigator, client) {
     function gameOver(){
         hideContainerPanel();
         stopTimer();
+        showStartButton();
     }
 
     function startTimer() {
@@ -84,6 +87,14 @@ export default function createGame(createQuestionsNavigator, client) {
             questionAnswers[i].innerHTML = (question.answers[i].answer);
             radioAnswersList[i].setAttribute('id', question.answers[i].id);
         }
+    }
+
+    function showStartButton(){
+        startButton.style.visibility="visible";
+    }
+
+    function hideStartButton() {
+        startButton.style.visibility="hidden";
     }
 
     function showContainerPanel(){

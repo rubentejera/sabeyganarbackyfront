@@ -6,8 +6,9 @@ export default function createQuestionsNavigator(questions) {
         return nonVisitedQuestions;
     }
 
-    function resetQuestions() {
+    function restartQuestions() {
         questionsIndex = 0;
+        nonVisitedQuestions = true;
     }
 
     function goToNextQuestion() {
@@ -19,12 +20,12 @@ export default function createQuestionsNavigator(questions) {
         goToNextQuestion();
         if (questionsIndex >= questions.length) {
             nonVisitedQuestions = false;
-            resetQuestions();
         }
         return question;
     }
 
     return {
+        restartQuestions: restartQuestions,
         areThereNonVisitedQuestions,
         getNextQuestion: getNextQuestion
     };
