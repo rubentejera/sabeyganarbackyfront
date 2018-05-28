@@ -12,7 +12,9 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function start(){
         questionsContainer = document.querySelector('.questions__container');
-        hideContainerPanel();
+        // hideContainerPanel();
+        // hideComponent(questionsContainer);
+        hideComponent(questionsContainer);
         startButton = document.querySelector('.start--button');
         startButton.addEventListener('click', onStartGame);
         questionTitle = document.querySelector('.question--title');
@@ -33,7 +35,8 @@ export default function createGame(createQuestionsNavigator, client) {
         startTimer();
         theQuestionNavigator.restartQuestions();
         loadNextQuestion();
-        hideStartButton();
+        // hideStartButton();
+        hideComponent(startButton);
     }
     function onNextQuestion(){
         loadNextQuestion();
@@ -49,9 +52,10 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
     function gameOver(){
-        hideContainerPanel();
+        hideComponent(questionsContainer);
         stopTimer();
-        showStartButton();
+        showComponent(startButton);
+
     }
 
     function startTimer() {
@@ -80,7 +84,8 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function renderQuestion(question) {
-        showContainerPanel();
+        // showContainerPanel();
+        showComponent(questionsContainer);
         questionTitle.innerHTML = (question.title);
         questionTitle.setAttribute('id', question.id);
         for (let i = 0; i < question.answers.length; i++) {
@@ -89,20 +94,12 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
 
-    function showStartButton(){
-        startButton.style.visibility="visible";
+    function showComponent(component){
+        component.style.visibility="visible";
     }
 
-    function hideStartButton() {
-        startButton.style.visibility="hidden";
-    }
-
-    function showContainerPanel(){
-        questionsContainer.style.visibility="visible";
-    }
-
-    function hideContainerPanel() {
-        questionsContainer.style.visibility="hidden";
+    function hideComponent(component) {
+        component.style.visibility="hidden";
     }
 
     return {
