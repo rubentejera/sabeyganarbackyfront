@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "jest": "^22.4.3"
   },
   "dependencies": {
@@ -9,7 +10,7 @@
     "pug": "^2.0.3"
   },
   "scripts": {
-    "test": "jest",
-    "start":"nodemon src/server.js"
+    "test": "jest --watch",
+    "start": "nodemon src/server.js"
   }
 }
