@@ -66,6 +66,13 @@ function application() {
 
     let questionsNavigator = function(questions) {
         let questionsIndex = -1;
+        let questionsAsked = [];
+
+        function addQuestionsAsked(question){
+            console.log(questionsAsked);
+            questionsAsked.push(question);
+            console.log(questionsAsked);
+        }
         function isNotTheEndOfTheGame(){
             return questionsIndex < questions.length;
         }
@@ -73,6 +80,7 @@ function application() {
             questionsIndex = 0;
         }
         function goToNextQuestion(){
+            addQuestionsAsked(currentQuestion());
             questionsIndex++;
         }
         function currentQuestion() {
