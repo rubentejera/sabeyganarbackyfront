@@ -32,7 +32,7 @@ describe("the questions navigator", () => {
         questionsNavigator = createQuestionsNavigator(questions);
     });
 
-    it("gest the current question", () => {
+    it("get the current question", () => {
         let question = questionsNavigator.getNextQuestion();
         expect(questions).toContain(question);
     });
@@ -107,6 +107,14 @@ describe("the game", function () {
         setTimeout(onTimeout, 1000);
     });
 
+    it("should have any selected question at the beginning of the game", function(){
+        startGame();
+        expect(getSelectedAnswer()).toBe(undefined);
+    });
+
+
+
+
     function getQuestionTitleElement() {
         return document.querySelector('.question--title');
     }
@@ -116,15 +124,27 @@ describe("the game", function () {
         expect(Number(questionTitle.id)).toEqual(Number(questions[0].id));
     }
 
+
     function startGame() {
         let buttonStart = document.getElementById('start--button');
         buttonStart.click();
         expectFirstQuestionToBeRendered();
     }
 
+    function getSelectedAnswer(){
+        let radioButtons = document.getElementsByClassName("input-radio");
+        for (let index = 0; index < radioButtons.length; index++) {
+            if (radioButtons[index].checked){
+                return radioButtons[index]
+            }
+        }
+        return undefined;
+    }
+
     function selectFirstAnswer() {
         let firstAnswer = document.getElementsByTagName('input')[0];
         firstAnswer.click();
+        return firstAnswer;
     }
 
     function goToNextQuestion() {

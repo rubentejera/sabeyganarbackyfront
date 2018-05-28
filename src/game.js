@@ -12,8 +12,6 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function start(){
         questionsContainer = document.querySelector('.questions__container');
-        // hideContainerPanel();
-        // hideComponent(questionsContainer);
         hideComponent(questionsContainer);
         startButton = document.querySelector('.start--button');
         startButton.addEventListener('click', onStartGame);
@@ -35,7 +33,6 @@ export default function createGame(createQuestionsNavigator, client) {
         startTimer();
         theQuestionNavigator.restartQuestions();
         loadNextQuestion();
-        // hideStartButton();
         hideComponent(startButton);
     }
     function onNextQuestion(){
@@ -84,7 +81,6 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function renderQuestion(question) {
-        // showContainerPanel();
         showComponent(questionsContainer);
         questionTitle.innerHTML = (question.title);
         questionTitle.setAttribute('id', question.id);
