@@ -1,113 +1,113 @@
 export default function createGame(createQuestionsNavigator, client) {
 
-    let startButton;
-    let questionsContainer;
-    let nextQuestionButton;
-    let questionTitle;
-    let questionAnswers;
-    let radioAnswersList;
-    let timerId;
-    let countdown;
+    let startButtonUI;
+    let questionsContainerUI;
+    let nextQuestionButtonUI;
+    let questionTitleUI;
+    let questionAnswersUI;
+    let radioAnswersListUI;
+    let timer;
+    let seconds;
     let theQuestionNavigator;
-    let answerList;
-    let answerOption;
+    let answerListUI;
+    let secondsPerQuestion = 10;
 
-    function start(){
-        questionsContainer = document.querySelector('.questions__container');
-        hideComponent(questionsContainer);
-        startButton = document.querySelector('.start--button');
-        startButton.addEventListener('click', onStartGame);
-        questionTitle = document.querySelector('.question--title');
-        questionAnswers = document.querySelectorAll('.question--answer');
-        radioAnswersList = document.querySelectorAll('.input-radio');
-        nextQuestionButton = document.getElementById('next--question--button');
-        answerList = document.getElementById('answer--list');
+    function start() {
+        questionsContainerUI = document.querySelector('.questions__container');
+        setInvisibleComponentUI(questionsContainerUI);
+        startButtonUI = document.querySelector('.start--button');
+        startButtonUI.addEventListener('click', onStartGame);
+        questionTitleUI = document.querySelector('.question--title');
+        questionAnswersUI = document.querySelectorAll('.question--answer');
+        radioAnswersListUI = document.querySelectorAll('.input-radio');
+        nextQuestionButtonUI = document.getElementById('next--question--button');
+        answerListUI = document.getElementById('answer--list');
 
 
-        nextQuestionButton.addEventListener('click', onNextQuestion);
+        nextQuestionButtonUI.addEventListener('click', onNextQuestion);
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
         });
     }
 
-    function onStartGame(){
-        resetCountdown();
+    function onStartGame() {
+        resetTimer(secondsPerQuestion);
         updateTimerUI();
         startTimer();
         theQuestionNavigator.restartQuestions();
         loadNextQuestion();
-        hideComponent(startButton);
+        setInvisibleComponentUI(startButtonUI);
     }
-    function onNextQuestion(){
+
+    function onNextQuestion() {
+        resetTimer(secondsPerQuestion);
+        updateTimerUI();
         loadNextQuestion();
     }
+
     function loadNextQuestion() {
-        resetCountdown();
-        updateTimerUI();
         if (theQuestionNavigator.areThereNonVisitedQuestions()) {
-            renderQuestion(theQuestionNavigator.getNextQuestion());
+            renderQuestionUI(theQuestionNavigator.getNextQuestion());
         }
         else {
             gameOver();
         }
     }
-    function gameOver(){
-        hideComponent(questionsContainer);
+
+    function gameOver() {
+        setInvisibleComponentUI(questionsContainerUI);
         stopTimer();
-        showComponent(startButton);
+        setVisibleComponentUI(startButtonUI);
 
     }
 
     function startTimer() {
-        timerId = setInterval(function(){
-            updateCountdown(onNextQuestion, updateTimerUI);
+        timer = setInterval(function () {
+            updateSeconds(onNextQuestion, updateTimerUI);
         }, 1000);
     }
-    function stopTimer(){
-        clearInterval(timerId);
+
+    function stopTimer() {
+        clearInterval(timer);
     }
-    function resetCountdown(){
-        countdown = 10;
+
+    function resetTimer(secondsPerQuestion) {
+        seconds = secondsPerQuestion;
     }
+
     function updateTimerUI() {
-        let clock = document.querySelector('.clock');
-        clock.innerHTML = countdown;
+        let clockUI = document.querySelector('.clock');
+        clockUI.innerHTML = seconds;
     }
-    function updateCountdown(onTimeout, onTimeChanged){
-        countdown--;
-        if (countdown > 0) {
+
+    function updateSeconds(onTimeout, onTimeChanged) {
+        seconds--;
+        if (seconds > 0) {
             onTimeChanged();
         }
-        else if (countdown === 0) {
+        else if (seconds === 0) {
             onTimeout();
         }
     }
 
-    function renderQuestion(question) {
-        showComponent(questionsContainer);
-        questionTitle.innerHTML = (question.title);
-        questionTitle.setAttribute('id', question.id);
+    function renderQuestionUI(question) {
+        let answerOptionsUI = document.querySelectorAll('.answer--option');
 
-        // for (let i = 0; i < question.answers.length; i++) {
-        //     questionAnswers[i].innerHTML = (question.answers[i].answer);
-        //     radioAnswersList[i].setAttribute('id', question.answers[i].id);
-        // }
-        answerOption = document.querySelectorAll('.answer--option');
-        console.log("***********************",answerOption.length);
-
-        if(answerOption.length>0){
-            answerOption.forEach(function(element){
-                console.log("BORRO -->", element);
-                element.remove();
-
+        if (answerOptionsUI.length > 0) {
+            answerOptionsUI.forEach(function (option) {
+                option.remove();
             });
         }
 
-        for (let i = 0; i < question.answers.length; i++) {
-            var li = document.createElement("li",/*{class:"answer--option"}*/);
-            li.setAttribute("class","answer--option");
+        questionTitleUI.innerHTML = (question.title);
+        questionTitleUI.setAttribute('id', question.id);
 
-            var input = document.createElement("input"/*, {type:"radio",value:"",name:"radAnswer",class:"input-radio",id:question.answers[i].id}*/);
+
+        for (let i = 0; i < question.answers.length; i++) {
+            let li = document.createElement("li");
+            li.setAttribute("class", "answer--option");
+
+            let input = document.createElement("input");
             input.setAttribute("type", "radio");
             input.setAttribute("value", "");
             input.setAttribute("name", "radAnswer");
@@ -115,40 +115,26 @@ export default function createGame(createQuestionsNavigator, client) {
             input.setAttribute("id", question.answers[i].id);
 
 
-            var label = document.createElement("label"/*,{class:"question--answer"}*/);
-            label.setAttribute("class","question--answer");
+            let label = document.createElement("label");
+            label.setAttribute("class", "question--answer");
 
-            var answerText = document.createTextNode(question.answers[i].answer);
+            let answerText = document.createTextNode(question.answers[i].answer);
 
             label.appendChild(answerText);
             li.appendChild(input);
             li.appendChild(label);
-            answerList.appendChild(li);
+            answerListUI.appendChild(li);
         }
-
-        // var li = document.createElement("li",{class:"answer--option"});
-        // var input = document.createElement("input", {type:"radio",value:"",name:"radAnswer",class:"input-radio"});
-        // var label = document.createElement("label",{class:"question--answer"});
-
-
-        // li.appendChild(input);
-        // li.appendChild(label);
-        // console.log(li);
-
-
-    // <li class="answer--option">
-    //         <input type="radio" value="" name="radAnswer" class="input-radio">
-    //         <label class="question--answer"></label>
-    //  </li>
-
+        
+        setVisibleComponentUI(questionsContainerUI);
     }
 
-    function showComponent(component){
-        component.style.visibility="visible";
+    function setVisibleComponentUI(component) {
+        component.style.visibility = "visible";
     }
 
-    function hideComponent(component) {
-        component.style.visibility="hidden";
+    function setInvisibleComponentUI(component) {
+        component.style.visibility = "hidden";
     }
 
     return {
