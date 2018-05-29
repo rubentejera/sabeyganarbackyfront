@@ -31,16 +31,19 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onStartGame() {
+        stopTimer();
         resetTimer(secondsPerQuestion);
-        updateTimerUI();
         startTimer();
+        updateTimerUI();
         theQuestionNavigator.restartQuestions();
         loadNextQuestion();
         setInvisibleComponentUI(startButtonUI);
     }
 
     function onNextQuestion() {
+        stopTimer();
         resetTimer(secondsPerQuestion);
+        startTimer();
         updateTimerUI();
         loadNextQuestion();
     }
