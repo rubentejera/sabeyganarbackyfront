@@ -26,56 +26,56 @@ export default function createGame(createQuestionsNavigator, client) {
         answerListUI = document.getElementById('answer--list');
     }
 
-    function setVisibleComponentUI(component) {
-        component.style.visibility = "visible";
-    }
+    // function setVisibleComponent(component) {
+    //     component.style.visibility = "visible";
+    // }
+    //
+    // function setInvisibleComponent(component) {
+    //     component.style.visibility = "hidden";
+    // }
 
-    function setInvisibleComponentUI(component) {
-        component.style.visibility = "hidden";
-    }
-
-    function renderQuestionUI(question) {
-        let answerOptionsUI = document.querySelectorAll('.answer--option');
-
-        if (answerOptionsUI.length > 0) {
-            answerOptionsUI.forEach(function (option) {
-                option.remove();
-            });
-        }
-
-        questionTitleUI.innerHTML = (question.title);
-        questionTitleUI.setAttribute('id', question.id);
-
-
-        for (let i = 0; i < question.answers.length; i++) {
-            let li = document.createElement("li");
-            li.setAttribute("class", "answer--option");
-
-            let input = document.createElement("input");
-            input.setAttribute("type", "radio");
-            input.setAttribute("value", "");
-            input.setAttribute("name", "radAnswer");
-            input.setAttribute("class", "input-radio");
-            input.setAttribute("id", question.answers[i].id);
-
-
-            let label = document.createElement("label");
-            label.setAttribute("class", "question--answer");
-
-            let answerText = document.createTextNode(question.answers[i].answer);
-
-            label.appendChild(answerText);
-            li.appendChild(input);
-            li.appendChild(label);
-            answerListUI.appendChild(li);
-        }
-
-        setVisibleComponentUI(questionsContainerUI);
-    }
+    // function renderQuestionUI(question) {
+    //     let answerOptionsUI = document.querySelectorAll('.answer--option');
+    //
+    //     if (answerOptionsUI.length > 0) {
+    //         answerOptionsUI.forEach(function (option) {
+    //             option.remove();
+    //         });
+    //     }
+    //
+    //     questionTitleUI.innerHTML = (question.title);
+    //     questionTitleUI.setAttribute('id', question.id);
+    //
+    //
+    //     for (let i = 0; i < question.answers.length; i++) {
+    //         let li = document.createElement("li");
+    //         li.setAttribute("class", "answer--option");
+    //
+    //         let input = document.createElement("input");
+    //         input.setAttribute("type", "radio");
+    //         input.setAttribute("value", "");
+    //         input.setAttribute("name", "radAnswer");
+    //         input.setAttribute("class", "input-radio");
+    //         input.setAttribute("id", question.answers[i].id);
+    //
+    //
+    //         let label = document.createElement("label");
+    //         label.setAttribute("class", "question--answer");
+    //
+    //         let answerText = document.createTextNode(question.answers[i].answer);
+    //
+    //         label.appendChild(answerText);
+    //         li.appendChild(input);
+    //         li.appendChild(label);
+    //         answerListUI.appendChild(li);
+    //     }
+    //
+    //     ui.setVisibleComponent(questionsContainerUI);
+    // }
 
     function start() {
         getElementUI();
-        setInvisibleComponentUI(questionsContainerUI);
+        ui.setInvisibleComponent(questionsContainerUI);
         nextQuestionButtonUI.addEventListener('click', onNextQuestion);
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
@@ -84,7 +84,7 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function loadNextQuestion() {
         if (theQuestionNavigator.areThereNonVisitedQuestions()) {
-            renderQuestionUI(theQuestionNavigator.getNextQuestion());
+            ui.renderQuestionUI(theQuestionNavigator.getNextQuestion());
         }
         else {
             gameOver();
@@ -107,7 +107,7 @@ export default function createGame(createQuestionsNavigator, client) {
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
         loadNextQuestion();
-        setInvisibleComponentUI(startButtonUI);
+        ui.setInvisibleComponent(startButtonUI);
     }
 
     function onNextQuestion() {
@@ -116,9 +116,9 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function gameOver() {
-        setInvisibleComponentUI(questionsContainerUI);
+        ui.setInvisibleComponent(questionsContainerUI);
         questionTimer.stop();
-        setVisibleComponentUI(startButtonUI);
+        ui.setVisibleComponent(startButtonUI);
     }
 
 
