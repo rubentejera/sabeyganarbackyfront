@@ -11,8 +11,8 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function start() {
         ui.setInvisibleComponent(ui.getElement().questionsContainer);
-        ui.setClickEventListener(ui.getElement().startButton,onStartGame);
-        ui.setClickEventListener(ui.getElement().nextQuestionButton,onNextQuestion);
+        ui.setClickEventListener(ui.getElement().startButton, onStartGame);
+        ui.setClickEventListener(ui.getElement().nextQuestionButton, onNextQuestion);
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
         });
@@ -27,14 +27,13 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
 
-    function handlerEventTime(time){
-        ui.setElementText(ui.getElement().clock,time);
+    function handlerEventTime(time) {
+        ui.setElementText(ui.getElement().clock, time);
 
         if (time <= 0) {
             onNextQuestion();
         }
     }
-
 
 
     function onStartGame() {

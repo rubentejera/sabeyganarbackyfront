@@ -1,5 +1,6 @@
 import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
+import scoreboard from '../src/scoreboard';
 const pug = require('pug');
 
 let questions = [
@@ -163,4 +164,13 @@ describe("the game", function () {
         expect(Number(questionTitle.id)).toEqual(Number(questions[1].id));
         expect(questionTitle.innerHTML).toEqual(questions[1].title);
     }
+});
+
+describe("Scoreboard", function () {
+    let scoreboardGame = new scoreboard();
+
+    it("should return 0 when scoreboard is started",function(){
+        expect(scoreboardGame.getScore()).toEqual(0);
+    });
+
 });

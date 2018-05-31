@@ -7,7 +7,7 @@ export default function gameUI() {
     let clock = document.querySelector('.clock');
 
 
-    function getElement(){
+    function getElement() {
 
         return {
             startButton,
@@ -17,12 +17,12 @@ export default function gameUI() {
         }
     }
 
-    function setClickEventListener(element, action){
+    function setClickEventListener(element, action) {
         element.addEventListener('click', action);
     }
 
 
-    function setElementText(element, text){
+    function setElementText(element, text) {
         element.innerHTML = text;
     }
 
@@ -44,7 +44,7 @@ export default function gameUI() {
             });
         }
 
-        setElementText(questionTitleUI,question.title);
+        setElementText(questionTitleUI, question.title);
         questionTitleUI.setAttribute('id', question.id);
 
 
