@@ -1,19 +1,23 @@
-export default function scoreboard(){
+export default function scoreboard() {
     let score = 0;
 
-    function getScore(){
+    function getScore() {
         return score;
     }
 
-    function increment(points){
+    function increment(points) {
         score += points;
     }
 
-    function decrement(points){
-        score -= points;
+    function decrement(points) {
+        if (score - points < 0) {
+            score = 0;
+        } else {
+            score -= points;
+        }
     }
 
-    return{
+    return {
         getScore,
         increment,
         decrement,
