@@ -9,8 +9,13 @@ export default function scoreboard(){
         score += points;
     }
 
+    function decrement(points){
+        score -= points;
+    }
+
     return{
         getScore,
         increment,
+        decrement,
     }
 }
