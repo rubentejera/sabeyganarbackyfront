@@ -11,7 +11,8 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function start() {
         ui.setInvisibleComponent(ui.getElement().questionsContainer);
-        ui.setClickEventListener(ui.getElement().startButton, onStartGame);
+        // ui.setClickEventListener(ui.getElement().startButton, onStartGame);
+        ui.setOnStart(onStartGame);
         ui.setClickEventListener(ui.getElement().nextQuestionButton, onNextQuestion);
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
