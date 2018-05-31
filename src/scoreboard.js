@@ -5,7 +5,12 @@ export default function scoreboard(){
         return score;
     }
 
+    function increment(points){
+        score += points;
+    }
+
     return{
         getScore,
+        increment,
     }
 }
