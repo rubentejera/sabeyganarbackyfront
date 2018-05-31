@@ -24,6 +24,10 @@ export default function gameUI() {
      function setOnStart(action){
          setClickEventListener(startButton, action);
      }
+    function setOnNextQuestion(action){
+        setClickEventListener(nextQuestionButton, action);
+    }
+
 
 
     function setElementText(element, text) {
@@ -85,8 +89,8 @@ export default function gameUI() {
         setInvisibleComponent,
         renderQuestion,
         getElement,
-        setClickEventListener,
         setOnStart,
+        setOnNextQuestion,
 
     }
 }
