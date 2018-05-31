@@ -1,14 +1,25 @@
 export default function gameUI() {
     let questionsContainerUI = document.querySelector('.questions__container');
-    let startButtonUI = document.querySelector('.start--button');
+    let startButton = document.querySelector('.start--button');
     let questionTitleUI = document.querySelector('.question--title');
     let questionAnswersUI = document.querySelectorAll('.question--answer');
     let radioAnswersListUI = document.querySelectorAll('.input-radio');
-    let nextQuestionButtonUI = document.getElementById('next--question--button');
+    let nextQuestionButton = document.getElementById('next--question--button');
     let answerListUI = document.getElementById('answer--list');
     let clockUI = document.querySelector('.clock');
 
-    // let startButtonUI.addEventListener('click', onStartGame);
+
+    function getElement(){
+
+        return {
+            startButton,
+            nextQuestionButton,
+        }
+    }
+
+    function setClickEventListener(element, action){
+        element.addEventListener('click', action);
+    }
 
     function updateTimer(timer) {
         clockUI.innerHTML = timer;
@@ -22,7 +33,7 @@ export default function gameUI() {
         component.style.visibility = "hidden";
     }
 
-    function renderQuestionUI(question) {
+    function renderQuestion(question) {
         let answerOptionsUI = document.querySelectorAll('.answer--option');
 
         if (answerOptionsUI.length > 0) {
@@ -65,6 +76,8 @@ export default function gameUI() {
         updateTimer,
         setVisibleComponent,
         setInvisibleComponent,
-        renderQuestionUI,
+        renderQuestion,
+        getElement,
+        setClickEventListener,
     }
 }
