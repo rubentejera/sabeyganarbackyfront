@@ -167,10 +167,19 @@ describe("the game", function () {
 });
 
 describe("Scoreboard", function () {
-    let scoreboardGame = new scoreboard();
+    let scoreboardGame;
+
+    beforeEach(function () {
+        scoreboardGame = new scoreboard();
+    });
 
     it("should return 0 when scoreboard is started",function(){
         expect(scoreboardGame.getScore()).toEqual(0);
+    });
+
+    it("should add a quantity to the scoreboard",function(){
+        scoreboardGame.increment(3);
+        expect(scoreboardGame.getScore()).toEqual(3);
     });
 
 });
