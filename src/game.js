@@ -3,30 +3,14 @@ import gameUI from './gameUI.js';
 
 export default function createGame(createQuestionsNavigator, client) {
 
-   // let startButton;
-    let questionsContainerUI;
-    let questionTitleUI;
-    let questionAnswersUI;
-    let radioAnswersListUI;
     let theQuestionNavigator;
-    let answerListUI;
     let secondsPerQuestion = 10;
-    let questionTimer;
+    let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let ui = gameUI();
 
-    function getElementUI() {
-        questionsContainerUI = document.querySelector('.questions__container');
-       // startButton = document.querySelector('.start--button');
-        // startButton.addEventListener('click', onStartGame);
-        questionTitleUI = document.querySelector('.question--title');
-        questionAnswersUI = document.querySelectorAll('.question--answer');
-        radioAnswersListUI = document.querySelectorAll('.input-radio');
-        answerListUI = document.getElementById('answer--list');
-    }
 
     function start() {
-        getElementUI();
-        ui.setInvisibleComponent(questionsContainerUI);
+        ui.setInvisibleComponent(ui.getElement().questionsContainer);
         ui.setClickEventListener(ui.getElement().startButton,onStartGame);
         ui.setClickEventListener(ui.getElement().nextQuestionButton,onNextQuestion);
         client.getQuestions(function (questions) {
@@ -51,8 +35,6 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
 
-    questionTimer = new timer(secondsPerQuestion, handlerEventTime);
-
 
 
     function onStartGame() {
@@ -68,7 +50,7 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function gameOver() {
-        ui.setInvisibleComponent(questionsContainerUI);
+        ui.setInvisibleComponent(ui.getElement().questionsContainer);
         questionTimer.stop();
         ui.setVisibleComponent(ui.getElement().startButton);
     }

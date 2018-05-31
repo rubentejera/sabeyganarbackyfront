@@ -1,5 +1,5 @@
 export default function gameUI() {
-    let questionsContainerUI = document.querySelector('.questions__container');
+    let questionsContainer = document.querySelector('.questions__container');
     let startButton = document.querySelector('.start--button');
     let questionTitleUI = document.querySelector('.question--title');
     let questionAnswersUI = document.querySelectorAll('.question--answer');
@@ -14,6 +14,7 @@ export default function gameUI() {
         return {
             startButton,
             nextQuestionButton,
+            questionsContainer
         }
     }
 
@@ -69,7 +70,7 @@ export default function gameUI() {
             answerListUI.appendChild(li);
         }
 
-        setVisibleComponent(questionsContainerUI);
+        setVisibleComponent(questionsContainer);
     }
 
     return {
