@@ -28,7 +28,7 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function handlerEventTime(time){
-        ui.updateTimer(time);
+        ui.setElementText(ui.getElement().clock,time);
 
         if (time <= 0) {
             onNextQuestion();
