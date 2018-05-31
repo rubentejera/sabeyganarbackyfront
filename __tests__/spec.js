@@ -188,4 +188,9 @@ describe("Scoreboard", function () {
         expect(scoreboardGame.getScore()).toEqual(1);
     });
 
+    it("should be 0 the minimum score",function(){
+        scoreboardGame.decrement(2);
+        expect(scoreboardGame.getScore()).toEqual(0);
+    });
+
 });
