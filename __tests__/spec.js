@@ -177,9 +177,15 @@ describe("Scoreboard", function () {
         expect(scoreboardGame.getScore()).toEqual(0);
     });
 
-    it("should add a quantity to the scoreboard",function(){
+    it("should increment a quantity to the scoreboard",function(){
         scoreboardGame.increment(3);
         expect(scoreboardGame.getScore()).toEqual(3);
+    });
+
+    it("should decrement a quantity to the scoreboard",function(){
+        scoreboardGame.increment(3);
+        scoreboardGame.decrement(2);
+        expect(scoreboardGame.getScore()).toEqual(1);
     });
 
 });
