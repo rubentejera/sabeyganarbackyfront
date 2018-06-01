@@ -7,22 +7,14 @@ export default function gameUI() {
     let clock = document.querySelector('.clock');
 
 
-    function getElement() {
-
-        return {
-            startButton,
-            clock,
-            nextQuestionButton,
-            questionsContainer
-        }
-    }
-
     function setClickEventListener(element, action) {
         element.addEventListener('click', action);
     }
 
     function setOnStart(action) {
+
         setClickEventListener(startButton, action);
+
     }
 
     function setOnNextQuestion(action) {
@@ -44,9 +36,28 @@ export default function gameUI() {
         component.style.visibility = "visible";
     }
 
+    function setVisibleStart(){
+        setVisibleComponent(startButton);
+    }
+    function setVisibleQuestions(){
+        setVisibleComponent(questionsContainer);
+    }
+
     function setInvisibleComponent(component) {
         component.style.visibility = "hidden";
     }
+
+
+    function setInvisibleStart(){
+        setInvisibleComponent(startButton);
+    }
+
+    function setInvisibleQuestions(){
+        setInvisibleComponent(questionsContainer);
+    }
+
+
+
 
     function renderQuestion(question) {
         let answerOptionsUI = document.querySelectorAll('.answer--option');
@@ -84,15 +95,15 @@ export default function gameUI() {
             answerListUI.appendChild(li);
         }
 
-        setVisibleComponent(questionsContainer);
+        // setVisibleComponent(questionsContainer);
     }
 
     return {
-        setElementText,
-        setVisibleComponent,
-        setInvisibleComponent,
+        setVisibleStart,
+        setInvisibleStart,
+        setVisibleQuestions,
+        setInvisibleQuestions,
         renderQuestion,
-        getElement,
         setOnStart,
         setOnNextQuestion,
         setClock,
