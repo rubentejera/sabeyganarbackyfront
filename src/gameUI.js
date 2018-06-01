@@ -21,18 +21,22 @@ export default function gameUI() {
         element.addEventListener('click', action);
     }
 
-     function setOnStart(action){
-         setClickEventListener(startButton, action);
-     }
-    function setOnNextQuestion(action){
-        setClickEventListener(nextQuestionButton, action);
+    function setOnStart(action) {
+        setClickEventListener(startButton, action);
     }
 
+    function setOnNextQuestion(action) {
+        setClickEventListener(nextQuestionButton, action);
+    }
 
 
     function setElementText(element, text) {
         element.innerHTML = text;
 
+    }
+
+    function setClock(text) {
+        setElementText(clock, text);
     }
 
 
@@ -91,6 +95,7 @@ export default function gameUI() {
         getElement,
         setOnStart,
         setOnNextQuestion,
+        setClock,
 
     }
 }
