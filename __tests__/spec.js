@@ -209,6 +209,14 @@ describe("the game", function () {
         return undefined;
     }
 
+    function checkAnswer(question, selectedAnswer) {
+        if (question.correctAnswer.id === parseInt(selectedAnswer.id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function goToNextQuestion() {
         let nextQuestionButton = document.getElementById('next--question--button');
         nextQuestionButton.click();
