@@ -8,6 +8,9 @@ export default function createGame(createQuestionsNavigator, client) {
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let ui = gameUI();
 
+    function getQuestionNavigator(){
+            return theQuestionNavigator;
+    }
 
     function start() {
         ui.setInvisibleQuestions();
@@ -45,9 +48,18 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onNextQuestion() {
+        // checkUserAnswer();
         questionTimer.restart();
         loadNextQuestion();
     }
+
+    // function checkUserAnswer(){
+    //     if(ui.getCorrectAnswer() == ui.getSelectedAnswer()){
+    //
+    //     }else{
+    //
+    //     }
+    // }
 
     function gameOver() {
         ui.setInvisibleQuestions();
@@ -58,6 +70,6 @@ export default function createGame(createQuestionsNavigator, client) {
 
     return {
         start,
-        questionsNavigator: createQuestionsNavigator
+        getQuestionNavigator,
     }
 };

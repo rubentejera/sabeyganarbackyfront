@@ -5,6 +5,7 @@ export default function gameUI() {
     let nextQuestionButton = document.getElementById('next--question--button');
     let answerListUI = document.getElementById('answer--list');
     let clock = document.querySelector('.clock');
+    let answerOptionsUI=[];
 
 
     function setClickEventListener(element, action) {
@@ -56,11 +57,29 @@ export default function gameUI() {
         setInvisibleComponent(questionsContainer);
     }
 
+    function getCorrectAnswer(){
 
+    }
+
+    // function getSelectedAnswer(){
+    //     answerOptionsUI = document.querySelectorAll('.answer--option');
+    //
+    // }
+
+
+    function getSelectedAnswer(){
+        let radioButtons = document.getElementsByClassName("input-radio");
+        for (let index = 0; index < radioButtons.length; index++) {
+            if (radioButtons[index].checked){
+                return radioButtons[index]
+            }
+        }
+        return undefined;
+    }
 
 
     function renderQuestion(question) {
-        let answerOptionsUI = document.querySelectorAll('.answer--option');
+        answerOptionsUI = document.querySelectorAll('.answer--option');
 
         if (answerOptionsUI.length > 0) {
             answerOptionsUI.forEach(function (option) {

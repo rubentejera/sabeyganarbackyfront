@@ -1,6 +1,7 @@
 import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
 import scoreboard from '../src/scoreboard';
+
 const pug = require('pug');
 
 let questions = [
@@ -23,6 +24,16 @@ let questions = [
             {id: 2, answer: 'Canarias'}
         ],
         correctAnswer: {id: 2}
+    },
+    {
+        id: 12,
+        title: 'Nombre de Colón?',
+        answers: [
+            {id: 0, answer: 'Cristobal'},
+            {id: 1, answer: 'Santiago'},
+            {id: 2, answer: 'Pepito'}
+        ],
+        correctAnswer: {id: 0}
     }
 ];
 
@@ -53,9 +64,11 @@ describe("the questions navigator", () => {
     });
 
     it("knows when the questions are all visited", () => {
-        questionsNavigator.getNextQuestion();
-        expect(questionsNavigator.areThereNonVisitedQuestions()).toBeTruthy();
-
+        let nextToLast = questions.length - 1;
+        for (let i = 0; i < nextToLast; i++) {
+            questionsNavigator.getNextQuestion();
+            expect(questionsNavigator.areThereNonVisitedQuestions()).toBeTruthy();
+        }
         questionsNavigator.getNextQuestion();
         expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
     });
@@ -63,16 +76,19 @@ describe("the questions navigator", () => {
 
 describe("the game", function () {
     let game;
+    let theQuestionNavigator;
 
     beforeEach(function () {
         document.body.innerHTML = pug.compileFile('./views/main.pug', null)();
         let stubClient = {
-            getQuestions: function(callback){
+            getQuestions: function (callback) {
                 callback(questions);
             }
         };
         game = createGame(createQuestionsNavigator, stubClient);
         game.start();
+        theQuestionNavigator = game.getQuestionNavigator();
+
     });
 
     it('loads the markup', function () {
@@ -83,7 +99,7 @@ describe("the game", function () {
 
     it('answers a question', function () {
         startGame();
-        selectFirstAnswer();
+        selectAnswer(1);
 
         goToNextQuestion();
 
@@ -96,7 +112,7 @@ describe("the game", function () {
 
     it("restart the counter time", function (done) {
         startGame();
-        selectFirstAnswer();
+        selectAnswer(1);
         goToNextQuestion();
         const counterInDOM = getCounterUIValue();
 
@@ -108,23 +124,54 @@ describe("the game", function () {
         setTimeout(onTimeout, 1000);
     });
 
-    it("should not have any selected question at the beginning of the game", function(){
+    it("should not have any selected question at the beginning of the game", function () {
         startGame();
         expect(getSelectedAnswer()).toBe(undefined);
     });
 
-    it("should not have any selected question when go to next questions", function(){
+    it("should not have any selected question when go to next questions", function () {
         startGame();
-        selectFirstAnswer();
+        selectAnswer(1);
         goToNextQuestion();
         expect(getSelectedAnswer()).toBe(undefined);
     });
 
-    xit("should show 0 on the scoreboard UI when start game", function(){
+    it("should return the same id of selected answer", function () {
         startGame();
-        let scoreboard = document.querySelector(".result-score");
+        let seletedAnswer = selectAnswer(1);
+        expect(getSelectedAnswer()).toBe(parseInt(seletedAnswer.id));
+    });
+
+    it("should return correct check of answer", function () {
+        startGame();
+        let seletedAnswer = selectAnswer(3);
+        expect(checkAnswer(questions[0], seletedAnswer)).toBeTruthy();
+
+        goToNextQuestion();
+        seletedAnswer = selectAnswer(3);
+        expect(checkAnswer(questions[1], seletedAnswer)).toBeTruthy();
+
+        goToNextQuestion();
+        seletedAnswer = selectAnswer(3);
+        expect(checkAnswer(questions[2], seletedAnswer)).toBeFalsy();
+    });
+
+
+    xit("should show 0 on the scoreboard UI when start game", function () {
+        startGame();
+        let scoreboard = document.querySelector(".result--score");
         expect(parseInt(scoreboard.innerHTML)).toBe(0);
     });
+
+
+    xit("should add more points if it's respond quickly", function () {
+        startGame();
+        selectAnswer(3);
+        goToNextQuestion();
+        expect(parseInt(scoreboard.innerHTML)).toBe(3);
+
+    });
+
 
     function getQuestionTitleElement() {
         return document.querySelector('.question--title');
@@ -142,20 +189,24 @@ describe("the game", function () {
         expectFirstQuestionToBeRendered();
     }
 
-    function getSelectedAnswer(){
-        let radioButtons = document.getElementsByClassName("input-radio");
-        for (let index = 0; index < radioButtons.length; index++) {
-            if (radioButtons[index].checked){
-                return radioButtons[index]
+    function getAnswers() {
+        return document.getElementsByClassName('input-radio');
+    }
+
+    function selectAnswer(num) {
+        let answerSeleted = getAnswers()[num - 1];
+        answerSeleted.click();
+        return answerSeleted;
+    }
+
+    function getSelectedAnswer() {
+        let answers = getAnswers();
+        for (let index = 0; index < answers.length; index++) {
+            if (answers[index].checked) {
+                return parseInt(answers[index].id);
             }
         }
         return undefined;
-    }
-
-    function selectFirstAnswer() {
-        let firstAnswer = document.getElementsByTagName('input')[0];
-        firstAnswer.click();
-        return firstAnswer;
     }
 
     function goToNextQuestion() {
@@ -170,6 +221,14 @@ describe("the game", function () {
     }
 });
 
+
+// describe("Check Questions", function () {
+//     it("should add more points if it's respond quickly",function(){
+//
+//         expect(score).toEqual(3);
+//     });
+// });
+
 describe("Scoreboard", function () {
     let scoreboardGame;
 
@@ -177,22 +236,22 @@ describe("Scoreboard", function () {
         scoreboardGame = new scoreboard();
     });
 
-    it("should return 0 when scoreboard is started",function(){
+    it("should return 0 when scoreboard is started", function () {
         expect(scoreboardGame.getScore()).toEqual(0);
     });
 
-    it("should increment a quantity to the scoreboard",function(){
+    it("should increment a quantity to the scoreboard", function () {
         scoreboardGame.increment(3);
         expect(scoreboardGame.getScore()).toEqual(3);
     });
 
-    it("should decrement a quantity to the scoreboard",function(){
+    it("should decrement a quantity to the scoreboard", function () {
         scoreboardGame.increment(3);
         scoreboardGame.decrement(2);
         expect(scoreboardGame.getScore()).toEqual(1);
     });
 
-    it("should be 0 the minimum score",function(){
+    it("should be 0 the minimum score", function () {
         scoreboardGame.decrement(2);
         expect(scoreboardGame.getScore()).toEqual(0);
     });
