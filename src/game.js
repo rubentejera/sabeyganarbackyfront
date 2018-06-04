@@ -10,8 +10,8 @@ export default function createGame(createQuestionsNavigator, client) {
     let gameScoreboard = new scoreboard();
     let ui = gameUI();
 
-    function getQuestionNavigator(){
-            return theQuestionNavigator;
+    function getQuestionNavigator() {
+        return theQuestionNavigator;
     }
 
     function start() {
@@ -51,19 +51,22 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onNextQuestion() {
-        // checkUserAnswer();
+        let currentQuestion = theQuestionNavigator.getCurrentQuestion();
+        let selectedAnswer = ui.getSelectedAnswer();
+
+        if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
+
+        } else {
+
+        }
+
         questionTimer.restart();
         loadNextQuestion();
     }
 
-    // function checkUserAnswer(){
-    //     if(ui.getCorrectAnswer() == ui.getSelectedAnswer()){
-    //
-    //     }else{
-    //
-    //     }
-    // }
-
+    function isAnswerCorrect(currentQuestion, selectedAnswer) {
+        return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
+    }
 
     function gameOver() {
         ui.setInvisibleQuestions();

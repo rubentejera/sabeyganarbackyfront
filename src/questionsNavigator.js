@@ -15,7 +15,7 @@ export default function createQuestionsNavigator(questions) {
         questionsIndex++;
     }
 
-    function getActualQuestion() {
+    function getCurrentQuestion() {
         return questions[questionsIndex];
     }
 
@@ -29,7 +29,7 @@ export default function createQuestionsNavigator(questions) {
     }
 
     return {
-        getActualQuestion,
+        getCurrentQuestion,
         restartQuestions: restartQuestions,
         areThereNonVisitedQuestions,
         getNextQuestion: getNextQuestion

@@ -131,6 +131,7 @@ export default function gameUI() {
         setOnNextQuestion,
         setClock,
         setScoreboard,
+        getSelectedAnswer,
 
     }
 }
