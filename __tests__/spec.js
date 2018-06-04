@@ -1,6 +1,7 @@
 import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
 import scoreboard from '../src/scoreboard';
+import gameRules from '../src/gameRules';
 
 const pug = require('pug');
 
@@ -167,7 +168,7 @@ describe("the game", function () {
         startGame();
         selectAnswer(3);
         goToNextQuestion();
-        expect(parseInt(getScoreboard().innerHTML)).toBe(3);
+        expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsQuickReply);
 
     });
 
