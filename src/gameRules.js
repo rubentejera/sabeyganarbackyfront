@@ -1,5 +1,5 @@
 export default function gameRules() {
-    let secondsPerQuestion = 10;
+    let secondsPerQuestion = 12;
     const maxTimeQuickReply = 3;
     const maxTimeNormalReply = 10;
 

@@ -98,7 +98,7 @@ export default function createGame(createQuestionsNavigator, client) {
         if (time <= gameRules().maxTimeQuickReply) {
             gameScoreboard.increment(gameRules().pointsQuickReply);
         } else if (time <= gameRules().maxTimeNormalReply){
-            // console.log("******NORMAL TIME-->",time);
+            console.log("******NORMAL TIME-->",time);
         } else {
             // console.log("******SLOW TIME-->",time);
         }

@@ -118,7 +118,7 @@ describe("the game", function () {
         const counterInDOM = getCounterUIValue();
 
         function onTimeout() {
-            expect(counterInDOM).toEqual(10);
+            expect(counterInDOM).toEqual(gameRules().secondsPerQuestion);
             done();
         }
 
