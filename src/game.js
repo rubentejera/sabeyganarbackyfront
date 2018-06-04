@@ -1,11 +1,13 @@
 import timer from './timer.js';
 import gameUI from './gameUI.js';
 import scoreboard from './scoreboard.js';
+import gameRules from './gameRules.js';
 
 export default function createGame(createQuestionsNavigator, client) {
 
     let theQuestionNavigator;
-    let secondsPerQuestion = 10;
+    let secondsPerQuestion = gameRules().secondsPerQuestion;
+    // let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let gameScoreboard = new scoreboard();
     let ui = gameUI();
@@ -85,17 +87,17 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function recalculateScoreIfSuccess(time) {
-        const maxTimeQuickReply = 3;
-        const maxTimeNormalReply = 10;
+        // const maxTimeQuickReply = 3;
+        // const maxTimeNormalReply = 10;
+        //
+        // const pointsQuickReply = 3;
+        // const pointsNormalReply = 2;
+        // const pointsSlowReply = 1;
 
-        const pointsQuickReply = 3;
-        const pointsNormalReply = 2;
-        const pointsSlowReply = 1;
 
-
-        if (time <= maxTimeQuickReply) {
-            gameScoreboard.increment(pointsQuickReply);
-        } else if (time <= maxTimeNormalReply){
+        if (time <= gameRules().maxTimeQuickReply) {
+            gameScoreboard.increment(gameRules().pointsQuickReply);
+        } else if (time <= gameRules().maxTimeNormalReply){
             // console.log("******NORMAL TIME-->",time);
         } else {
             // console.log("******SLOW TIME-->",time);
