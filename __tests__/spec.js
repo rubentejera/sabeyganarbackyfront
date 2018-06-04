@@ -159,16 +159,15 @@ describe("the game", function () {
 
     it("should show 0 on the scoreboard UI when start game", function () {
         startGame();
-        let scoreboard = document.querySelector(".result--score");
-        expect(parseInt(scoreboard.innerHTML)).toBe(0);
+        expect(parseInt(getScoreboard().innerHTML)).toBe(0);
     });
 
 
-    xit("should add more points if it's respond quickly", function () {
+    it("should add more points if it's reply quickly", function () {
         startGame();
         selectAnswer(3);
         goToNextQuestion();
-        expect(parseInt(scoreboard.innerHTML)).toBe(3);
+        expect(parseInt(getScoreboard().innerHTML)).toBe(3);
 
     });
 
@@ -191,6 +190,10 @@ describe("the game", function () {
 
     function getAnswers() {
         return document.getElementsByClassName('input-radio');
+    }
+
+    function getScoreboard(){
+        return document.querySelector(".result--score");
     }
 
     function selectAnswer(num) {
@@ -228,14 +231,6 @@ describe("the game", function () {
         expect(questionTitle.innerHTML).toEqual(questions[1].title);
     }
 });
-
-
-// describe("Check Questions", function () {
-//     it("should add more points if it's respond quickly",function(){
-//
-//         expect(score).toEqual(3);
-//     });
-// });
 
 describe("Scoreboard", function () {
     let scoreboardGame;

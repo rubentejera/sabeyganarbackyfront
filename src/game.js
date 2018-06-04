@@ -41,20 +41,27 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
 
+    function updateUIScoreboard(){
+        ui.setScoreboard(gameScoreboard.getScore());
+    }
 
     function onStartGame() {
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
         loadNextQuestion();
         ui.setInvisibleStart();
-        ui.setScoreboard(gameScoreboard.getScore());
+        updateUIScoreboard();
+    }
+
+    function getTimeElapsed(){
+        return secondsPerQuestion - questionTimer.get();
     }
 
     function onNextQuestion() {
         let currentQuestion = theQuestionNavigator.getCurrentQuestion();
         let selectedAnswer = ui.getSelectedAnswer();
-        let currentTimer = questionTimer.get();
-        if(selectedAnswer){
+        let currentTimer = getTimeElapsed();
+        if (selectedAnswer) {
             if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
                 recalculateScoreIfSuccess(currentTimer);
             } else {
@@ -64,6 +71,7 @@ export default function createGame(createQuestionsNavigator, client) {
             recalculateScoreIfDontAnswer(currentTimer);
         }
 
+        updateUIScoreboard();
         questionTimer.restart();
         loadNextQuestion();
     }
@@ -77,10 +85,25 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function recalculateScoreIfSuccess(time) {
+        const maxTimeQuickReply = 3;
+        const maxTimeNormalReply = 10;
+
+        const pointsQuickReply = 3;
+        const pointsNormalReply = 2;
+        const pointsSlowReply = 1;
+
+
+        if (time <= maxTimeQuickReply) {
+            gameScoreboard.increment(pointsQuickReply);
+        } else if (time <= maxTimeNormalReply){
+            // console.log("******NORMAL TIME-->",time);
+        } else {
+            // console.log("******SLOW TIME-->",time);
+        }
 
     }
 
-    function recalculateScoreIfDontAnswer(time){
+    function recalculateScoreIfDontAnswer(time) {
 
     }
 
