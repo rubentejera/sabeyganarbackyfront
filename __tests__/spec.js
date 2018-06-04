@@ -172,6 +172,13 @@ describe("the game", function () {
 
     });
 
+    it("should add normal points if it's reply in normal time", function () {
+        startGame();
+        selectAnswer(3);
+        setTimeout(goToNextQuestion(),gameRules().maxTimeNormalReply);
+        expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsNormalReply);
+    });
+
 
     function getQuestionTitleElement() {
         return document.querySelector('.question--title');
