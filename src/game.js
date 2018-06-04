@@ -1,11 +1,13 @@
 import timer from './timer.js';
 import gameUI from './gameUI.js';
+import scoreboard from './scoreboard.js';
 
 export default function createGame(createQuestionsNavigator, client) {
 
     let theQuestionNavigator;
     let secondsPerQuestion = 10;
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
+    let gameScoreboard = new scoreboard();
     let ui = gameUI();
 
     function getQuestionNavigator(){
@@ -45,6 +47,7 @@ export default function createGame(createQuestionsNavigator, client) {
         theQuestionNavigator.restartQuestions();
         loadNextQuestion();
         ui.setInvisibleStart();
+        ui.setScoreboard(gameScoreboard.getScore());
     }
 
     function onNextQuestion() {
@@ -60,6 +63,7 @@ export default function createGame(createQuestionsNavigator, client) {
     //
     //     }
     // }
+
 
     function gameOver() {
         ui.setInvisibleQuestions();

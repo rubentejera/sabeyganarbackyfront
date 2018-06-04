@@ -157,7 +157,7 @@ describe("the game", function () {
     });
 
 
-    xit("should show 0 on the scoreboard UI when start game", function () {
+    it("should show 0 on the scoreboard UI when start game", function () {
         startGame();
         let scoreboard = document.querySelector(".result--score");
         expect(parseInt(scoreboard.innerHTML)).toBe(0);
@@ -209,8 +209,8 @@ describe("the game", function () {
         return undefined;
     }
 
-    function checkAnswer(question, selectedAnswer) {
-        if (question.correctAnswer.id === parseInt(selectedAnswer.id)) {
+    function checkAnswer(currentQuestion, selectedAnswer) {
+        if (currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id)) {
             return true;
         } else {
             return false;

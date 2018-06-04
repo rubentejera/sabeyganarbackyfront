@@ -5,6 +5,7 @@ export default function gameUI() {
     let nextQuestionButton = document.getElementById('next--question--button');
     let answerListUI = document.getElementById('answer--list');
     let clock = document.querySelector('.clock');
+    let scoreboard = document.querySelector('.result--score');
     let answerOptionsUI=[];
 
 
@@ -32,6 +33,9 @@ export default function gameUI() {
         setElementText(clock, text);
     }
 
+    function setScoreboard (score) {
+        setElementText(scoreboard,score);
+    }
 
     function setVisibleComponent(component) {
         component.style.visibility = "visible";
@@ -126,6 +130,7 @@ export default function gameUI() {
         setOnStart,
         setOnNextQuestion,
         setClock,
+        setScoreboard,
 
     }
 }
