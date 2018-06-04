@@ -53,11 +53,15 @@ export default function createGame(createQuestionsNavigator, client) {
     function onNextQuestion() {
         let currentQuestion = theQuestionNavigator.getCurrentQuestion();
         let selectedAnswer = ui.getSelectedAnswer();
-
-        if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
-
+        let currentTimer = questionTimer.get();
+        if(selectedAnswer){
+            if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
+                recalculateScoreIfSuccess(currentTimer);
+            } else {
+                recalculateScoreIfFails(currentTimer);
+            }
         } else {
-
+            recalculateScoreIfDontAnswer(currentTimer);
         }
 
         questionTimer.restart();
@@ -66,6 +70,18 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function isAnswerCorrect(currentQuestion, selectedAnswer) {
         return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
+    }
+
+    function recalculateScoreIfFails(time) {
+
+    }
+
+    function recalculateScoreIfSuccess(time) {
+
+    }
+
+    function recalculateScoreIfDontAnswer(time){
+
     }
 
     function gameOver() {
