@@ -7,7 +7,6 @@ export default function createGame(createQuestionsNavigator, client) {
 
     let theQuestionNavigator;
     let secondsPerQuestion = gameRules().secondsPerQuestion;
-    // let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let gameScoreboard = new scoreboard();
     let ui = gameUI();
@@ -50,8 +49,10 @@ export default function createGame(createQuestionsNavigator, client) {
     function onStartGame() {
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
-        loadNextQuestion();
-        ui.setInvisibleStart();
+        ui.setVisibleQuestions();
+        // loadNextQuestion();
+        ui.renderQuestion(theQuestionNavigator.getCurrentQuestion());
+        ui.setVisibleQuestions();
         updateUIScoreboard();
     }
 
@@ -61,6 +62,7 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function onNextQuestion() {
         let currentQuestion = theQuestionNavigator.getCurrentQuestion();
+        // console.log("CURRENT QUESTION ONNEXTQUESTION-->",currentQuestion);
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
         if (selectedAnswer) {
@@ -72,35 +74,34 @@ export default function createGame(createQuestionsNavigator, client) {
         } else {
             recalculateScoreIfDontAnswer(currentTimer);
         }
-
+        // console.log("vvvv");
         updateUIScoreboard();
         questionTimer.restart();
         loadNextQuestion();
     }
 
     function isAnswerCorrect(currentQuestion, selectedAnswer) {
+        // console.log("CURRENT QUESTION-->",currentQuestion);
+        // console.log("SELETED ANSWER-->",selectedAnswer);
         return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
     }
 
     function recalculateScoreIfFails(time) {
-
+        console.log("Fallo");
     }
 
     function recalculateScoreIfSuccess(time) {
-        // const maxTimeQuickReply = 3;
-        // const maxTimeNormalReply = 10;
-        //
-        // const pointsQuickReply = 3;
-        // const pointsNormalReply = 2;
-        // const pointsSlowReply = 1;
-
-
+        console.log("******TIME-->",time);
         if (time <= gameRules().maxTimeQuickReply) {
+            console.log("******QUICK TIME-->",time);
             gameScoreboard.increment(gameRules().pointsQuickReply);
         } else if (time <= gameRules().maxTimeNormalReply){
             console.log("******NORMAL TIME-->",time);
+            gameScoreboard.increment(gameRules().pointsNormalReply);
         } else {
-            // console.log("******SLOW TIME-->",time);
+            console.log("******SLOW TIME-->",time);
+            gameScoreboard.increment(gameRules().pointsSlowReply);
+
         }
 
     }

@@ -16,16 +16,25 @@ export default function createQuestionsNavigator(questions) {
     }
 
     function getCurrentQuestion() {
+        isTheLastQuestion();
         return questions[questionsIndex];
     }
 
     function getNextQuestion() {
-        let question = questions[questionsIndex];
         goToNextQuestion();
-        if (questionsIndex >= questions.length) {
+        // isTheLastQuestion();
+        return getCurrentQuestion()
+        // let question = questions[questionsIndex];
+        // if (questionsIndex >= questions.length) {
+        //     nonVisitedQuestions = false;
+        // }
+        // return question;
+    }
+
+    function isTheLastQuestion(){
+        if (questionsIndex >= questions.length-1) {
             nonVisitedQuestions = false;
         }
-        return question;
     }
 
     return {
