@@ -2,7 +2,7 @@ import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
 import scoreboard from '../src/scoreboard';
 import gameRules from '../src/gameRules';
-// jest.setTimeout(30000);
+jest.setTimeout(30000);
 
 const pug = require('pug');
 
@@ -175,7 +175,7 @@ describe("the game", function () {
 
     });
 
-    xit("should add normal points if it's reply in normal time", function (done) {
+    it("should add normal points if it's reply in normal time", function (done) {
         startGame();
         selectAnswer(3);
         // let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply)*1000;
@@ -183,9 +183,8 @@ describe("the game", function () {
 
         function onTimeOut() {
             goToNextQuestion();
-            // done();
-            // expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsNormalReply);
-            expect(parseInt(getScoreboard().innerHTML)).toBe(7000);
+            expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsNormalReply);
+            done();
         }
 
         console.log("SETTIMEOUT-->>", maxTimeNormalReplyInMillis);

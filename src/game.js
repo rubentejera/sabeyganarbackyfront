@@ -62,7 +62,6 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function onNextQuestion() {
         let currentQuestion = theQuestionNavigator.getCurrentQuestion();
-        // console.log("CURRENT QUESTION ONNEXTQUESTION-->",currentQuestion);
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
         if (selectedAnswer) {
@@ -74,15 +73,12 @@ export default function createGame(createQuestionsNavigator, client) {
         } else {
             recalculateScoreIfDontAnswer(currentTimer);
         }
-        // console.log("vvvv");
         updateUIScoreboard();
         questionTimer.restart();
         loadNextQuestion();
     }
 
     function isAnswerCorrect(currentQuestion, selectedAnswer) {
-        // console.log("CURRENT QUESTION-->",currentQuestion);
-        // console.log("SELETED ANSWER-->",selectedAnswer);
         return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
     }
 
@@ -91,7 +87,6 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function recalculateScoreIfSuccess(time) {
-        console.log("******TIME-->",time);
         if (time <= gameRules().maxTimeQuickReply) {
             console.log("******QUICK TIME-->",time);
             gameScoreboard.increment(gameRules().pointsQuickReply);
