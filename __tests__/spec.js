@@ -2,6 +2,7 @@ import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
 import scoreboard from '../src/scoreboard';
 import gameRules from '../src/gameRules';
+
 jest.setTimeout(30000);
 
 const pug = require('pug');
@@ -52,17 +53,55 @@ describe("the questions navigator", () => {
     });
 
     it("is always pointing to a question", () => {
-        let question = questionsNavigator.getNextQuestion();
+        // let question = questionsNavigator.getNextQuestion();
+        // expect(questions).toContain(question);
+
+        let lastQuestion = questions.length;
+        let question;
+        for (let i = 0; i < lastQuestion; i++) {
+            if (i == 0) {
+                question = questionsNavigator.getCurrentQuestion();
+            } else {
+                question = questionsNavigator.getNextQuestion();
+            }
+            console.log("/////////////i-->",i);
+        }
+
+        question = questionsNavigator.getNextQuestion();
+
         expect(questions).toContain(question);
+
+        // expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
+
+
     });
 
     it("does not repeat the last question", () => {
-        let question1 = questionsNavigator.getNextQuestion();
-        let question2 = questionsNavigator.getNextQuestion();
-        let question3 = questionsNavigator.getNextQuestion();
+        //******************
+        let lastQuestion = questions.length;
+        let question;
 
-        expect(question1).not.toEqual(question2);
-        expect(question2).not.toEqual(question3);
+
+        let lastQuestionVisited = {};
+
+        for (let i = 0; i < lastQuestion; i++) {
+            if (i == 0) {
+                question = questionsNavigator.getCurrentQuestion();
+            } else {
+                question = questionsNavigator.getNextQuestion();
+            }
+            // console.log("/////////////i-->",i);
+            expect(question).not.toEqual(lastQuestionVisited);
+            lastQuestionVisited = question;
+        }
+        //***************
+        //
+        // let question1 = questionsNavigator.getNextQuestion();
+        // let question2 = questionsNavigator.getNextQuestion();
+        // let question3 = questionsNavigator.getNextQuestion();
+        //
+        // expect(question1).not.toEqual(question2);
+        // expect(question2).not.toEqual(question3);
     });
 
     it("knows when the questions are all visited", () => {

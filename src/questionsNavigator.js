@@ -21,7 +21,9 @@ export default function createQuestionsNavigator(questions) {
     }
 
     function getNextQuestion() {
-        goToNextQuestion();
+        if (areThereNonVisitedQuestions()) {
+            goToNextQuestion();
+        }
         // isTheLastQuestion();
         return getCurrentQuestion()
         // let question = questions[questionsIndex];
