@@ -17,9 +17,14 @@ export default function scoreboard() {
         }
     }
 
+    function restart() {
+        score = 0;
+    }
+
     return {
         getScore,
         increment,
         decrement,
+        restart,
     }
 }

@@ -49,8 +49,8 @@ export default function createGame(createQuestionsNavigator, client) {
     function onStartGame() {
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
-        ui.setVisibleQuestions();
-        // loadNextQuestion();
+        gameScoreboard.restart();
+
         ui.renderQuestion(theQuestionNavigator.getCurrentQuestion());
         ui.setVisibleQuestions();
         updateUIScoreboard();
