@@ -47,7 +47,7 @@ describe("the questions navigator", () => {
     });
 
     it("get the current question", () => {
-        let question = questionsNavigator.getNextQuestion();
+        let question = questionsNavigator.getCurrentQuestion();
         expect(questions).toContain(question);
     });
 
