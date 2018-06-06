@@ -42,71 +42,54 @@ let questions = [
 
 describe("the questions navigator", () => {
     let questionsNavigator;
+    let totalQuestions;
+    let currentQuestion;
 
     beforeEach(function () {
         questionsNavigator = createQuestionsNavigator(questions);
+        totalQuestions = questions.length;
     });
 
     it("get the current question", () => {
-        let question = questionsNavigator.getCurrentQuestion();
-        expect(questions).toContain(question);
+        currentQuestion = questionsNavigator.getCurrentQuestion();
+        expect(questions).toContain(currentQuestion);
     });
 
     it("is always pointing to a question", () => {
-        // let question = questionsNavigator.getNextQuestion();
-        // expect(questions).toContain(question);
+        let questionAfterTheLast;
 
-        let lastQuestion = questions.length;
-        let question;
-        for (let i = 0; i < lastQuestion; i++) {
+        for (let i = 0; i < totalQuestions; i++) {
             if (i == 0) {
-                question = questionsNavigator.getCurrentQuestion();
+                questionsNavigator.getCurrentQuestion();
             } else {
-                question = questionsNavigator.getNextQuestion();
+                questionsNavigator.getNextQuestion();
             }
-            console.log("/////////////i-->",i);
         }
 
-        question = questionsNavigator.getNextQuestion();
+        questionAfterTheLast = questionsNavigator.getNextQuestion();
 
-        expect(questions).toContain(question);
-
-        // expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
+        expect(questions).toContain(questionAfterTheLast);
+        expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
 
 
     });
 
     it("does not repeat the last question", () => {
-        //******************
-        let lastQuestion = questions.length;
-        let question;
-
-
         let lastQuestionVisited = {};
 
-        for (let i = 0; i < lastQuestion; i++) {
+        for (let i = 0; i < totalQuestions; i++) {
             if (i == 0) {
-                question = questionsNavigator.getCurrentQuestion();
+                currentQuestion = questionsNavigator.getCurrentQuestion();
             } else {
-                question = questionsNavigator.getNextQuestion();
+                currentQuestion = questionsNavigator.getNextQuestion();
             }
-            // console.log("/////////////i-->",i);
-            expect(question).not.toEqual(lastQuestionVisited);
-            lastQuestionVisited = question;
+            expect(currentQuestion).not.toEqual(lastQuestionVisited);
+            lastQuestionVisited = currentQuestion;
         }
-        //***************
-        //
-        // let question1 = questionsNavigator.getNextQuestion();
-        // let question2 = questionsNavigator.getNextQuestion();
-        // let question3 = questionsNavigator.getNextQuestion();
-        //
-        // expect(question1).not.toEqual(question2);
-        // expect(question2).not.toEqual(question3);
     });
 
     it("knows when the questions are all visited", () => {
-        let lastQuestion = questions.length;
-        for (let i = 0; i < lastQuestion; i++) {
+        for (let i = 0; i < totalQuestions; i++) {
             if (i == 0) {
                 questionsNavigator.getCurrentQuestion();
             } else {
