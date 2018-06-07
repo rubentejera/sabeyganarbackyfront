@@ -193,7 +193,7 @@ describe("the game", function () {
         startGame();
         selectAnswer(3);
         goToNextQuestion();
-        expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsQuickReply);
+        expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsQuickReplySuccess);
 
     });
 
@@ -205,7 +205,7 @@ describe("the game", function () {
 
         function onTimeOut() {
             goToNextQuestion();
-            expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsNormalReply);
+            expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsNormalReplySuccess);
             done();
         }
 

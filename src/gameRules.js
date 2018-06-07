@@ -3,16 +3,23 @@ export default function gameRules() {
     const maxTimeQuickReply = 3;
     const maxTimeNormalReply = 10;
 
-    const pointsQuickReply = 3;
-    const pointsNormalReply = 2;
-    const pointsSlowReply = 1;
+    const pointsQuickReplySuccess = 3;
+    const pointsNormalReplySuccess = 2;
+    const pointsSlowReplySuccess = 1;
+
+    const pointsQuickReplyFail = -1;
+    const pointsNormalReplyFail = -2;
+    const pointsNoReply = -3;
 
     return {
         secondsPerQuestion,
         maxTimeNormalReply,
         maxTimeQuickReply,
-        pointsQuickReply,
-        pointsNormalReply,
-        pointsSlowReply,
+        pointsQuickReplySuccess,
+        pointsNormalReplySuccess,
+        pointsSlowReplySuccess,
+        pointsQuickReplyFail,
+        pointsNormalReplyFail,
+        pointsNoReply
     }
 }

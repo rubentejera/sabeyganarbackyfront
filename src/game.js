@@ -42,7 +42,7 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
 
-    function updateUIScoreboard(){
+    function updateUIScoreboard() {
         ui.setScoreboard(gameScoreboard.getScore());
     }
 
@@ -56,7 +56,7 @@ export default function createGame(createQuestionsNavigator, client) {
         updateUIScoreboard();
     }
 
-    function getTimeElapsed(){
+    function getTimeElapsed() {
         return secondsPerQuestion - questionTimer.get();
     }
 
@@ -64,15 +64,29 @@ export default function createGame(createQuestionsNavigator, client) {
         let currentQuestion = theQuestionNavigator.getCurrentQuestion();
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
-        if (selectedAnswer) {
-            if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
-                recalculateScoreIfSuccess(currentTimer);
+        if (questionTimer.get() !== 0) {
+            if (selectedAnswer) {
+                if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
+                    recalculateScoreIfSuccess(currentTimer);
+                } else {
+                    recalculateScoreIfFails(currentTimer);
+                }
+                updateUIToNextQuestion();
             } else {
-                recalculateScoreIfFails(currentTimer);
+                console.log("NO DEBERIA PODER ENTRAR AQUI SIN SELECCIONAR UNA OPCION");
             }
         } else {
-            recalculateScoreIfDontAnswer(currentTimer);
+            console.log("TIEMPO ACABADO Y PASO A LA NEXT QUESTION");
+            recalculateScoreIfDontAnswer();
+            updateUIToNextQuestion();
         }
+
+        // updateUIScoreboard();
+        // questionTimer.restart();
+        // loadNextQuestion();
+    }
+
+    function updateUIToNextQuestion(){
         updateUIScoreboard();
         questionTimer.restart();
         loadNextQuestion();
@@ -82,27 +96,28 @@ export default function createGame(createQuestionsNavigator, client) {
         return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
     }
 
-    function recalculateScoreIfFails(time) {
-        console.log("Fallo");
-    }
-
     function recalculateScoreIfSuccess(time) {
         if (time <= gameRules().maxTimeQuickReply) {
-            console.log("******QUICK TIME-->",time);
-            gameScoreboard.increment(gameRules().pointsQuickReply);
-        } else if (time <= gameRules().maxTimeNormalReply){
-            console.log("******NORMAL TIME-->",time);
-            gameScoreboard.increment(gameRules().pointsNormalReply);
+            gameScoreboard.increment(gameRules().pointsQuickReplySuccess);
+        } else if (time <= gameRules().maxTimeNormalReply) {
+            gameScoreboard.increment(gameRules().pointsNormalReplySuccess);
         } else {
-            console.log("******SLOW TIME-->",time);
-            gameScoreboard.increment(gameRules().pointsSlowReply);
+            gameScoreboard.increment(gameRules().pointsSlowReplySuccess);
 
         }
-
     }
 
-    function recalculateScoreIfDontAnswer(time) {
+    function recalculateScoreIfFails(time) {
+        if (time <= gameRules().maxTimeQuickReply) {
+            gameScoreboard.decrement(gameRules().pointsQuickReplyFail);
+        } else {
+            gameScoreboard.decrement(gameRules().pointsNormalReplyFail);
 
+        }
+    }
+
+    function recalculateScoreIfDontAnswer() {
+        gameScoreboard.decrement(gameRules().pointsNoReply);
     }
 
     function gameOver() {
