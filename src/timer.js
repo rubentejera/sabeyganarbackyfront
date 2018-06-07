@@ -1,4 +1,4 @@
-export default function timer(seconds, event){
+export default function timer(seconds, event) {
     let saveSeconds = seconds;
     let counter = 0;
     let interval;
@@ -9,7 +9,7 @@ export default function timer(seconds, event){
         }, 1000);
     }
 
-    function intervalAction(){
+    function intervalAction() {
         decrease();
         event(counter);
     }
@@ -18,26 +18,26 @@ export default function timer(seconds, event){
         clearInterval(interval);
     }
 
-    function reset(){
+    function reset() {
         counter = saveSeconds;
     }
 
-    function decrease(){
+    function decrease() {
         counter--;
     }
 
-    function get(){
+    function get() {
         return counter;
     }
 
-    function restart(){
+    function restart() {
         stop();
         reset();
         start();
         event(counter);
     }
 
-    return{
+    return {
         restart,
         get,
         stop,

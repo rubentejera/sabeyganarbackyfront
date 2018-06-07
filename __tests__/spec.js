@@ -193,23 +193,21 @@ describe("the game", function () {
         startGame();
         selectAnswer(3);
         goToNextQuestion();
-        expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsQuickReplySuccess);
+        expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsToAddQuickReplySuccess);
 
     });
 
     it("should add normal points if it's reply in normal time", function (done) {
         startGame();
         selectAnswer(3);
-        // let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply)*1000;
-        let maxTimeNormalReplyInMillis = 9000;
+        let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply) * 1000;
 
         function onTimeOut() {
             goToNextQuestion();
-            expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsNormalReplySuccess);
+            expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsToAddNormalReplySuccess);
             done();
         }
 
-        console.log("SETTIMEOUT-->>", maxTimeNormalReplyInMillis);
         setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
     });
 

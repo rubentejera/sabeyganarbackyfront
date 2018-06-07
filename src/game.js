@@ -76,17 +76,13 @@ export default function createGame(createQuestionsNavigator, client) {
                 console.log("NO DEBERIA PODER ENTRAR AQUI SIN SELECCIONAR UNA OPCION");
             }
         } else {
-            console.log("TIEMPO ACABADO Y PASO A LA NEXT QUESTION");
             recalculateScoreIfDontAnswer();
             updateUIToNextQuestion();
         }
 
-        // updateUIScoreboard();
-        // questionTimer.restart();
-        // loadNextQuestion();
     }
 
-    function updateUIToNextQuestion(){
+    function updateUIToNextQuestion() {
         updateUIScoreboard();
         questionTimer.restart();
         loadNextQuestion();
@@ -98,26 +94,26 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function recalculateScoreIfSuccess(time) {
         if (time <= gameRules().maxTimeQuickReply) {
-            gameScoreboard.increment(gameRules().pointsQuickReplySuccess);
+            gameScoreboard.increment(gameRules().pointsToAddQuickReplySuccess);
         } else if (time <= gameRules().maxTimeNormalReply) {
-            gameScoreboard.increment(gameRules().pointsNormalReplySuccess);
+            gameScoreboard.increment(gameRules().pointsToAddNormalReplySuccess);
         } else {
-            gameScoreboard.increment(gameRules().pointsSlowReplySuccess);
+            gameScoreboard.increment(gameRules().pointsToAddSlowReplySuccess);
 
         }
     }
 
     function recalculateScoreIfFails(time) {
         if (time <= gameRules().maxTimeQuickReply) {
-            gameScoreboard.decrement(gameRules().pointsQuickReplyFail);
+            gameScoreboard.decrement(gameRules().pointsToSubtractQuickReplyFail);
         } else {
-            gameScoreboard.decrement(gameRules().pointsNormalReplyFail);
+            gameScoreboard.decrement(gameRules().pointsToSubtractNormalReplyFail);
 
         }
     }
 
     function recalculateScoreIfDontAnswer() {
-        gameScoreboard.decrement(gameRules().pointsNoReply);
+        gameScoreboard.decrement(gameRules().pointsToSubtractNoReply);
     }
 
     function gameOver() {

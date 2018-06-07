@@ -6,7 +6,7 @@ export default function gameUI() {
     let answerListUI = document.getElementById('answer--list');
     let clock = document.querySelector('.clock');
     let scoreboard = document.querySelector('.result--score');
-    let answerOptionsUI=[];
+    let answerOptionsUI = [];
 
 
     function setClickEventListener(element, action) {
@@ -33,18 +33,19 @@ export default function gameUI() {
         setElementText(clock, text);
     }
 
-    function setScoreboard (score) {
-        setElementText(scoreboard,score);
+    function setScoreboard(score) {
+        setElementText(scoreboard, score);
     }
 
     function setVisibleComponent(component) {
         component.style.visibility = "visible";
     }
 
-    function setVisibleStart(){
+    function setVisibleStart() {
         setVisibleComponent(startButton);
     }
-    function setVisibleQuestions(){
+
+    function setVisibleQuestions() {
         setVisibleComponent(questionsContainer);
     }
 
@@ -53,28 +54,19 @@ export default function gameUI() {
     }
 
 
-    function setInvisibleStart(){
+    function setInvisibleStart() {
         setInvisibleComponent(startButton);
     }
 
-    function setInvisibleQuestions(){
+    function setInvisibleQuestions() {
         setInvisibleComponent(questionsContainer);
     }
 
-    function getCorrectAnswer(){
 
-    }
-
-    // function getSelectedAnswer(){
-    //     answerOptionsUI = document.querySelectorAll('.answer--option');
-    //
-    // }
-
-
-    function getSelectedAnswer(){
+    function getSelectedAnswer() {
         let radioButtons = document.getElementsByClassName("input-radio");
         for (let index = 0; index < radioButtons.length; index++) {
-            if (radioButtons[index].checked){
+            if (radioButtons[index].checked) {
                 return radioButtons[index]
             }
         }
@@ -117,8 +109,6 @@ export default function gameUI() {
             li.appendChild(label);
             answerListUI.appendChild(li);
         }
-
-        // setVisibleComponent(questionsContainer);
     }
 
     return {
