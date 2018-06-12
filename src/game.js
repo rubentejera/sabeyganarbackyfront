@@ -1,6 +1,6 @@
 import timer from './timer.js';
 import gameUI from './gameUI.js';
-import scoreboard from './scoreboard.js';
+import score from './score.js';
 import gameRules from './gameRules.js';
 
 export default function createGame(createQuestionsNavigator, client) {
@@ -8,7 +8,7 @@ export default function createGame(createQuestionsNavigator, client) {
     let theQuestionNavigator;
     let secondsPerQuestion = gameRules().secondsPerQuestion;
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
-    let gameScoreboard = new scoreboard();
+    let gameScoreboard = new score();
     let ui = gameUI();
 
     function getQuestionNavigator() {

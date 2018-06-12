@@ -6,6 +6,7 @@ export default function gameUI() {
     let answerListUI = document.getElementById('answer--list');
     let clock = document.querySelector('.clock');
     let scoreboard = document.querySelector('.result--score');
+    let statisticsContainer = document.querySelector('.statistics__container');
     let answerOptionsUI = [];
 
 
@@ -14,9 +15,7 @@ export default function gameUI() {
     }
 
     function setOnStart(action) {
-
         setClickEventListener(startButton, action);
-
     }
 
     function setOnNextQuestion(action) {
@@ -26,7 +25,6 @@ export default function gameUI() {
 
     function setElementText(element, text) {
         element.innerHTML = text;
-
     }
 
     function setClock(text) {
@@ -53,13 +51,20 @@ export default function gameUI() {
         component.style.visibility = "hidden";
     }
 
-
     function setInvisibleStart() {
         setInvisibleComponent(startButton);
     }
 
     function setInvisibleQuestions() {
         setInvisibleComponent(questionsContainer);
+    }
+
+    function setVisibleStatistics() {
+        setVisibleComponent(statisticsContainer);
+    }
+
+    function setInvisibleStatistics() {
+        setInvisibleComponent(statisticsContainer);
     }
 
 
@@ -116,6 +121,8 @@ export default function gameUI() {
         setInvisibleStart,
         setVisibleQuestions,
         setInvisibleQuestions,
+        setVisibleStatistics,
+        setInvisibleStatistics,
         renderQuestion,
         setOnStart,
         setOnNextQuestion,

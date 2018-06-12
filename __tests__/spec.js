@@ -1,6 +1,6 @@
 import createGame from '../src/game';
 import createQuestionsNavigator from '../src/questionsNavigator';
-import scoreboard from '../src/scoreboard';
+import score from '../src/score';
 import gameRules from '../src/gameRules';
 
 jest.setTimeout(30000);
@@ -183,7 +183,7 @@ describe("the game", function () {
     });
 
 
-    it("should show 0 on the scoreboard UI when start game", function () {
+    it("should show 0 on the score UI when start game", function () {
         startGame();
         expect(parseInt(getScoreboard().innerHTML)).toBe(0);
     });
@@ -211,6 +211,14 @@ describe("the game", function () {
         setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
     });
 
+    it("shouldn't be show the statistics if the game is started", function () {
+        startGame();
+        // console.log("*****************-->",getStatistics().style.visibility);
+        console.log(document.getElementById("statistics__container").style.visibility);
+
+
+        expect(getStatistics().style.visibility).toBe("hidden");
+    });
 
     function getQuestionTitleElement() {
         return document.querySelector('.question--title');
@@ -234,6 +242,10 @@ describe("the game", function () {
 
     function getScoreboard() {
         return document.querySelector(".result--score");
+    }
+
+    function getStatistics() {
+        return document.getElementById("statistics__container");
     }
 
     function selectAnswer(num) {
@@ -276,19 +288,19 @@ describe("Scoreboard", function () {
     let scoreboardGame;
 
     beforeEach(function () {
-        scoreboardGame = new scoreboard();
+        scoreboardGame = new score();
     });
 
-    it("should return 0 when scoreboard is started", function () {
+    it("should return 0 when score is started", function () {
         expect(scoreboardGame.getScore()).toEqual(0);
     });
 
-    it("should increment a quantity to the scoreboard", function () {
+    it("should increment a quantity to the score", function () {
         scoreboardGame.increment(3);
         expect(scoreboardGame.getScore()).toEqual(3);
     });
 
-    it("should decrement a quantity to the scoreboard", function () {
+    it("should decrement a quantity to the score", function () {
         scoreboardGame.increment(3);
         scoreboardGame.decrement(2);
         expect(scoreboardGame.getScore()).toEqual(1);
@@ -300,3 +312,18 @@ describe("Scoreboard", function () {
     });
 
 });
+
+// describe("Statistics", function () {
+//
+//
+//     // beforeEach(function () {
+//     //     scoreboardGame = new score();
+//     // });
+//
+//     it("shouldn't be show the statistics if the game is started", function () {
+//         getS
+//         expect(scoreboardGame.getScore()).toEqual(0);
+//     });
+//
+//
+// });
