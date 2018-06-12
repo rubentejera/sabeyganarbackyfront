@@ -6,7 +6,7 @@ export default function createClient() {
             let questions = JSON.parse(request.responseText);
             callback(questions);
         });
-        request.open("GET", '/api/questions');
+        request.open("GET", '/api/testQuestions');
         request.send();
     }
 

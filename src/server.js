@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.render('index', {'variable': 'valor'});
 });
 
-app.get('/api/questions', (request, response) => {
+app.get('/api/testQuestions', (request, response) => {
     let questions = [
         {
             id: 1,

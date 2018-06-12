@@ -40,7 +40,7 @@ let questions = [
     }
 ];
 
-describe("the questions navigator", () => {
+describe("the testQuestions navigator", () => {
     let questionsNavigator;
     let totalQuestions;
     let currentQuestion;
@@ -88,7 +88,7 @@ describe("the questions navigator", () => {
         }
     });
 
-    it("knows when the questions are all visited", () => {
+    it("knows when the testQuestions are all visited", () => {
         for (let i = 0; i < totalQuestions; i++) {
             if (i == 0) {
                 questionsNavigator.getCurrentQuestion();
@@ -155,7 +155,7 @@ describe("the game", function () {
         expect(getSelectedAnswer()).toBe(undefined);
     });
 
-    it("should not have any selected question when go to next questions", function () {
+    it("should not have any selected question when go to next testQuestions", function () {
         startGame();
         selectAnswer(1);
         goToNextQuestion();
