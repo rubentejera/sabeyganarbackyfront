@@ -40,65 +40,65 @@ let questions = [
     }
 ];
 
-describe("the testQuestions navigator", () => {
-    let questionsNavigator;
-    let totalQuestions;
-    let currentQuestion;
-
-    beforeEach(function () {
-        questionsNavigator = createQuestionsNavigator(questions);
-        totalQuestions = questions.length;
-    });
-
-    it("get the current question", () => {
-        currentQuestion = questionsNavigator.getCurrentQuestion();
-        expect(questions).toContain(currentQuestion);
-    });
-
-    it("is always pointing to a question", () => {
-        let questionAfterTheLast;
-
-        for (let i = 0; i < totalQuestions; i++) {
-            if (i == 0) {
-                questionsNavigator.getCurrentQuestion();
-            } else {
-                questionsNavigator.getNextQuestion();
-            }
-        }
-
-        questionAfterTheLast = questionsNavigator.getNextQuestion();
-
-        expect(questions).toContain(questionAfterTheLast);
-        expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
-
-
-    });
-
-    it("does not repeat the last question", () => {
-        let lastQuestionVisited = {};
-
-        for (let i = 0; i < totalQuestions; i++) {
-            if (i == 0) {
-                currentQuestion = questionsNavigator.getCurrentQuestion();
-            } else {
-                currentQuestion = questionsNavigator.getNextQuestion();
-            }
-            expect(currentQuestion).not.toEqual(lastQuestionVisited);
-            lastQuestionVisited = currentQuestion;
-        }
-    });
-
-    it("knows when the testQuestions are all visited", () => {
-        for (let i = 0; i < totalQuestions; i++) {
-            if (i == 0) {
-                questionsNavigator.getCurrentQuestion();
-            } else {
-                questionsNavigator.getNextQuestion();
-            }
-        }
-        expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
-    });
-});
+// describe("the testQuestions navigator", () => {
+//     let questionsNavigator;
+//     let totalQuestions;
+//     let currentQuestion;
+//
+//     beforeEach(function () {
+//         questionsNavigator = createQuestionsNavigator(questions);
+//         totalQuestions = questions.length;
+//     });
+//
+//     it("get the current question", () => {
+//         currentQuestion = questionsNavigator.getCurrentQuestion();
+//         expect(questions).toContain(currentQuestion);
+//     });
+//
+//     it("is always pointing to a question", () => {
+//         let questionAfterTheLast;
+//
+//         for (let i = 0; i < totalQuestions; i++) {
+//             if (i == 0) {
+//                 questionsNavigator.getCurrentQuestion();
+//             } else {
+//                 questionsNavigator.getNextQuestion();
+//             }
+//         }
+//
+//         questionAfterTheLast = questionsNavigator.getNextQuestion();
+//
+//         expect(questions).toContain(questionAfterTheLast);
+//         expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
+//
+//
+//     });
+//
+//     it("does not repeat the last question", () => {
+//         let lastQuestionVisited = {};
+//
+//         for (let i = 0; i < totalQuestions; i++) {
+//             if (i == 0) {
+//                 currentQuestion = questionsNavigator.getCurrentQuestion();
+//             } else {
+//                 currentQuestion = questionsNavigator.getNextQuestion();
+//             }
+//             expect(currentQuestion).not.toEqual(lastQuestionVisited);
+//             lastQuestionVisited = currentQuestion;
+//         }
+//     });
+//
+//     it("knows when the testQuestions are all visited", () => {
+//         for (let i = 0; i < totalQuestions; i++) {
+//             if (i == 0) {
+//                 questionsNavigator.getCurrentQuestion();
+//             } else {
+//                 questionsNavigator.getNextQuestion();
+//             }
+//         }
+//         expect(questionsNavigator.areThereNonVisitedQuestions()).toBeFalsy();
+//     });
+// });
 
 describe("the game", function () {
     let game;
@@ -280,34 +280,34 @@ describe("the game", function () {
     }
 });
 
-describe("Scoreboard", function () {
-    let scoreboardGame;
-
-    beforeEach(function () {
-        scoreboardGame = new score();
-    });
-
-    it("should return 0 when score is started", function () {
-        expect(scoreboardGame.getScore()).toEqual(0);
-    });
-
-    it("should increment a quantity to the score", function () {
-        scoreboardGame.increment(3);
-        expect(scoreboardGame.getScore()).toEqual(3);
-    });
-
-    it("should decrement a quantity to the score", function () {
-        scoreboardGame.increment(3);
-        scoreboardGame.decrement(2);
-        expect(scoreboardGame.getScore()).toEqual(1);
-    });
-
-    it("should be 0 the minimum score", function () {
-        scoreboardGame.decrement(2);
-        expect(scoreboardGame.getScore()).toEqual(0);
-    });
-
-});
+// describe("Scoreboard", function () {
+//     let scoreboardGame;
+//
+//     beforeEach(function () {
+//         scoreboardGame = new score();
+//     });
+//
+//     it("should return 0 when score is started", function () {
+//         expect(scoreboardGame.getScore()).toEqual(0);
+//     });
+//
+//     it("should increment a quantity to the score", function () {
+//         scoreboardGame.increment(3);
+//         expect(scoreboardGame.getScore()).toEqual(3);
+//     });
+//
+//     it("should decrement a quantity to the score", function () {
+//         scoreboardGame.increment(3);
+//         scoreboardGame.decrement(2);
+//         expect(scoreboardGame.getScore()).toEqual(1);
+//     });
+//
+//     it("should be 0 the minimum score", function () {
+//         scoreboardGame.decrement(2);
+//         expect(scoreboardGame.getScore()).toEqual(0);
+//     });
+//
+// });
 
 // describe("Statistics", function () {
 //
