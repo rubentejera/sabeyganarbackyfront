@@ -17,6 +17,7 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function start() {
         ui.setInvisibleQuestions();
+        ui.setInvisibleStatistics();
         ui.setOnStart(onStartGame);
         ui.setOnNextQuestion(onNextQuestion);
         client.getQuestions(function (questions) {

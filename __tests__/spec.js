@@ -213,10 +213,6 @@ describe("the game", function () {
 
     it("shouldn't be show the statistics if the game is started", function () {
         startGame();
-        // console.log("*****************-->",getStatistics().style.visibility);
-        console.log(document.getElementById("statistics__container").style.visibility);
-
-
         expect(getStatistics().style.visibility).toBe("hidden");
     });
 
