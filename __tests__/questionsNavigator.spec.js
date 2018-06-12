@@ -23,7 +23,7 @@ describe("the testQuestions navigator", () => {
         let questionAfterTheLast;
 
         for (let i = 0; i < totalQuestions; i++) {
-            if (i == 0) {
+            if (i === 0) {
                 questionsNavigator.getCurrentQuestion();
             } else {
                 questionsNavigator.getNextQuestion();
@@ -42,7 +42,7 @@ describe("the testQuestions navigator", () => {
         let lastQuestionVisited = {};
 
         for (let i = 0; i < totalQuestions; i++) {
-            if (i == 0) {
+            if (i === 0) {
                 currentQuestion = questionsNavigator.getCurrentQuestion();
             } else {
                 currentQuestion = questionsNavigator.getNextQuestion();
@@ -54,7 +54,7 @@ describe("the testQuestions navigator", () => {
 
     it("knows when the testQuestions are all visited", () => {
         for (let i = 0; i < totalQuestions; i++) {
-            if (i == 0) {
+            if (i === 0) {
                 questionsNavigator.getCurrentQuestion();
             } else {
                 questionsNavigator.getNextQuestion();

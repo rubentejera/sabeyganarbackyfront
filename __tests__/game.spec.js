@@ -26,103 +26,113 @@ describe("the game", function () {
 
     });
 
-    it('loads the markup', function () {
-        expect(
-            document.getElementById('start--button'))
-            .not.toBeNull();
+
+    it('should show the start button when start game', function () {
+        expect(document.getElementById('start--button')).not.toBeNull();
     });
 
-    it('answers a question', function () {
-        startGame();
-        selectAnswer(1);
-
-        goToNextQuestion();
-
-        assertThatSecondQuestionIsRendered();
-    });
 
     function getCounterUIValue() {
         return parseInt(document.querySelector(".clock").innerHTML);
     }
 
-    it("restart the counter time", function (done) {
-        startGame();
-        selectAnswer(1);
-        goToNextQuestion();
-        const counterInDOM = getCounterUIValue();
-
-        function onTimeout() {
-            expect(counterInDOM).toEqual(gameRules().secondsPerQuestion);
-            done();
-        }
-
-        setTimeout(onTimeout, 1000);
-    });
-
-    it("should not have any selected question at the beginning of the game", function () {
-        startGame();
-        expect(getSelectedAnswer()).toBe(undefined);
-    });
-
-    it("should not have any selected question when go to next testQuestions", function () {
-        startGame();
-        selectAnswer(1);
-        goToNextQuestion();
-        expect(getSelectedAnswer()).toBe(undefined);
-    });
-
-    it("should return the same id of selected answer", function () {
-        startGame();
-        let seletedAnswer = selectAnswer(1);
-        expect(getSelectedAnswer()).toBe(parseInt(seletedAnswer.id));
-    });
-
-    it("should return correct check of answer", function () {
-        startGame();
-        let seletedAnswer = selectAnswer(3);
-        expect(checkAnswer(questions[0], seletedAnswer)).toBeTruthy();
-
-        goToNextQuestion();
-        seletedAnswer = selectAnswer(3);
-        expect(checkAnswer(questions[1], seletedAnswer)).toBeTruthy();
-
-        goToNextQuestion();
-        seletedAnswer = selectAnswer(3);
-        expect(checkAnswer(questions[2], seletedAnswer)).toBeFalsy();
-    });
-
-
-    it("should show 0 on the score UI when start game", function () {
-        startGame();
-        expect(parseInt(getScoreboard().innerHTML)).toBe(0);
-    });
-
-
-    it("should add more points if it's reply quickly", function () {
-        startGame();
-        selectAnswer(3);
-        goToNextQuestion();
-        expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsToAddQuickReplySuccess);
-
-    });
-
-    it("should add normal points if it's reply in normal time", function (done) {
-        startGame();
-        selectAnswer(3);
-        let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply) * 1000;
-
-        function onTimeOut() {
+    describe("counter", function () {
+        it("restart the counter time", function (done) {
+            startGame();
+            selectAnswer(1);
             goToNextQuestion();
-            expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsToAddNormalReplySuccess);
-            done();
-        }
+            const counterInDOM = getCounterUIValue();
 
-        setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
+            function onTimeout() {
+                expect(counterInDOM).toEqual(gameRules().secondsPerQuestion);
+                done();
+            }
+
+            setTimeout(onTimeout, 1000);
+        });
     });
 
-    it("shouldn't be show the statistics if the game is started", function () {
-        startGame();
-        expect(getStatistics().style.visibility).toBe("hidden");
+    describe("questions", function () {
+
+        it('answers a question', function () {
+            startGame();
+            selectAnswer(1);
+
+            goToNextQuestion();
+
+            assertThatSecondQuestionIsRendered();
+        });
+
+        it("should not have any selected question at the beginning of the game", function () {
+            startGame();
+            expect(getSelectedAnswer()).toBe(undefined);
+        });
+
+        it("should not have any selected question when go to next testQuestions", function () {
+            startGame();
+            selectAnswer(1);
+            goToNextQuestion();
+            expect(getSelectedAnswer()).toBe(undefined);
+        });
+
+        it("should return the same id of selected answer", function () {
+            startGame();
+            let seletedAnswer = selectAnswer(1);
+            expect(getSelectedAnswer()).toBe(parseInt(seletedAnswer.id));
+        });
+
+        it("should return correct check of answer", function () {
+            startGame();
+            let seletedAnswer = selectAnswer(3);
+            expect(checkAnswer(questions[0], seletedAnswer)).toBeTruthy();
+
+            goToNextQuestion();
+            seletedAnswer = selectAnswer(3);
+            expect(checkAnswer(questions[1], seletedAnswer)).toBeTruthy();
+
+            goToNextQuestion();
+            seletedAnswer = selectAnswer(3);
+            expect(checkAnswer(questions[2], seletedAnswer)).toBeFalsy();
+        });
+    });
+
+    describe("score", function () {
+
+        it("should show 0 on the score UI when start game", function () {
+            startGame();
+            expect(parseInt(getScoreboard().innerHTML)).toBe(0);
+        });
+
+
+        it("should add more points if it's reply quickly", function () {
+            startGame();
+            selectAnswer(3);
+            goToNextQuestion();
+            expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsToAddQuickReplySuccess);
+
+        });
+
+        it("should add normal points if it's reply in normal time", function (done) {
+            startGame();
+            selectAnswer(3);
+            let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply) * 1000;
+
+            function onTimeOut() {
+                goToNextQuestion();
+                expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsToAddNormalReplySuccess);
+                done();
+            }
+
+            setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
+        });
+
+    });
+
+    describe("statistics", function () {
+        it("shouldn't be show the statistics if the game is started", function () {
+            startGame();
+            expect(getStatistics().style.visibility).toBe("hidden");
+        });
     });
 
     function getQuestionTitleElement() {
