@@ -7,6 +7,7 @@ export default function gameUI() {
     let clock = document.querySelector('.clock');
     let scoreboard = document.querySelector('.result--score');
     let statisticsContainer = document.querySelector('.statistics__container');
+    let intro = document.getElementById('intro');
     let answerOptionsUI = [];
 
 
@@ -39,6 +40,10 @@ export default function gameUI() {
         component.style.visibility = "visible";
     }
 
+    function setVisibleIntro() {
+        setVisibleComponent(intro);
+    }
+
     function setVisibleStart() {
         setVisibleComponent(startButton);
     }
@@ -49,6 +54,10 @@ export default function gameUI() {
 
     function setInvisibleComponent(component) {
         component.style.visibility = "hidden";
+    }
+
+    function setInvisibleIntro() {
+        setInvisibleComponent(intro);
     }
 
     function setInvisibleStart() {
@@ -119,6 +128,8 @@ export default function gameUI() {
     return {
         setVisibleStart,
         setInvisibleStart,
+        setVisibleIntro,
+        setInvisibleIntro,
         setVisibleQuestions,
         setInvisibleQuestions,
         setVisibleStatistics,

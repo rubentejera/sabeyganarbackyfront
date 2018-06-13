@@ -16,6 +16,8 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function start() {
+        ui.setVisibleIntro();
+        ui.setVisibleStart();
         ui.setInvisibleQuestions();
         ui.setInvisibleStatistics();
         ui.setOnStart(onStartGame);
@@ -48,6 +50,8 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onStartGame() {
+        ui.setInvisibleIntro();
+        ui.setInvisibleStart();
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
         gameScoreboard.restart();
@@ -118,9 +122,10 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function gameOver() {
-        ui.setInvisibleQuestions();
+        // ui.setInvisibleQuestions();
         questionTimer.stop();
-        ui.setVisibleStart();
+        start();
+        // ui.setVisibleStart();
     }
 
 
