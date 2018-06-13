@@ -165,6 +165,21 @@ describe("the game", function () {
             setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
         });
 
+        it("should substract more points if it is not reply", function (done) {
+            startGame();
+            selectAnswer(3);
+            goToNextQuestion();
+            let allowTimeForTheNextQuestion = (gameRules().secondsPerQuestion + 1) * 1000;
+
+            function onTimeOut() {
+                expect(parseInt(getScoreboard().innerHTML)).toEqual(
+                    gameRules().pointsToAddQuickReplySuccess - gameRules().pointsToSubtractNoReply);
+                done();
+            }
+
+            setTimeout(onTimeOut, allowTimeForTheNextQuestion);
+        });
+
     });
 
 
