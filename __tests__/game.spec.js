@@ -111,7 +111,7 @@ describe("the game", function () {
 
         it("should add more points if it's correct reply success quickly", function () {
             startGame();
-            selectAnswer(3);
+            selectFirstCorrectAnswer();
             goToNextQuestion();
             expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsToAddQuickReplySuccess);
 
@@ -119,7 +119,7 @@ describe("the game", function () {
 
         it("should add normal points if it's reply success in normal time", function (done) {
             startGame();
-            selectAnswer(3);
+            selectFirstCorrectAnswer();
             let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply) * 1000;
 
             function onTimeOut() {
@@ -133,9 +133,9 @@ describe("the game", function () {
 
         it("should substract normal points if it's reply fail in quick time", function (done) {
             startGame();
-            selectAnswer(3);
+            selectFirstCorrectAnswer();
             goToNextQuestion();
-            selectAnswer(2);
+            selectSecondWrongAnswer();
             let maxTimeQuickReplyInMillis = (gameRules().maxTimeQuickReply) * 1000;
 
             function onTimeOut() {
@@ -150,9 +150,9 @@ describe("the game", function () {
 
         it("should substract normal points if it's reply fail in normal time", function (done) {
             startGame();
-            selectAnswer(3);
+            selectFirstCorrectAnswer();
             goToNextQuestion();
-            selectAnswer(2);
+            selectSecondWrongAnswer();
             let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply) * 1000;
 
             function onTimeOut() {
@@ -167,7 +167,7 @@ describe("the game", function () {
 
         it("should substract more points if it is not reply", function (done) {
             startGame();
-            selectAnswer(3);
+            selectFirstCorrectAnswer();
             goToNextQuestion();
             let allowTimeForTheNextQuestion = (gameRules().secondsPerQuestion + 1) * 1000;
 
@@ -191,6 +191,13 @@ describe("the game", function () {
         });
     });
 
+    function selectFirstCorrectAnswer(){
+        selectAnswer(3);
+    }
+
+    function selectSecondWrongAnswer(){
+        selectAnswer(2);
+    }
 
     function getCounterUIValue() {
         return parseInt(document.querySelector(".clock").innerHTML);
