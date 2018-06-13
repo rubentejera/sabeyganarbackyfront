@@ -131,6 +131,14 @@ describe("the game", function () {
             setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
         });
 
+        it("should not be less than 0", function () {
+            startGame();
+            selectFirstWrongAnswer();
+            goToNextQuestion();
+            selectSecondWrongAnswer();
+            expect(parseInt(getScoreboard().innerHTML)).toEqual(0);
+        });
+
         it("should substract normal points if it's reply fail in quick time", function (done) {
             startGame();
             selectFirstCorrectAnswer();
@@ -193,6 +201,10 @@ describe("the game", function () {
 
     function selectFirstCorrectAnswer(){
         selectAnswer(3);
+    }
+
+    function selectFirstWrongAnswer(){
+        selectAnswer(2);
     }
 
     function selectSecondWrongAnswer(){
