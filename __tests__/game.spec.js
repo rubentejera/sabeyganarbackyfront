@@ -131,6 +131,23 @@ describe("the game", function () {
             setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
         });
 
+        it("should substract normal points if it's reply fail in quick time", function (done) {
+            startGame();
+            selectAnswer(3);
+            goToNextQuestion();
+            selectAnswer(2);
+            let maxTimeQuickReplyInMillis = (gameRules().maxTimeQuickReply) * 1000;
+
+            function onTimeOut() {
+                goToNextQuestion();
+                expect(parseInt(getScoreboard().innerHTML)).toEqual(
+                    gameRules().pointsToAddQuickReplySuccess - gameRules().pointsToSubtractQuickReplyFail);
+                done();
+            }
+
+            setTimeout(onTimeOut, maxTimeQuickReplyInMillis);
+        });
+
         it("should substract normal points if it's reply fail in normal time", function (done) {
             startGame();
             selectAnswer(3);
