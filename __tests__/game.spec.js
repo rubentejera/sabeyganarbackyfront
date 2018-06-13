@@ -26,6 +26,10 @@ describe("the game", function () {
 
     });
 
+    afterEach(function () {
+        application.gameOver();
+    });
+
 
     it('should show the start button when start game', function () {
         expect(document.getElementById('start--button')).not.toBeNull();
