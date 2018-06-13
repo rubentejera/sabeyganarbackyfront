@@ -126,6 +126,7 @@ export default function createGame(createQuestionsNavigator, client) {
 
     return {
         start,
+        gameOver,
         getQuestionNavigator,
     }
 };

@@ -10,7 +10,7 @@ const pug = require('pug');
 
 describe("the game", function () {
     let questions = testQuestions().getQuestions();
-    let game;
+    let application;
     let theQuestionNavigator;
 
     beforeEach(function () {
@@ -20,9 +20,9 @@ describe("the game", function () {
                 callback(questions);
             }
         };
-        game = createGame(createQuestionsNavigator, stubClient);
-        game.start();
-        theQuestionNavigator = game.getQuestionNavigator();
+        application = createGame(createQuestionsNavigator, stubClient);
+        application.start();
+        theQuestionNavigator = application.getQuestionNavigator();
 
     });
 
@@ -32,11 +32,10 @@ describe("the game", function () {
     });
 
 
-    function getCounterUIValue() {
-        return parseInt(document.querySelector(".clock").innerHTML);
-    }
+
 
     describe("counter", function () {
+
         it("restart the counter time", function (done) {
             startGame();
             selectAnswer(1);
@@ -51,6 +50,7 @@ describe("the game", function () {
             setTimeout(onTimeout, 1000);
         });
     });
+
 
     describe("questions", function () {
 
@@ -96,6 +96,7 @@ describe("the game", function () {
         });
     });
 
+
     describe("score", function () {
 
         it("should show 0 on the score UI when start game", function () {
@@ -104,7 +105,7 @@ describe("the game", function () {
         });
 
 
-        it("should add more points if it's reply quickly", function () {
+        it("should add more points if it's correct reply success quickly", function () {
             startGame();
             selectAnswer(3);
             goToNextQuestion();
@@ -112,7 +113,7 @@ describe("the game", function () {
 
         });
 
-        it("should add normal points if it's reply in normal time", function (done) {
+        it("should add normal points if it's reply success in normal time", function (done) {
             startGame();
             selectAnswer(3);
             let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply) * 1000;
@@ -126,14 +127,38 @@ describe("the game", function () {
             setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
         });
 
+        it("should substract normal points if it's reply fail in normal time", function (done) {
+            startGame();
+            selectAnswer(3);
+            goToNextQuestion();
+            selectAnswer(2);
+            let maxTimeNormalReplyInMillis = (gameRules().maxTimeNormalReply) * 1000;
+
+            function onTimeOut() {
+                goToNextQuestion();
+                expect(parseInt(getScoreboard().innerHTML)).toEqual(
+                    gameRules().pointsToAddQuickReplySuccess - gameRules().pointsToSubtractNormalReplyFail);
+                done();
+            }
+
+            setTimeout(onTimeOut, maxTimeNormalReplyInMillis);
+        });
+
     });
 
+
     describe("statistics", function () {
+
         it("shouldn't be show the statistics if the game is started", function () {
             startGame();
             expect(getStatistics().style.visibility).toBe("hidden");
         });
     });
+
+
+    function getCounterUIValue() {
+        return parseInt(document.querySelector(".clock").innerHTML);
+    }
 
     function getQuestionTitleElement() {
         return document.querySelector('.question--title');
@@ -143,7 +168,6 @@ describe("the game", function () {
         let questionTitle = getQuestionTitleElement();
         expect(Number(questionTitle.id)).toEqual(Number(questions[0].id));
     }
-
 
     function startGame() {
         let buttonStart = document.getElementById('start--button');
