@@ -212,7 +212,7 @@ describe("the game", function () {
     }
 
     function getCounterUIValue() {
-        return parseInt(document.querySelector(".clock").innerHTML);
+        return parseInt(document.getElementById("clock").innerHTML);
     }
 
     function getQuestionTitleElement() {

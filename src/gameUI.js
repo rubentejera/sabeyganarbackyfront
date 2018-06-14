@@ -2,12 +2,13 @@ export default function gameUI() {
     let questionsContainer = document.querySelector('.questions__container');
     let startButton;
     let nextQuestionButton = document.getElementById('next--question--button');
-    let clock = document.querySelector('.clock');
+    // let clock = document.querySelector('.clock');
+    let clock;
     let score = document.querySelector('.result--score');
     let statisticsContainer = document.querySelector('.statistics__container');
     let scoresContainer = document.getElementById('scores__container');
     let intro = document.getElementById('intro');
-    let answerOptionsUI = [];
+    let main = document.getElementsByTagName('main')[0];
 
 
     function setClickEventListener(element, action) {
@@ -15,18 +16,19 @@ export default function gameUI() {
     }
 
     function start(startButtonAction, onNextQuestionAction) {
+        // deleteMain();//TODO DEBERIA FUNCIONAR, FALTA CREAR COMPONENTES
         deleteQuestions();
         renderIntro();
         renderScores();//TODO Solo cuando sea mas de la 1º vez
         setOnStart(startButtonAction);
         setOnNextQuestion(onNextQuestionAction);
-        setInvisibleQuestions();
         setInvisibleStatistics();
     }
 
     function onStartGame(question) {
         deleteIntro();
         deleteScores();
+        renderClock();
         renderQuestion(question);
     }
 
@@ -45,6 +47,7 @@ export default function gameUI() {
     }
 
     function setClock(text) {
+        clock = document.getElementById('clock');
         setElementText(clock, text);
     }
 
@@ -56,18 +59,11 @@ export default function gameUI() {
         component.style.visibility = "visible";
     }
 
-    function setVisibleQuestions() {
-        setVisibleComponent(questionsContainer);
-    }
-
     function setInvisibleComponent(component) {
         component.style.visibility = "hidden";
     }
 
-    function setInvisibleQuestions() {
-        setInvisibleComponent(questionsContainer);
-    }
-
+    //TODO quitar estas dos y sustituirlas por render y delete
     function setVisibleStatistics() {
         setVisibleComponent(statisticsContainer);
     }
@@ -98,8 +94,8 @@ export default function gameUI() {
         deleteAllChildrenOf(intro);
     }
 
-    function deleteIntro() {
-        deleteAllChildrenOf(intro);
+    function deleteMain() {
+        deleteAllChildrenOf(main);
     }
 
     function deleteScores() {
@@ -108,6 +104,37 @@ export default function gameUI() {
 
     function deleteQuestions() {
         deleteAllChildrenOf(questionsContainer);
+    }
+
+    function renderClock(){
+        let clock = document.createElement("span");
+        clock.setAttribute("class","clock");
+        clock.setAttribute("id","clock");
+        setElementText(clock, 12);
+
+        main.appendChild(clock);
+    }
+
+    function renderScore(){
+        // <h3>Puntuacion:</h3>
+        // <h3 class="result--score">0</h3>
+        let title = document.createElement("H3");
+        setElementText(title,"Puntuacion:");
+
+        let score = document.createElement("H3");
+        socre.setAttribute("class","result--score");
+        setElementText(score,0);
+
+        main.appendChild(title);
+        main.appendChild(score)
+    }
+
+    function renderNextQuestionButton(){
+        // <button id="next--question--button">Pasa a la siguiente pregunta</button>
+    }
+
+    function renderStatistics(){
+
     }
 
     function renderScores(){
@@ -136,21 +163,12 @@ export default function gameUI() {
         buttonStart.setAttribute("type", "button");
         buttonStart.setAttribute("id", "start--button");
         buttonStart.setAttribute("class", "start--button");
-        setElementText(buttonStart, "Comenzar a Jugarrr");
+        setElementText(buttonStart, "Comenzar a Jugar");
 
         intro.appendChild(ul);
         intro.appendChild(buttonStart);
     }
 
-    // function deleteAllAnswerVisibles(){
-    //     answerOptionsUI = document.querySelectorAll('.answer--option');
-    //
-    //     if (answerOptionsUI.length > 0) {
-    //         answerOptionsUI.forEach(function (option) {
-    //             option.remove();
-    //         });
-    //     }
-    // }
 
     function renderQuestion(question) {
         deleteQuestions();
@@ -193,8 +211,6 @@ export default function gameUI() {
         questionsContainer.appendChild(questionTitle);
         questionsContainer.appendChild(ul);
         questionsContainer.appendChild(description);
-
-        setVisibleQuestions();
     }
 
     return {

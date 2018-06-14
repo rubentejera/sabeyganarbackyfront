@@ -45,10 +45,10 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onStartGame() {
+        ui.onStartGame(theQuestionNavigator.getCurrentQuestion());
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
         gameScore.restart();
-        ui.onStartGame(theQuestionNavigator.getCurrentQuestion());
         updateUIScore();
     }
 
