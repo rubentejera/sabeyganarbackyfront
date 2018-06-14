@@ -8,7 +8,7 @@ export default function createGame(createQuestionsNavigator, client) {
     let theQuestionNavigator;
     let secondsPerQuestion = gameRules().secondsPerQuestion;
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
-    let gameScoreboard = new score();
+    let gameScore = new score();
     let ui = gameUI();
 
     function getQuestionNavigator() {
@@ -16,7 +16,7 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function start() {
-        ui.start(onStartGame,onNextQuestion);
+        ui.start(onStartGame, onNextQuestion);
 
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
@@ -26,8 +26,8 @@ export default function createGame(createQuestionsNavigator, client) {
     function loadNextQuestion() {
         if (theQuestionNavigator.areThereNonVisitedQuestions()) {
             ui.renderQuestion(theQuestionNavigator.getNextQuestion());
-        }
-        else {
+
+        } else {
             gameOver();
         }
     }
@@ -40,16 +40,16 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
 
-    function updateUIScoreboard() {
-        ui.setScoreboard(gameScoreboard.getScore());
+    function updateUIScore() {
+        ui.setScore(gameScore.getScore());
     }
 
     function onStartGame() {
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
-        gameScoreboard.restart();
+        gameScore.restart();
         ui.onStartGame(theQuestionNavigator.getCurrentQuestion());
-        updateUIScoreboard();
+        updateUIScore();
     }
 
     function getTimeElapsed() {
@@ -60,17 +60,22 @@ export default function createGame(createQuestionsNavigator, client) {
         let currentQuestion = theQuestionNavigator.getCurrentQuestion();
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
+
         if (questionTimer.get() !== 0) {
             if (selectedAnswer) {
                 if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
                     recalculateScoreIfSuccess(currentTimer);
+
                 } else {
                     recalculateScoreIfFails(currentTimer);
                 }
+
                 updateUIToNextQuestion();
+
             } else {
                 console.log("NO DEBERIA PODER ENTRAR AQUI SIN SELECCIONAR UNA OPCION");
             }
+
         } else {
             recalculateScoreIfDontAnswer();
             updateUIToNextQuestion();
@@ -79,7 +84,7 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function updateUIToNextQuestion() {
-        updateUIScoreboard();
+        updateUIScore();
         questionTimer.restart();
         loadNextQuestion();
     }
@@ -90,26 +95,28 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function recalculateScoreIfSuccess(time) {
         if (time <= gameRules().maxTimeQuickReply) {
-            gameScoreboard.increment(gameRules().pointsToAddQuickReplySuccess);
-        } else if (time <= gameRules().maxTimeNormalReply) {
-            gameScoreboard.increment(gameRules().pointsToAddNormalReplySuccess);
-        } else {
-            gameScoreboard.increment(gameRules().pointsToAddSlowReplySuccess);
+            gameScore.increment(gameRules().pointsToAddQuickReplySuccess);
 
+        } else if (time <= gameRules().maxTimeNormalReply) {
+            gameScore.increment(gameRules().pointsToAddNormalReplySuccess);
+
+        } else {
+            gameScore.increment(gameRules().pointsToAddSlowReplySuccess);
         }
     }
 
     function recalculateScoreIfFails(time) {
         if (time <= gameRules().maxTimeQuickReply) {
-            gameScoreboard.decrement(gameRules().pointsToSubtractQuickReplyFail);
+            gameScore.decrement(gameRules().pointsToSubtractQuickReplyFail);
+
         } else {
-            gameScoreboard.decrement(gameRules().pointsToSubtractNormalReplyFail);
+            gameScore.decrement(gameRules().pointsToSubtractNormalReplyFail);
 
         }
     }
 
     function recalculateScoreIfDontAnswer() {
-        gameScoreboard.decrement(gameRules().pointsToSubtractNoReply);
+        gameScore.decrement(gameRules().pointsToSubtractNoReply);
     }
 
     function gameOver() {

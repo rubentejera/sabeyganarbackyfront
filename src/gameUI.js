@@ -5,7 +5,7 @@ export default function gameUI() {
     let nextQuestionButton = document.getElementById('next--question--button');
     let answerListUI = document.getElementById('answer--list');
     let clock = document.querySelector('.clock');
-    let scoreboard = document.querySelector('.result--score');
+    let score = document.querySelector('.result--score');
     let statisticsContainer = document.querySelector('.statistics__container');
     let intro = document.getElementById('intro');
     let answerOptionsUI = [];
@@ -15,7 +15,7 @@ export default function gameUI() {
         element.addEventListener('click', action);
     }
 
-    function start(startButtonAction,onNextQuestionAction){
+    function start(startButtonAction, onNextQuestionAction) {
         renderIntro();
 
         setOnStart(startButtonAction);
@@ -24,8 +24,8 @@ export default function gameUI() {
         setInvisibleStatistics();
     }
 
-    function onStartGame(question){
-        setInvisibleIntro();
+    function onStartGame(question) {
+        deleteIntro();
         renderQuestion(question);
     }
 
@@ -47,8 +47,8 @@ export default function gameUI() {
         setElementText(clock, text);
     }
 
-    function setScoreboard(score) {
-        setElementText(scoreboard, score);
+    function setScore(actualScore) {
+        setElementText(score, actualScore);
     }
 
     function setVisibleComponent(component) {
@@ -63,7 +63,7 @@ export default function gameUI() {
         component.style.visibility = "hidden";
     }
 
-    function setInvisibleIntro() {
+    function deleteIntro() {
         while (intro.firstChild) {
             intro.removeChild(intro.firstChild);
         }
@@ -92,7 +92,9 @@ export default function gameUI() {
         return undefined;
     }
 
-    function renderIntro(){
+    function renderScoreBoard
+
+    function renderIntro() {
         const INTROTEXTS = [
             "Tienes 12 segundos para responder cada pregunta",
             "La puntuación depende del tiempo que tardes en contestar",
@@ -108,9 +110,9 @@ export default function gameUI() {
         }
 
         let buttonStart = document.createElement("button");
-        buttonStart.setAttribute("type","button");
-        buttonStart.setAttribute("id","start--button");
-        buttonStart.setAttribute("class","start--button");
+        buttonStart.setAttribute("type", "button");
+        buttonStart.setAttribute("id", "start--button");
+        buttonStart.setAttribute("class", "start--button");
         setElementText(buttonStart, "Comenzar a Jugarrr");
 
         intro.appendChild(ul);
@@ -161,7 +163,7 @@ export default function gameUI() {
         onStartGame,
         renderQuestion,
         setClock,
-        setScoreboard,
+        setScore,
         setVisibleStatistics,
         setInvisibleStatistics,
         getSelectedAnswer,
