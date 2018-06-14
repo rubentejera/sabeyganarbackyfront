@@ -16,12 +16,8 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function start() {
-        ui.setVisibleIntro();
-        ui.setVisibleStart();
-        ui.setInvisibleQuestions();
-        ui.setInvisibleStatistics();
-        ui.setOnStart(onStartGame);
-        ui.setOnNextQuestion(onNextQuestion);
+        ui.start(onStartGame,onNextQuestion);
+
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
         });
@@ -30,7 +26,6 @@ export default function createGame(createQuestionsNavigator, client) {
     function loadNextQuestion() {
         if (theQuestionNavigator.areThereNonVisitedQuestions()) {
             ui.renderQuestion(theQuestionNavigator.getNextQuestion());
-            ui.setVisibleQuestions();
         }
         else {
             gameOver();
@@ -50,14 +45,10 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onStartGame() {
-        ui.setInvisibleIntro();
-        ui.setInvisibleStart();
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
         gameScoreboard.restart();
-
-        ui.renderQuestion(theQuestionNavigator.getCurrentQuestion());
-        ui.setVisibleQuestions();
+        ui.onStartGame(theQuestionNavigator.getCurrentQuestion());
         updateUIScoreboard();
     }
 
@@ -122,10 +113,8 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function gameOver() {
-        // ui.setInvisibleQuestions();
         questionTimer.stop();
         start();
-        // ui.setVisibleStart();
     }
 
 

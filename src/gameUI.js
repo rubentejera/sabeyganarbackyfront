@@ -1,6 +1,6 @@
 export default function gameUI() {
     let questionsContainer = document.querySelector('.questions__container');
-    let startButton = document.querySelector('.start--button');
+    let startButton;
     let questionTitleUI = document.querySelector('.question--title');
     let nextQuestionButton = document.getElementById('next--question--button');
     let answerListUI = document.getElementById('answer--list');
@@ -15,7 +15,22 @@ export default function gameUI() {
         element.addEventListener('click', action);
     }
 
+    function start(startButtonAction,onNextQuestionAction){
+        renderIntro();
+
+        setOnStart(startButtonAction);
+        setOnNextQuestion(onNextQuestionAction);
+        setInvisibleQuestions();
+        setInvisibleStatistics();
+    }
+
+    function onStartGame(question){
+        setInvisibleIntro();
+        renderQuestion(question);
+    }
+
     function setOnStart(action) {
+        startButton = document.getElementById('start--button');
         setClickEventListener(startButton, action);
     }
 
@@ -40,14 +55,6 @@ export default function gameUI() {
         component.style.visibility = "visible";
     }
 
-    function setVisibleIntro() {
-        setVisibleComponent(intro);
-    }
-
-    function setVisibleStart() {
-        setVisibleComponent(startButton);
-    }
-
     function setVisibleQuestions() {
         setVisibleComponent(questionsContainer);
     }
@@ -57,11 +64,9 @@ export default function gameUI() {
     }
 
     function setInvisibleIntro() {
-        setInvisibleComponent(intro);
-    }
-
-    function setInvisibleStart() {
-        setInvisibleComponent(startButton);
+        while (intro.firstChild) {
+            intro.removeChild(intro.firstChild);
+        }
     }
 
     function setInvisibleQuestions() {
@@ -87,6 +92,30 @@ export default function gameUI() {
         return undefined;
     }
 
+    function renderIntro(){
+        const INTROTEXTS = [
+            "Tienes 12 segundos para responder cada pregunta",
+            "La puntuación depende del tiempo que tardes en contestar",
+            "Las respuestas incorrectas y las preguntas que no se respondan restan puntos"
+        ]
+
+        let ul = document.createElement("ul");
+
+        for (let numText = 0; numText < INTROTEXTS.length; numText++) {
+            let li = document.createElement("li");
+            setElementText(li, INTROTEXTS[numText]);
+            ul.appendChild(li);
+        }
+
+        let buttonStart = document.createElement("button");
+        buttonStart.setAttribute("type","button");
+        buttonStart.setAttribute("id","start--button");
+        buttonStart.setAttribute("class","start--button");
+        setElementText(buttonStart, "Comenzar a Jugarrr");
+
+        intro.appendChild(ul);
+        intro.appendChild(buttonStart);
+    }
 
     function renderQuestion(question) {
         answerOptionsUI = document.querySelectorAll('.answer--option');
@@ -123,22 +152,18 @@ export default function gameUI() {
             li.appendChild(label);
             answerListUI.appendChild(li);
         }
+
+        setVisibleQuestions();
     }
 
     return {
-        setVisibleStart,
-        setInvisibleStart,
-        setVisibleIntro,
-        setInvisibleIntro,
-        setVisibleQuestions,
-        setInvisibleQuestions,
-        setVisibleStatistics,
-        setInvisibleStatistics,
+        start,
+        onStartGame,
         renderQuestion,
-        setOnStart,
-        setOnNextQuestion,
         setClock,
         setScoreboard,
+        setVisibleStatistics,
+        setInvisibleStatistics,
         getSelectedAnswer,
 
     }
