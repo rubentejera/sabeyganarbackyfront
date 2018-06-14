@@ -1,12 +1,11 @@
 export default function gameUI() {
     let questionsContainer = document.querySelector('.questions__container');
     let startButton;
-    let questionTitleUI = document.querySelector('.question--title');
     let nextQuestionButton = document.getElementById('next--question--button');
-    let answerListUI = document.getElementById('answer--list');
     let clock = document.querySelector('.clock');
     let score = document.querySelector('.result--score');
     let statisticsContainer = document.querySelector('.statistics__container');
+    let scoresContainer = document.getElementById('scores__container');
     let intro = document.getElementById('intro');
     let answerOptionsUI = [];
 
@@ -16,8 +15,9 @@ export default function gameUI() {
     }
 
     function start(startButtonAction, onNextQuestionAction) {
+        deleteQuestions();
         renderIntro();
-
+        renderScores();//TODO Solo cuando sea mas de la 1º vez
         setOnStart(startButtonAction);
         setOnNextQuestion(onNextQuestionAction);
         setInvisibleQuestions();
@@ -26,6 +26,7 @@ export default function gameUI() {
 
     function onStartGame(question) {
         deleteIntro();
+        deleteScores();
         renderQuestion(question);
     }
 
@@ -63,12 +64,6 @@ export default function gameUI() {
         component.style.visibility = "hidden";
     }
 
-    function deleteIntro() {
-        while (intro.firstChild) {
-            intro.removeChild(intro.firstChild);
-        }
-    }
-
     function setInvisibleQuestions() {
         setInvisibleComponent(questionsContainer);
     }
@@ -92,7 +87,35 @@ export default function gameUI() {
         return undefined;
     }
 
-    function renderScoreBoard
+
+    function deleteAllChildrenOf(parent){
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+    }
+
+    function deleteIntro() {
+        deleteAllChildrenOf(intro);
+    }
+
+    function deleteIntro() {
+        deleteAllChildrenOf(intro);
+    }
+
+    function deleteScores() {
+        deleteAllChildrenOf(scoresContainer);
+    }
+
+    function deleteQuestions() {
+        deleteAllChildrenOf(questionsContainer);
+    }
+
+    function renderScores(){
+        let title = document.createElement("H2");
+        setElementText(title, "MARCADORES");
+
+        scoresContainer.appendChild(title);
+    }
 
     function renderIntro() {
         const INTROTEXTS = [
@@ -119,18 +142,26 @@ export default function gameUI() {
         intro.appendChild(buttonStart);
     }
 
+    // function deleteAllAnswerVisibles(){
+    //     answerOptionsUI = document.querySelectorAll('.answer--option');
+    //
+    //     if (answerOptionsUI.length > 0) {
+    //         answerOptionsUI.forEach(function (option) {
+    //             option.remove();
+    //         });
+    //     }
+    // }
+
     function renderQuestion(question) {
-        answerOptionsUI = document.querySelectorAll('.answer--option');
+        deleteQuestions();
 
-        if (answerOptionsUI.length > 0) {
-            answerOptionsUI.forEach(function (option) {
-                option.remove();
-            });
-        }
+        let questionTitle = document.createElement("H3");
+        questionTitle.setAttribute('id', question.id);
+        questionTitle.setAttribute('class','question--title');
+        setElementText(questionTitle, question.title);
 
-        setElementText(questionTitleUI, question.title);
-        questionTitleUI.setAttribute('id', question.id);
-
+        let ul = document.createElement("ul");
+        ul.setAttribute("id","answer--list");
 
         for (let i = 0; i < question.answers.length; i++) {
             let li = document.createElement("li");
@@ -152,8 +183,16 @@ export default function gameUI() {
             label.appendChild(answerText);
             li.appendChild(input);
             li.appendChild(label);
-            answerListUI.appendChild(li);
+            ul.appendChild(li);
         }
+
+        let description = document.createElement("p");
+        setElementText(description, "Selecciona la respues que creas correcta");
+
+
+        questionsContainer.appendChild(questionTitle);
+        questionsContainer.appendChild(ul);
+        questionsContainer.appendChild(description);
 
         setVisibleQuestions();
     }
