@@ -70,7 +70,7 @@ export default function createGame(createQuestionsNavigator, client) {
                     recalculateScoreIfFails(currentTimer);
                 }
 
-                updateUIToNextQuestion();
+                updateToNextQuestion();
 
             } else {
                 console.log("NO DEBERIA PODER ENTRAR AQUI SIN SELECCIONAR UNA OPCION");
@@ -78,12 +78,12 @@ export default function createGame(createQuestionsNavigator, client) {
 
         } else {
             recalculateScoreIfDontAnswer();
-            updateUIToNextQuestion();
+            updateToNextQuestion();
         }
 
     }
 
-    function updateUIToNextQuestion() {
+    function updateToNextQuestion() {
         updateUIScore();
         questionTimer.restart();
         loadNextQuestion();

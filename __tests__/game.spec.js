@@ -195,7 +195,7 @@ describe("the game", function () {
 
         it("shouldn't be show the statistics if the game is started", function () {
             startGame();
-            expect(getStatistics().style.visibility).toBe("hidden");
+            expect(getStatistics()).toBe(null);
         });
     });
 
