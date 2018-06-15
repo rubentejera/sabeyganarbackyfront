@@ -1,7 +1,7 @@
 export default function gameUI() {
     let questionsContainer = document.querySelector('.questions__container');
     let startButton;
-    let nextQuestionButton;
+    let retryStartButton;
     let clock;
     let score;
     let statisticsContainer;
@@ -16,9 +16,9 @@ export default function gameUI() {
     }
 
     function start(startButtonAction, onNextQuestionAction) {
-        actionToNextQuestion = onNextQuestionAction;
         actionToStartButton = startButtonAction;
-        deleteMain();
+        actionToNextQuestion = onNextQuestionAction;
+        deleteAllChildrenOfMain();
         renderIntro();
         setOnStart(actionToStartButton);
         renderScores();//TODO Solo cuando sea mas de la 1º vez
@@ -31,14 +31,17 @@ export default function gameUI() {
     }
 
     function onFinishGame(){
-        deleteMain();
+        deleteAllChildrenOfMain();
+        renderRetryStartGame();
+        setOnRetryStartGame();
+
         renderScores();//TODO Solo cuando sea mas de la 1º vez
         renderStatistics();//TODO Solo cuando sea mas de la 1º vez
     }
 
     function onStartGame(question) {
-        deleteIntro();
-        deleteScores();
+        AllChildrenOfIntro();
+        deleteAllChildrenOfScores();
         deleteStatistics();
 
         renderScore();
@@ -50,8 +53,8 @@ export default function gameUI() {
     }
 
     function setOnNextQuestion(action) {
-        nextQuestionButton = document.getElementById('next--question--button');
-        setClickEventListener(nextQuestionButton, action);
+        retryStartButton = document.getElementById('next--question--button');
+        setClickEventListener(retryStartButton, action);
     }
 
 
@@ -91,15 +94,15 @@ export default function gameUI() {
         node.remove();
     }
 
-    function deleteIntro() {
+    function AllChildrenOfIntro() {
         deleteAllChildrenOf(intro);
     }
 
-    function deleteMain() {
+    function deleteAllChildrenOfMain() {
         deleteAllChildrenOf(main);
     }
 
-    function deleteScores() {
+    function deleteAllChildrenOfScores() {
         deleteAllChildrenOf(scoresContainer);
     }
 
@@ -108,7 +111,7 @@ export default function gameUI() {
         deleteElement(statisticsContainer);
     }
 
-    function deleteQuestions() {
+    function deleteAllChildrenOfQuestions() {
         deleteAllChildrenOf(questionsContainer);
     }
 
@@ -137,6 +140,19 @@ export default function gameUI() {
 
         main.appendChild(title);
         main.appendChild(score)
+    }
+
+    function renderRetryStartGame(){
+        let button = document.createElement("button");
+        button.setAttribute("id","retry--start--button");
+        setElementText(button, "Volver a Jugar");
+
+        main.appendChild(button);
+    }
+
+    function setOnRetryStartGame(action) {
+        retryStartButton = document.getElementById('retry--start--button');
+        setClickEventListener(retryStartButton, start(actionToStartButton,actionToNextQuestion));
     }
 
     function renderNextQuestionButton(){
@@ -193,7 +209,7 @@ export default function gameUI() {
     }
 
     function renderQuestion(question) {
-        deleteQuestions();
+        deleteAllChildrenOfQuestions();
 
         let questionTitle = document.createElement("H3");
         questionTitle.setAttribute('id', question.id);
