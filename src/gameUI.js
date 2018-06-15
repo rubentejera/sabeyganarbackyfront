@@ -1,14 +1,10 @@
 export default function gameUI() {
     let questionsContainer = document.querySelector('.questions__container');
     let startButton;
-    // let nextQuestionButton = document.getElementById('next--question--button');
     let nextQuestionButton;
-    // let clock = document.querySelector('.clock');
     let clock;
-    // let score = document.querySelector('.result--score');
     let score;
-    let statisticsContainer = document.getElementById('statistics__container');
-    // let statisticsContainer;
+    let statisticsContainer;
     let scoresContainer = document.getElementById('scores__container');
     let intro = document.getElementById('intro');
     let main = document.getElementsByTagName('main')[0];
@@ -22,33 +18,35 @@ export default function gameUI() {
     function start(startButtonAction, onNextQuestionAction) {
         actionToNextQuestion = onNextQuestionAction;
         actionToStartButton = startButtonAction;
-        deleteMain();//TODO DEBERIA FUNCIONAR, FALTA CREAR COMPONENTES
-        // deleteQuestions();
+        deleteMain();
         renderIntro();
-        renderScores();//TODO Solo cuando sea mas de la 1º vez
-        renderStatistics();
         setOnStart(actionToStartButton);
-        // setOnNextQuestion(onNextQuestionAction);
-        // setInvisibleStatistics();
-        // console.log("ACTION ON START!-->",actionToNextQuestion);
-    }
-
-    function onStartGame(question) {
-        // console.log("ACTION ON ONSTART!-->",actionToNextQuestion);
-        deleteIntro();
-        deleteScores();
-        deleteStatistics();
-        // renderMain();
-        renderScore();
-        renderClock();
-        renderQuestion(question);
-        renderNextQuestionButton();
-        setOnNextQuestion(actionToNextQuestion);
+        renderScores();//TODO Solo cuando sea mas de la 1º vez
+        renderStatistics();//TODO Solo cuando sea mas de la 1º vez
     }
 
     function setOnStart(action) {
         startButton = document.getElementById('start--button');
         setClickEventListener(startButton, action);
+    }
+
+    function onFinishGame(){
+        deleteMain();
+        renderScores();//TODO Solo cuando sea mas de la 1º vez
+        renderStatistics();//TODO Solo cuando sea mas de la 1º vez
+    }
+
+    function onStartGame(question) {
+        deleteIntro();
+        deleteScores();
+        deleteStatistics();
+
+        renderScore();
+        renderClock();
+        renderQuestionBox();
+        renderQuestion(question);
+        renderNextQuestionButton();
+        setOnNextQuestion(actionToNextQuestion);
     }
 
     function setOnNextQuestion(action) {
@@ -71,23 +69,6 @@ export default function gameUI() {
         setElementText(score, actualScore);
     }
 
-    function setVisibleComponent(component) {
-        component.style.visibility = "visible";
-    }
-
-    function setInvisibleComponent(component) {
-        component.style.visibility = "hidden";
-    }
-    //
-    // //TODO quitar estas dos y sustituirlas por render y delete
-    // function setVisibleStatistics() {
-    //     setVisibleComponent(statisticsContainer);
-    // }
-    //
-    // function setInvisibleStatistics() {
-    //     setInvisibleComponent(statisticsContainer);
-    // }
-
 
     function getSelectedAnswer() {
         let radioButtons = document.getElementsByClassName("input-radio");
@@ -107,7 +88,6 @@ export default function gameUI() {
     }
 
     function deleteElement(node){
-        // (node.parentNode.nodeName).remo
         node.remove();
     }
 
@@ -144,13 +124,8 @@ export default function gameUI() {
         main.appendChild(title);
         main.appendChild(clock);
     }
-    function renderMain(){
-        renderScore();
-        renderClock();
-        renderQuestion(question);
-        renderNextQuestionButton();
-        setOnNextQuestion(actionToNextQuestion);
-    }
+
+
 
     function renderScore(){
         let title = document.createElement("H3");
@@ -170,7 +145,6 @@ export default function gameUI() {
         setElementText(button, "Pasa a la siguiente pregunta");
 
         main.appendChild(button);
-        // <button id="next--question--button">Pasa a la siguiente pregunta</button>
     }
 
     function renderStatistics(){
@@ -179,7 +153,6 @@ export default function gameUI() {
         boxStatistic.setAttribute("class","statistics__container");
 
         main.appendChild(boxStatistic);
-        // <div id="statistics__container" class="statistics__container"></div>
     }
 
 
@@ -215,6 +188,9 @@ export default function gameUI() {
         intro.appendChild(buttonStart);
     }
 
+    function renderQuestionBox(){
+        main.appendChild(questionsContainer);
+    }
 
     function renderQuestion(question) {
         deleteQuestions();
@@ -258,7 +234,7 @@ export default function gameUI() {
         questionsContainer.appendChild(ul);
         questionsContainer.appendChild(description);
 
-        main.appendChild(questionsContainer);
+        // main.appendChild(questionsContainer);
     }
 
     return {
@@ -267,8 +243,6 @@ export default function gameUI() {
         renderQuestion,
         setClock,
         setScore,
-        // setVisibleStatistics,
-        // setInvisibleStatistics,
         getSelectedAnswer,
 
     }
