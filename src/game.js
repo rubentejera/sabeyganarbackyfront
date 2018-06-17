@@ -16,7 +16,7 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function start() {
-        ui.start(onStartGame, onNextQuestion);
+        ui.initialState(onStartGame, onNextQuestion);
 
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);

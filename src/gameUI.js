@@ -16,7 +16,7 @@ export default function gameUI() {
     }
 
     //TODO rename to InitialState
-    function start(startButtonAction, onNextQuestionAction) {
+    function initialState(startButtonAction, onNextQuestionAction) {
         actionToStartButton = startButtonAction;
         actionToNextQuestion = onNextQuestionAction;
         deleteAllChildrenOfMain();
@@ -29,7 +29,7 @@ export default function gameUI() {
     }
 
     //TODO rename To finishState
-    function onFinishGame(){
+    function finishState(){
         //TODO Llamarlo al terminar el juego en vez de start
         deleteAllChildrenOfMain();
         renderRetryStartGame();
@@ -40,7 +40,7 @@ export default function gameUI() {
     }
 
     //TODO rename to startState
-    function onStartGame(question) {
+    function startState(question) {
         deleteAllChildrenOfIntro();
         deleteAllChildrenOfScores();
         deleteStatistics();
@@ -50,11 +50,11 @@ export default function gameUI() {
         renderQuestionBox();
         renderNextQuestionButton();
         setOnNextQuestion(actionToNextQuestion);
-        renderQuestion(question);
+        nextQuestionState(question);
     }
 
     //TODO rename to nextQuestionState
-    function renderQuestion(question) {
+    function nextQuestionState(question) {
         deleteAllChildrenOfQuestions();
 
         let questionTitle = document.createElement("H3");
@@ -202,7 +202,7 @@ export default function gameUI() {
 
     function setOnRetryStartGame(action) {
         retryStartButton = document.getElementById('retry--start--button');
-        setClickEventListener(retryStartButton, start(actionToStartButton,actionToNextQuestion));
+        setClickEventListener(retryStartButton, initialState(actionToStartButton,actionToNextQuestion));
     }
 
     function renderNextQuestionButton(){
@@ -260,9 +260,9 @@ export default function gameUI() {
 
 
     return {
-        start,
-        onStartGame,
-        renderQuestion,
+        initialState,
+        onStartGame: startState,
+        renderQuestion: nextQuestionState,
         setClock,
         setScore,
         getSelectedAnswer,
