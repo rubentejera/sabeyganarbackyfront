@@ -15,41 +15,91 @@ export default function gameUI() {
         element.addEventListener('click', action);
     }
 
+    //TODO rename to InitialState
     function start(startButtonAction, onNextQuestionAction) {
         actionToStartButton = startButtonAction;
         actionToNextQuestion = onNextQuestionAction;
         deleteAllChildrenOfMain();
         renderIntro();
         setOnStart(actionToStartButton);
-        renderScores();//TODO Solo cuando sea mas de la 1º vez
-        renderStatistics();//TODO Solo cuando sea mas de la 1º vez
+
+        // TODO Borrar una vez se implemente onFinishedGame
+        renderScores();
+        renderStatistics();
     }
 
-    function setOnStart(action) {
-        startButton = document.getElementById('start--button');
-        setClickEventListener(startButton, action);
-    }
-
+    //TODO rename To finishState
     function onFinishGame(){
+        //TODO Llamarlo al terminar el juego en vez de start
         deleteAllChildrenOfMain();
         renderRetryStartGame();
         setOnRetryStartGame();
 
-        renderScores();//TODO Solo cuando sea mas de la 1º vez
-        renderStatistics();//TODO Solo cuando sea mas de la 1º vez
+        renderScores();
+        renderStatistics();
     }
 
+    //TODO rename to startState
     function onStartGame(question) {
-        AllChildrenOfIntro();
+        deleteAllChildrenOfIntro();
         deleteAllChildrenOfScores();
         deleteStatistics();
 
         renderScore();
         renderClock();
         renderQuestionBox();
-        renderQuestion(question);
         renderNextQuestionButton();
         setOnNextQuestion(actionToNextQuestion);
+        renderQuestion(question);
+    }
+
+    //TODO rename to nextQuestionState
+    function renderQuestion(question) {
+        deleteAllChildrenOfQuestions();
+
+        let questionTitle = document.createElement("H3");
+        questionTitle.setAttribute('id', question.id);
+        questionTitle.setAttribute('class','question--title');
+        setElementText(questionTitle, question.title);
+
+        let ul = document.createElement("ul");
+        ul.setAttribute("id","answer--list");
+
+        for (let i = 0; i < question.answers.length; i++) {
+            let li = document.createElement("li");
+            li.setAttribute("class", "answer--option");
+
+            let input = document.createElement("input");
+            input.setAttribute("type", "radio");
+            input.setAttribute("value", "");
+            input.setAttribute("name", "radAnswer");
+            input.setAttribute("class", "input-radio");
+            input.setAttribute("id", question.answers[i].id);
+
+
+            let label = document.createElement("label");
+            label.setAttribute("class", "question--answer");
+
+            let answerText = document.createTextNode(question.answers[i].answer);
+
+            label.appendChild(answerText);
+            li.appendChild(input);
+            li.appendChild(label);
+            ul.appendChild(li);
+        }
+
+        let description = document.createElement("p");
+        setElementText(description, "Selecciona la respuesta que creas correcta");
+
+        questionsContainer.appendChild(questionTitle);
+        questionsContainer.appendChild(ul);
+        questionsContainer.appendChild(description);
+        // main.appendChild(questionsContainer);
+    }
+
+    function setOnStart(action) {
+        startButton = document.getElementById('start--button');
+        setClickEventListener(startButton, action);
     }
 
     function setOnNextQuestion(action) {
@@ -94,7 +144,7 @@ export default function gameUI() {
         node.remove();
     }
 
-    function AllChildrenOfIntro() {
+    function deleteAllChildrenOfIntro() {
         deleteAllChildrenOf(intro);
     }
 
@@ -208,50 +258,6 @@ export default function gameUI() {
         main.appendChild(questionsContainer);
     }
 
-    function renderQuestion(question) {
-        deleteAllChildrenOfQuestions();
-
-        let questionTitle = document.createElement("H3");
-        questionTitle.setAttribute('id', question.id);
-        questionTitle.setAttribute('class','question--title');
-        setElementText(questionTitle, question.title);
-
-        let ul = document.createElement("ul");
-        ul.setAttribute("id","answer--list");
-
-        for (let i = 0; i < question.answers.length; i++) {
-            let li = document.createElement("li");
-            li.setAttribute("class", "answer--option");
-
-            let input = document.createElement("input");
-            input.setAttribute("type", "radio");
-            input.setAttribute("value", "");
-            input.setAttribute("name", "radAnswer");
-            input.setAttribute("class", "input-radio");
-            input.setAttribute("id", question.answers[i].id);
-
-
-            let label = document.createElement("label");
-            label.setAttribute("class", "question--answer");
-
-            let answerText = document.createTextNode(question.answers[i].answer);
-
-            label.appendChild(answerText);
-            li.appendChild(input);
-            li.appendChild(label);
-            ul.appendChild(li);
-        }
-
-        let description = document.createElement("p");
-        setElementText(description, "Selecciona la respues que creas correcta");
-
-
-        questionsContainer.appendChild(questionTitle);
-        questionsContainer.appendChild(ul);
-        questionsContainer.appendChild(description);
-
-        // main.appendChild(questionsContainer);
-    }
 
     return {
         start,
