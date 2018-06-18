@@ -16,35 +16,22 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function init() {
-        ui.initialState(onStartGame, onNextQuestion);
+        ui.initialState(handlerEventOnStartGame, handlerEventOnNextQuestion);
 
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
         });
     }
 
-    function loadNextQuestion() {
-        if (theQuestionNavigator.areThereNonVisitedQuestions()) {
-            ui.nextQuestionState(theQuestionNavigator.getNextQuestion());
-
-        } else {
-            gameOver();
-        }
-    }
-
     function handlerEventTime(time) {
         ui.setClock(time);
 
         if (time <= 0) {
-            onNextQuestion();
+            handlerEventOnNextQuestion();
         }
     }
 
-    function updateUIScore() {
-        ui.setScore(gameScore.getScore());
-    }
-
-    function onStartGame() {
+    function handlerEventOnStartGame() {
         theQuestionNavigator.restartQuestions();
         ui.startedState(theQuestionNavigator.getCurrentQuestion());
         questionTimer.restart();
@@ -52,7 +39,7 @@ export default function createGame(createQuestionsNavigator, client) {
         updateUIScore();
     }
 
-    function onNextQuestion() {
+    function handlerEventOnNextQuestion() {
         let currentQuestion = theQuestionNavigator.getCurrentQuestion();
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
@@ -79,6 +66,9 @@ export default function createGame(createQuestionsNavigator, client) {
 
     }
 
+    function updateUIScore() {
+        ui.setScore(gameScore.getScore());
+    }
 
     function getTimeElapsed() {
         return secondsPerQuestion - questionTimer.get();
@@ -99,6 +89,7 @@ export default function createGame(createQuestionsNavigator, client) {
     function isAnswerCorrect(currentQuestion, selectedAnswer) {
         return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
     }
+
 
     function recalculateScoreIfSuccess(time) {
         if (time <= gameRules().maxTimeQuickReply) {
@@ -134,7 +125,7 @@ export default function createGame(createQuestionsNavigator, client) {
 
     return {
         init,
-        gameOver,
+        gameOver,//only for test??
         getQuestionNavigator,
     }
 };

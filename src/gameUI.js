@@ -1,5 +1,5 @@
 export default function gameUI() {
-    let questionsContainer = document.querySelector('.questions__container');
+    let questionsContainer;
     let startButton;
     let playAgainButton;
     let clock;
@@ -18,10 +18,11 @@ export default function gameUI() {
         actionToNextQuestion = onNextQuestionAction;
         deleteAllChildrenOfMain();
         renderIntro();
+        renderStartButton();
         setOnStart(actionToStartButton);
     }
 
-    function finishState(){
+    function finishState() {
         deleteAllChildrenOfMain();
         renderPlayAgain();
         setOnPlayAgain();
@@ -36,7 +37,7 @@ export default function gameUI() {
 
         renderScore();
         renderClock();
-        renderQuestionBox();
+        renderQuestions();
         renderNextQuestionButton();
         setOnNextQuestion(actionToNextQuestion);
         nextQuestionState(question);
@@ -47,11 +48,11 @@ export default function gameUI() {
 
         let questionTitle = document.createElement("H3");
         questionTitle.setAttribute('id', question.id);
-        questionTitle.setAttribute('class','question--title');
+        questionTitle.setAttribute('class', 'question--title');
         setElementText(questionTitle, question.title);
 
         let ul = document.createElement("ul");
-        ul.setAttribute("id","answer--list");
+        ul.setAttribute("id", "answer--list");
 
         for (let i = 0; i < question.answers.length; i++) {
             let li = document.createElement("li");
@@ -85,12 +86,10 @@ export default function gameUI() {
     }
 
     function setOnStart(action) {
-        startButton = document.getElementById('start--button');
         setClickEventListener(startButton, action);
     }
 
     function setOnNextQuestion(action) {
-        playAgainButton = document.getElementById('next--question--button');
         setClickEventListener(playAgainButton, action);
     }
 
@@ -100,12 +99,10 @@ export default function gameUI() {
     }
 
     function setClock(text) {
-        clock = document.getElementById('clock');
         setElementText(clock, text);
     }
 
     function setScore(actualScore) {
-        score = document.querySelector('.result--score');
         setElementText(score, actualScore);
     }
 
@@ -121,7 +118,7 @@ export default function gameUI() {
     }
 
 
-    function deleteAllChildrenOf(parent){
+    function deleteAllChildrenOf(parent) {
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);
         }
@@ -141,36 +138,50 @@ export default function gameUI() {
         deleteAllChildrenOf(questionsContainer);
     }
 
-    function renderClock(){
+    function renderClock() {
         let title = document.createElement("H3");
-        setElementText(title,"TIEMPO RESTANTE:");
+        setElementText(title, "TIEMPO RESTANTE:");
 
-        let clock = document.createElement("span");
-        clock.setAttribute("class","clock");
-        clock.setAttribute("id","clock");
-        setElementText(clock, 12);
+        let clockValue = document.createElement("span");
+        clockValue.setAttribute("class", "clock");
+        clockValue.setAttribute("id", "clock");
+        setElementText(clockValue, 12);
 
         main.appendChild(title);
-        main.appendChild(clock);
+        main.appendChild(clockValue);
+
+        clock = document.getElementById('clock');
     }
 
 
 
-    function renderScore(){
-        let title = document.createElement("H3");
-        setElementText(title,"Puntuacion:");
+    function renderQuestions() {
+        let boxQuestions = document.createElement("div");
+        boxQuestions.setAttribute("id", "questions__container");
+        boxQuestions.setAttribute("class", "questions__container");
 
-        let score = document.createElement("H3");
-        score.setAttribute("class","result--score");
-        setElementText(score,0);
+        main.appendChild(boxQuestions);
 
-        main.appendChild(title);
-        main.appendChild(score)
+        questionsContainer = document.getElementById("questions__container");
     }
 
-    function renderPlayAgain(){
+    function renderScore() {
+        let title = document.createElement("H3");
+        setElementText(title, "Puntuacion:");
+
+        let scoreValue = document.createElement("H3");
+        scoreValue.setAttribute("class", "result--score");
+        setElementText(scoreValue, 0);
+
+        main.appendChild(title);
+        main.appendChild(scoreValue);
+
+        score = document.querySelector('.result--score');
+    }
+
+    function renderPlayAgain() {
         let button = document.createElement("button");
-        button.setAttribute("id","retry--start--button");
+        button.setAttribute("id", "retry--start--button");
         setElementText(button, "Volver a Jugar");
 
         main.appendChild(button);
@@ -178,34 +189,36 @@ export default function gameUI() {
 
     function setOnPlayAgain() {
         playAgainButton = document.getElementById('retry--start--button');
-        setClickEventListener(playAgainButton, ()=> initialState(actionToStartButton,actionToNextQuestion));
+        setClickEventListener(playAgainButton, () => initialState(actionToStartButton, actionToNextQuestion));
     }
 
-    function renderNextQuestionButton(){
+    function renderNextQuestionButton() {
         let button = document.createElement("button");
-        button.setAttribute("id","next--question--button");
+        button.setAttribute("id", "next--question--button");
         setElementText(button, "Pasa a la siguiente pregunta");
 
         main.appendChild(button);
+
+        playAgainButton = document.getElementById('next--question--button');
     }
 
-    function renderStatistics(){
+    function renderStatistics() {
         let boxStatistic = document.createElement("div");
-        boxStatistic.setAttribute("id","statistics__container");
-        boxStatistic.setAttribute("class","statistics__container");
+        boxStatistic.setAttribute("id", "statistics__container");
+        boxStatistic.setAttribute("class", "statistics__container");
 
-        let title =  document.createElement("H2");
-        setElementText(title,"ESTADISTICAS");
+        let title = document.createElement("H2");
+        setElementText(title, "ESTADISTICAS");
         boxStatistic.appendChild(title);
 
         main.appendChild(boxStatistic);
     }
 
 
-    function renderScores(){
+    function renderScores() {
         let boxScores = document.createElement("div");
-        boxScores.setAttribute("id","scores__container");
-        boxScores.setAttribute("class","scores__container");
+        boxScores.setAttribute("id", "scores__container");
+        boxScores.setAttribute("class", "scores__container");
 
         let title = document.createElement("H2");
         setElementText(title, "MARCADORES");
@@ -230,20 +243,20 @@ export default function gameUI() {
             ul.appendChild(li);
         }
 
+        intro.appendChild(ul);
+    }
+
+    function renderStartButton(){
         let buttonStart = document.createElement("button");
         buttonStart.setAttribute("type", "button");
         buttonStart.setAttribute("id", "start--button");
         buttonStart.setAttribute("class", "start--button");
         setElementText(buttonStart, "Comenzar a Jugar");
 
-        intro.appendChild(ul);
         intro.appendChild(buttonStart);
-    }
 
-    function renderQuestionBox(){
-        main.appendChild(questionsContainer);
+        startButton = document.getElementById('start--button');
     }
-
 
     return {
         initialState,
