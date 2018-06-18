@@ -198,6 +198,11 @@ describe("the game", function () {
             expect(getStatistics()).toBe(null);
         });
 
+        it("should be show the statistics if the game is finished", function () {
+            startGame();
+            application.gameOver();
+            expect(getStatistics()).not.toBe(null);
+        });
     });
 
     describe("scores", function () {
