@@ -14,7 +14,7 @@ describe("Scores", function () {
     });
 
     it("should return some scores ordered", function () {
-        expect(scoresTest.getScores()).toBe(scoresOrderedByScore);
+        expect(scoresTest.getScores()).toEqual(scoresOrderedByScore);
     });
 
 
@@ -48,12 +48,6 @@ describe("Scores", function () {
             name: "Juan",
             score: 9
         }
-    ]
-
-    let sortByProperty = function (property) {
-        return function (x, y) {
-            return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
-        };
-    };
+    ];
 
 });
