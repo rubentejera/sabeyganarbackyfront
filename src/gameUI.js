@@ -143,7 +143,6 @@ export default function gameUI() {
         setElementText(title, "TIEMPO RESTANTE:");
 
         let clockValue = document.createElement("span");
-        clockValue.setAttribute("class", "clock");
         clockValue.setAttribute("id", "clock");
         setElementText(clockValue, 12);
 
@@ -158,7 +157,6 @@ export default function gameUI() {
     function renderQuestions() {
         let boxQuestions = document.createElement("div");
         boxQuestions.setAttribute("id", "questions__container");
-        boxQuestions.setAttribute("class", "questions__container");
 
         main.appendChild(boxQuestions);
 
@@ -205,7 +203,6 @@ export default function gameUI() {
     function renderStatistics() {
         let boxStatistic = document.createElement("div");
         boxStatistic.setAttribute("id", "statistics__container");
-        boxStatistic.setAttribute("class", "statistics__container");
 
         let title = document.createElement("H2");
         setElementText(title, "ESTADISTICAS");
@@ -218,7 +215,6 @@ export default function gameUI() {
     function renderScores() {
         let boxScores = document.createElement("div");
         boxScores.setAttribute("id", "scores__container");
-        boxScores.setAttribute("class", "scores__container");
 
         let title = document.createElement("H2");
         setElementText(title, "MARCADORES");
@@ -250,7 +246,6 @@ export default function gameUI() {
         let buttonStart = document.createElement("button");
         buttonStart.setAttribute("type", "button");
         buttonStart.setAttribute("id", "start--button");
-        buttonStart.setAttribute("class", "start--button");
         setElementText(buttonStart, "Comenzar a Jugar");
 
         intro.appendChild(buttonStart);

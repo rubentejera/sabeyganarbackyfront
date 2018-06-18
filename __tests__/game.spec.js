@@ -105,7 +105,7 @@ describe("the game", function () {
 
         it("should show 0 on the score UI when start game", function () {
             startGame();
-            expect(parseInt(getScoreboard().innerHTML)).toBe(0);
+            expect(parseInt(getScore().innerHTML)).toBe(0);
         });
 
 
@@ -113,7 +113,7 @@ describe("the game", function () {
             startGame();
             selectFirstCorrectAnswer();
             goToNextQuestion();
-            expect(parseInt(getScoreboard().innerHTML)).toBe(gameRules().pointsToAddQuickReplySuccess);
+            expect(parseInt(getScore().innerHTML)).toBe(gameRules().pointsToAddQuickReplySuccess);
 
         });
 
@@ -124,7 +124,7 @@ describe("the game", function () {
 
             function onTimeOut() {
                 goToNextQuestion();
-                expect(parseInt(getScoreboard().innerHTML)).toEqual(gameRules().pointsToAddNormalReplySuccess);
+                expect(parseInt(getScore().innerHTML)).toEqual(gameRules().pointsToAddNormalReplySuccess);
                 done();
             }
 
@@ -136,7 +136,7 @@ describe("the game", function () {
             selectFirstWrongAnswer();
             goToNextQuestion();
             selectSecondWrongAnswer();
-            expect(parseInt(getScoreboard().innerHTML)).toEqual(0);
+            expect(parseInt(getScore().innerHTML)).toEqual(0);
         });
 
         it("should substract normal points if it's reply fail in quick time", function (done) {
@@ -148,7 +148,7 @@ describe("the game", function () {
 
             function onTimeOut() {
                 goToNextQuestion();
-                expect(parseInt(getScoreboard().innerHTML)).toEqual(
+                expect(parseInt(getScore().innerHTML)).toEqual(
                     gameRules().pointsToAddQuickReplySuccess - gameRules().pointsToSubtractQuickReplyFail);
                 done();
             }
@@ -165,7 +165,7 @@ describe("the game", function () {
 
             function onTimeOut() {
                 goToNextQuestion();
-                expect(parseInt(getScoreboard().innerHTML)).toEqual(
+                expect(parseInt(getScore().innerHTML)).toEqual(
                     gameRules().pointsToAddQuickReplySuccess - gameRules().pointsToSubtractNormalReplyFail);
                 done();
             }
@@ -180,7 +180,7 @@ describe("the game", function () {
             let allowTimeForTheNextQuestion = (gameRules().secondsPerQuestion + 1) * 1000;
 
             function onTimeOut() {
-                expect(parseInt(getScoreboard().innerHTML)).toEqual(
+                expect(parseInt(getScore().innerHTML)).toEqual(
                     gameRules().pointsToAddQuickReplySuccess - gameRules().pointsToSubtractNoReply);
                 done();
             }
@@ -194,6 +194,14 @@ describe("the game", function () {
     describe("statistics", function () {
 
         it("shouldn't be show the statistics if the game is started", function () {
+            startGame();
+            expect(getStatistics()).toBe(null);
+        });
+    });
+
+    describe("scores", function () {
+
+        it("shouldn't be show the scores if the game is started", function () {
             startGame();
             expect(getStatistics()).toBe(null);
         });
@@ -234,11 +242,15 @@ describe("the game", function () {
         return document.getElementsByClassName('input-radio');
     }
 
-    function getScoreboard() {
+    function getScore() {
         return document.querySelector(".result--score");
     }
 
     function getStatistics() {
+        return document.getElementById("statistics__container");
+    }
+
+    function getScores() {
         return document.getElementById("statistics__container");
     }
 
