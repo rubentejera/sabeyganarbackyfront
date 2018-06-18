@@ -197,6 +197,7 @@ describe("the game", function () {
             startGame();
             expect(getStatistics()).toBe(null);
         });
+
     });
 
     describe("scores", function () {
@@ -204,6 +205,12 @@ describe("the game", function () {
         it("shouldn't be show the scores if the game is started", function () {
             startGame();
             expect(getScores()).toBe(null);
+        });
+
+        it("should be show the scores if the game is finished", function () {
+            startGame();
+            application.gameOver();
+            expect(getScores()).not.toBe(null);
         });
     });
 
