@@ -15,7 +15,7 @@ export default function createGame(createQuestionsNavigator, client) {
         return theQuestionNavigator;
     }
 
-    function start() {
+    function init() {
         ui.initialState(onStartGame, onNextQuestion);
 
         client.getQuestions(function (questions) {
@@ -25,7 +25,7 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function loadNextQuestion() {
         if (theQuestionNavigator.areThereNonVisitedQuestions()) {
-            ui.renderQuestion(theQuestionNavigator.getNextQuestion());
+            ui.nextQuestionState(theQuestionNavigator.getNextQuestion());
 
         } else {
             gameOver();
@@ -45,7 +45,7 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onStartGame() {
-        ui.onStartGame(theQuestionNavigator.getCurrentQuestion());
+        ui.startState(theQuestionNavigator.getCurrentQuestion());
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
         gameScore.restart();
@@ -121,12 +121,12 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function gameOver() {
         questionTimer.stop();
-        start();
+        init();
     }
 
 
     return {
-        start,
+        init,
         gameOver,
         getQuestionNavigator,
     }

@@ -15,7 +15,6 @@ export default function gameUI() {
         element.addEventListener('click', action);
     }
 
-    //TODO rename to InitialState
     function initialState(startButtonAction, onNextQuestionAction) {
         actionToStartButton = startButtonAction;
         actionToNextQuestion = onNextQuestionAction;
@@ -28,7 +27,6 @@ export default function gameUI() {
         renderStatistics();
     }
 
-    //TODO rename To finishState
     function finishState(){
         //TODO Llamarlo al terminar el juego en vez de start
         deleteAllChildrenOfMain();
@@ -39,7 +37,6 @@ export default function gameUI() {
         renderStatistics();
     }
 
-    //TODO rename to startState
     function startState(question) {
         deleteAllChildrenOfIntro();
         deleteAllChildrenOfScores();
@@ -53,7 +50,6 @@ export default function gameUI() {
         nextQuestionState(question);
     }
 
-    //TODO rename to nextQuestionState
     function nextQuestionState(question) {
         deleteAllChildrenOfQuestions();
 
@@ -261,8 +257,9 @@ export default function gameUI() {
 
     return {
         initialState,
-        onStartGame: startState,
-        renderQuestion: nextQuestionState,
+        startState,
+        nextQuestionState,
+        finishState,
         setClock,
         setScore,
         getSelectedAnswer,

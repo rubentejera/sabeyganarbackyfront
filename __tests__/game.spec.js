@@ -21,7 +21,7 @@ describe("the game", function () {
             }
         };
         application = createGame(createQuestionsNavigator, stubClient);
-        application.start();
+        application.init();
         theQuestionNavigator = application.getQuestionNavigator();
 
     });
