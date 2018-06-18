@@ -15,12 +15,12 @@ describe("Scores", function () {
 
 
     function addRandomScores() {
-        scoreTest.addScore({
+        scoresTest.addScore({
             name: "Pepe",
             score: 10
         });
 
-        scoreTest.addScore({
+        scoresTest.addScore({
             name: "Juan",
             score: 9
         });
