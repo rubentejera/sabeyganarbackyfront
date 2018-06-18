@@ -217,6 +217,8 @@ describe("the game", function () {
             application.gameOver();
             expect(getScores()).not.toBe(null);
         });
+
+
     });
 
     function selectFirstCorrectAnswer(){
