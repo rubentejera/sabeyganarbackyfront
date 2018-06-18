@@ -13,6 +13,10 @@ describe("Scores", function () {
         expect(scoresTest.getScores()).not.toBe(null);
     });
 
+    it("should return some scores ordered", function () {
+        expect(scoresTest.getScores()).toBe(scoresOrderedByScore);
+    });
+
 
     function addRandomScores() {
         scoresTest.addScore({
@@ -30,5 +34,26 @@ describe("Scores", function () {
             score: 13
         });
     }
+
+    let scoresOrderedByScore = [
+        {
+            name: "Maria",
+            score: 13
+        },
+        {
+            name: "Pepe",
+            score: 10
+        },
+        {
+            name: "Juan",
+            score: 9
+        }
+    ]
+
+    let sortByProperty = function (property) {
+        return function (x, y) {
+            return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
+        };
+    };
 
 });
