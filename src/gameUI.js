@@ -1,7 +1,7 @@
 export default function gameUI() {
     let questionsContainer = document.querySelector('.questions__container');
     let startButton;
-    let retryStartButton;
+    let playAgainButton;
     let clock;
     let score;
     let statisticsContainer;
@@ -10,37 +10,40 @@ export default function gameUI() {
     let main = document.getElementsByTagName('main')[0];
     let actionToNextQuestion;
     let actionToStartButton;
+    // let actionToPlayAgain;
 
     function setClickEventListener(element, action) {
         element.addEventListener('click', action);
     }
 
-    function initialState(startButtonAction, onNextQuestionAction) {
+    function initialState(startButtonAction, onNextQuestionAction, onPlayAgainAction) {
         actionToStartButton = startButtonAction;
         actionToNextQuestion = onNextQuestionAction;
+        // actionToPlayAgain = onPlayAgainAction;
         deleteAllChildrenOfMain();
         renderIntro();
         setOnStart(actionToStartButton);
 
         // TODO Borrar una vez se implemente onFinishedGame
-        renderScores();
-        renderStatistics();
+        // renderScores();
+        // renderStatistics();
     }
 
     function finishState(){
         //TODO Llamarlo al terminar el juego en vez de start
         deleteAllChildrenOfMain();
-        renderRetryStartGame();
-        setOnRetryStartGame();
+        renderPlayAgain();
+        setOnPlayAgain();
 
         renderScores();
         renderStatistics();
     }
 
-    function startState(question) {
+    function startedState(question) {
         deleteAllChildrenOfIntro();
-        deleteAllChildrenOfScores();
-        deleteStatistics();
+        // deleteAllChildrenOfScores();
+        // deleteStatistics();
+        deleteAllChildrenOfMain();
 
         renderScore();
         renderClock();
@@ -99,8 +102,8 @@ export default function gameUI() {
     }
 
     function setOnNextQuestion(action) {
-        retryStartButton = document.getElementById('next--question--button');
-        setClickEventListener(retryStartButton, action);
+        playAgainButton = document.getElementById('next--question--button');
+        setClickEventListener(playAgainButton, action);
     }
 
 
@@ -136,9 +139,6 @@ export default function gameUI() {
         }
     }
 
-    function deleteElement(node){
-        node.remove();
-    }
 
     function deleteAllChildrenOfIntro() {
         deleteAllChildrenOf(intro);
@@ -148,14 +148,6 @@ export default function gameUI() {
         deleteAllChildrenOf(main);
     }
 
-    function deleteAllChildrenOfScores() {
-        deleteAllChildrenOf(scoresContainer);
-    }
-
-    function deleteStatistics() {
-        statisticsContainer = document.getElementById('statistics__container');
-        deleteElement(statisticsContainer);
-    }
 
     function deleteAllChildrenOfQuestions() {
         deleteAllChildrenOf(questionsContainer);
@@ -188,7 +180,7 @@ export default function gameUI() {
         main.appendChild(score)
     }
 
-    function renderRetryStartGame(){
+    function renderPlayAgain(){
         let button = document.createElement("button");
         button.setAttribute("id","retry--start--button");
         setElementText(button, "Volver a Jugar");
@@ -196,9 +188,9 @@ export default function gameUI() {
         main.appendChild(button);
     }
 
-    function setOnRetryStartGame(action) {
-        retryStartButton = document.getElementById('retry--start--button');
-        setClickEventListener(retryStartButton, initialState(actionToStartButton,actionToNextQuestion));
+    function setOnPlayAgain() {
+        playAgainButton = document.getElementById('retry--start--button');
+        setClickEventListener(playAgainButton, ()=> initialState(actionToStartButton,actionToNextQuestion));
     }
 
     function renderNextQuestionButton(){
@@ -257,7 +249,7 @@ export default function gameUI() {
 
     return {
         initialState,
-        startState,
+        startedState,//started
         nextQuestionState,
         finishState,
         setClock,

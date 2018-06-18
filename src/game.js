@@ -45,15 +45,11 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onStartGame() {
-        ui.startState(theQuestionNavigator.getCurrentQuestion());
+        ui.startedState(theQuestionNavigator.getCurrentQuestion());
         questionTimer.restart();
         theQuestionNavigator.restartQuestions();
         gameScore.restart();
         updateUIScore();
-    }
-
-    function getTimeElapsed() {
-        return secondsPerQuestion - questionTimer.get();
     }
 
     function onNextQuestion() {
@@ -81,6 +77,14 @@ export default function createGame(createQuestionsNavigator, client) {
             updateToNextQuestion();
         }
 
+    }
+
+    // function onPlayAgain(){
+    //     init();
+    // }
+
+    function getTimeElapsed() {
+        return secondsPerQuestion - questionTimer.get();
     }
 
     function updateToNextQuestion() {
@@ -121,7 +125,8 @@ export default function createGame(createQuestionsNavigator, client) {
 
     function gameOver() {
         questionTimer.stop();
-        init();
+        ui.finishState();
+        // init();
     }
 
 
