@@ -203,7 +203,7 @@ describe("the game", function () {
 
         it("shouldn't be show the scores if the game is started", function () {
             startGame();
-            expect(getStatistics()).toBe(null);
+            expect(getScores()).toBe(null);
         });
     });
 
@@ -251,7 +251,7 @@ describe("the game", function () {
     }
 
     function getScores() {
-        return document.getElementById("statistics__container");
+        return document.getElementById("scores__container");
     }
 
     function selectAnswer(num) {
