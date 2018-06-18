@@ -4,33 +4,24 @@ export default function gameUI() {
     let playAgainButton;
     let clock;
     let score;
-    let statisticsContainer;
-    let scoresContainer = document.getElementById('scores__container');
     let intro = document.getElementById('intro');
     let main = document.getElementsByTagName('main')[0];
     let actionToNextQuestion;
     let actionToStartButton;
-    // let actionToPlayAgain;
 
     function setClickEventListener(element, action) {
         element.addEventListener('click', action);
     }
 
-    function initialState(startButtonAction, onNextQuestionAction, onPlayAgainAction) {
+    function initialState(startButtonAction, onNextQuestionAction) {
         actionToStartButton = startButtonAction;
         actionToNextQuestion = onNextQuestionAction;
-        // actionToPlayAgain = onPlayAgainAction;
         deleteAllChildrenOfMain();
         renderIntro();
         setOnStart(actionToStartButton);
-
-        // TODO Borrar una vez se implemente onFinishedGame
-        // renderScores();
-        // renderStatistics();
     }
 
     function finishState(){
-        //TODO Llamarlo al terminar el juego en vez de start
         deleteAllChildrenOfMain();
         renderPlayAgain();
         setOnPlayAgain();
@@ -41,8 +32,6 @@ export default function gameUI() {
 
     function startedState(question) {
         deleteAllChildrenOfIntro();
-        // deleteAllChildrenOfScores();
-        // deleteStatistics();
         deleteAllChildrenOfMain();
 
         renderScore();
@@ -93,7 +82,6 @@ export default function gameUI() {
         questionsContainer.appendChild(questionTitle);
         questionsContainer.appendChild(ul);
         questionsContainer.appendChild(description);
-        // main.appendChild(questionsContainer);
     }
 
     function setOnStart(action) {
@@ -206,15 +194,25 @@ export default function gameUI() {
         boxStatistic.setAttribute("id","statistics__container");
         boxStatistic.setAttribute("class","statistics__container");
 
+        let title =  document.createElement("H2");
+        setElementText(title,"ESTADISTICAS");
+        boxStatistic.appendChild(title);
+
         main.appendChild(boxStatistic);
     }
 
 
     function renderScores(){
+        let boxScores = document.createElement("div");
+        boxScores.setAttribute("id","scores__container");
+        boxScores.setAttribute("class","scores__container");
+
         let title = document.createElement("H2");
         setElementText(title, "MARCADORES");
 
-        scoresContainer.appendChild(title);
+        boxScores.appendChild(title);
+
+        main.appendChild(boxScores);
     }
 
     function renderIntro() {
@@ -249,7 +247,7 @@ export default function gameUI() {
 
     return {
         initialState,
-        startedState,//started
+        startedState,
         nextQuestionState,
         finishState,
         setClock,

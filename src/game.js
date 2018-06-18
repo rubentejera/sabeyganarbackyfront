@@ -45,9 +45,9 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function onStartGame() {
+        theQuestionNavigator.restartQuestions();
         ui.startedState(theQuestionNavigator.getCurrentQuestion());
         questionTimer.restart();
-        theQuestionNavigator.restartQuestions();
         gameScore.restart();
         updateUIScore();
     }
@@ -66,7 +66,7 @@ export default function createGame(createQuestionsNavigator, client) {
                     recalculateScoreIfFails(currentTimer);
                 }
 
-                updateToNextQuestion();
+                goToNextQuestion();
 
             } else {
                 console.log("NO DEBERIA PODER ENTRAR AQUI SIN SELECCIONAR UNA OPCION");
@@ -74,23 +74,26 @@ export default function createGame(createQuestionsNavigator, client) {
 
         } else {
             recalculateScoreIfDontAnswer();
-            updateToNextQuestion();
+            goToNextQuestion();
         }
 
     }
 
-    // function onPlayAgain(){
-    //     init();
-    // }
 
     function getTimeElapsed() {
         return secondsPerQuestion - questionTimer.get();
     }
 
-    function updateToNextQuestion() {
-        updateUIScore();
-        questionTimer.restart();
-        loadNextQuestion();
+
+    function goToNextQuestion() {
+        if (theQuestionNavigator.areThereNonVisitedQuestions()) {
+            ui.nextQuestionState(theQuestionNavigator.getNextQuestion());
+            updateUIScore();
+            questionTimer.restart();
+
+        } else {
+            gameOver();
+        }
     }
 
     function isAnswerCorrect(currentQuestion, selectedAnswer) {
@@ -126,7 +129,6 @@ export default function createGame(createQuestionsNavigator, client) {
     function gameOver() {
         questionTimer.stop();
         ui.finishState();
-        // init();
     }
 
 
