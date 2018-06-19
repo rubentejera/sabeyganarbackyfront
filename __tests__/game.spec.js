@@ -218,8 +218,26 @@ describe("the game", function () {
             expect(getScores()).not.toBe(null);
         });
 
+        it("should be show the current game on the scores", function () {
+            startGame();
+            completeAllAnswer();
+            enterNameAtTheEndOfTheGame('Rubén');
+            expect(getNumberOfScoresShowing()).toEqual(1);
+        });
+
 
     });
+
+    function completeAllAnswer(){
+        selectFirstCorrectAnswer();
+        goToNextQuestion();
+
+        selectSecondCorrectAnswer();
+        goToNextQuestion();
+
+        selectThirdCorrectAnswer()
+        goToNextQuestion();
+    }
 
     function selectFirstCorrectAnswer(){
         selectAnswer(3);
@@ -229,7 +247,19 @@ describe("the game", function () {
         selectAnswer(2);
     }
 
+    function selectSecondCorrectAnswer(){
+        selectAnswer(3);
+    }
+
     function selectSecondWrongAnswer(){
+        selectAnswer(2);
+    }
+
+    function selectThirdCorrectAnswer(){
+        selectAnswer(1);
+    }
+
+    function selectThirdWrongAnswer(){
         selectAnswer(2);
     }
 
@@ -266,6 +296,10 @@ describe("the game", function () {
 
     function getScores() {
         return document.getElementById("scores__container");
+    }
+
+    function getNumberOfScoresShowing(){
+        return document.getElementById("scores__container").childElementCount;
     }
 
     function selectAnswer(num) {
