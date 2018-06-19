@@ -1,34 +1,30 @@
 export default function gameUI() {
     let questionsContainer;
     let startButton;
+    let nextQuestionButton;
     let playAgainButton;
+    let enterNameButton;
+    let userNameIntroduced;
     let clock;
     let score;
     let intro = document.getElementById('intro');
     let main = document.getElementsByTagName('main')[0];
     let actionToNextQuestion;
     let actionToStartButton;
+    let actionToEnterName;//TODO falta parametro name
 
     function setClickEventListener(element, action) {
         element.addEventListener('click', action);
     }
 
-    function initialState(startButtonAction, onNextQuestionAction) {
+    function initialState(startButtonAction, onNextQuestionAction, onEnterName) {
         actionToStartButton = startButtonAction;
         actionToNextQuestion = onNextQuestionAction;
+        actionToEnterName = onEnterName;
         deleteAllChildrenOfMain();
         renderIntro();
         renderStartButton();
         setOnStart(actionToStartButton);
-    }
-
-    function finishState() {
-        deleteAllChildrenOfMain();
-        renderPlayAgain();
-        setOnPlayAgain();
-
-        renderScores();
-        renderStatistics();
     }
 
     function startedState(question) {
@@ -41,6 +37,32 @@ export default function gameUI() {
         renderNextQuestionButton();
         setOnNextQuestion(actionToNextQuestion);
         nextQuestionState(question);
+    }
+
+    function finishAllQuestionState(){
+        deleteAllChildrenOfMain();
+        renderEnterName();
+        setOnEnterName(actionToEnterName);
+    }
+
+    // function gameOverState() {
+    function gameOverState(scores,statistics) {
+        deleteAllChildrenOfMain();
+        renderPlayAgain();
+        setOnPlayAgain();
+
+/*        renderScores();
+        renderStatistics();*/
+
+        //TODO
+        if(scores){
+            renderScores(scores);
+        }
+
+        if(statistics){
+            renderStatistics(statistics);
+        }
+
     }
 
     function nextQuestionState(question) {
@@ -90,7 +112,14 @@ export default function gameUI() {
     }
 
     function setOnNextQuestion(action) {
-        setClickEventListener(playAgainButton, action);
+        setClickEventListener(nextQuestionButton, action);
+    }
+
+    function setOnEnterName(action){
+        setClickEventListener(enterNameButton, function(){
+            let user = getUserNameIntroduced();
+            action(user);
+        });
     }
 
 
@@ -187,7 +216,7 @@ export default function gameUI() {
 
     function setOnPlayAgain() {
         playAgainButton = document.getElementById('retry--start--button');
-        setClickEventListener(playAgainButton, () => initialState(actionToStartButton, actionToNextQuestion));
+        setClickEventListener(playAgainButton, () => initialState(actionToStartButton, actionToNextQuestion, actionToEnterName));
     }
 
     function renderNextQuestionButton() {
@@ -197,9 +226,42 @@ export default function gameUI() {
 
         main.appendChild(button);
 
-        playAgainButton = document.getElementById('next--question--button');
+        nextQuestionButton = document.getElementById('next--question--button');
     }
 
+    function renderEnterName(){
+        let boxEnterName = document.createElement("div");
+        boxEnterName.setAttribute("id", "entername__container");
+
+        let title = document.createElement("H2");
+        setElementText(title,"Completa tu Nombre Para Ver Los Resultados");
+        boxEnterName.appendChild(title);
+
+        let input = document.createElement("input");
+        input.setAttribute("id", "enter--name--input");
+        input.setAttribute("type","text");
+        input.setAttribute("maxlength","30");
+        input.setAttribute("placeholder","Introduce Aquí Tu Nombre");
+        boxEnterName.appendChild(input);
+
+        let button = document.createElement("button");
+        button.setAttribute("id", "enter--name--button");
+        setElementText(button, "Ok");
+
+        boxEnterName.appendChild(button);
+        main.appendChild(boxEnterName);
+
+
+        userNameIntroduced = document.getElementById("enter--name--input");
+        enterNameButton = document.getElementById('enter--name--button');
+
+        //TODO
+        // setClickEventListener(enterNameButton, () => gameOverState());
+    }
+
+    function getUserNameIntroduced(){
+        return userNameIntroduced.value;
+    }
     function renderStatistics() {
         let boxStatistic = document.createElement("div");
         boxStatistic.setAttribute("id", "statistics__container");
@@ -212,7 +274,7 @@ export default function gameUI() {
     }
 
 
-    function renderScores() {
+    function renderScores(scores) {
         let boxScores = document.createElement("div");
         boxScores.setAttribute("id", "scores__container");
 
@@ -220,6 +282,20 @@ export default function gameUI() {
         setElementText(title, "MARCADORES");
 
         boxScores.appendChild(title);
+
+        if(scores){
+            let orderList = document.createElement('lo')
+
+            scores.forEach(function(score) {
+                let element = document.createElement('li');
+                let text = score.score + " - " + score.name;
+                setElementText(element,text);
+
+                orderList.appendChild(element);
+            });
+
+            boxScores.appendChild(orderList);
+        }
 
         main.appendChild(boxScores);
     }
@@ -257,7 +333,8 @@ export default function gameUI() {
         initialState,
         startedState,
         nextQuestionState,
-        finishState,
+        finishAllQuestionState,
+        gameOverState,
         setClock,
         setScore,
         getSelectedAnswer,

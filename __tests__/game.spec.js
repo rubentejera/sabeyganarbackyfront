@@ -27,7 +27,7 @@ describe("the game", function () {
     });
 
     afterEach(function () {
-        application.gameOver();
+        application.finishedAllQuestions();
     });
 
 
@@ -200,7 +200,7 @@ describe("the game", function () {
 
         it("should be show the statistics if the game is finished", function () {
             startGame();
-            application.gameOver();
+            application.finishedAllQuestions();
             expect(getStatistics()).not.toBe(null);
         });
     });
@@ -214,7 +214,7 @@ describe("the game", function () {
 
         it("should be show the scores if the game is finished", function () {
             startGame();
-            application.gameOver();
+            application.finishedAllQuestions();
             expect(getScores()).not.toBe(null);
         });
 

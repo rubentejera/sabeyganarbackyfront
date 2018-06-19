@@ -16,7 +16,7 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function init() {
-        ui.initialState(handlerEventOnStartGame, handlerEventOnNextQuestion);
+        ui.initialState(handlerEventOnStartGame, handlerEventOnNextQuestion, handlerEventOnEnterName);
 
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
@@ -29,6 +29,40 @@ export default function createGame(createQuestionsNavigator, client) {
         if (time <= 0) {
             handlerEventOnNextQuestion();
         }
+    }
+
+    function handlerEventOnEnterName(name){
+        console.log("NOMBRE RECIBIDO-->",name);
+        let scoresExample = [
+            {
+                name: "Maria",
+                score: 13
+            },
+            {
+                name: "Pepe",
+                score: 10
+            },
+            {
+                name: "Juan",
+                score: 9
+            }
+        ];
+
+        let statisticsExample = [
+            {
+                name: "Maria",
+                score: 13
+            },
+            {
+                name: "Pepe",
+                score: 10
+            },
+            {
+                name: "Juan",
+                score: 9
+            }
+        ];
+        ui.gameOverState(scoresExample,statisticsExample);
     }
 
     function handlerEventOnStartGame() {
@@ -82,7 +116,7 @@ export default function createGame(createQuestionsNavigator, client) {
             questionTimer.restart();
 
         } else {
-            gameOver();
+            finishedAllQuestions();
         }
     }
 
@@ -117,15 +151,16 @@ export default function createGame(createQuestionsNavigator, client) {
         gameScore.decrement(gameRules().pointsToSubtractNoReply);
     }
 
-    function gameOver() {
+    function finishedAllQuestions() {
         questionTimer.stop();
-        ui.finishState();
+        ui.finishAllQuestionState();
+        // ui.finishState();
     }
 
 
     return {
         init,
-        gameOver,//only for test??
+        finishedAllQuestions,//only for test??
         getQuestionNavigator,
     }
 };
