@@ -1,6 +1,7 @@
 import timer from './timer.js';
 import gameUI from './gameUI.js';
 import score from './score.js';
+import scores from './scores.js';
 import gameRules from './gameRules.js';
 
 export default function createGame(createQuestionsNavigator, client) {
@@ -9,6 +10,7 @@ export default function createGame(createQuestionsNavigator, client) {
     let secondsPerQuestion = gameRules().secondsPerQuestion;
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let gameScore = new score();
+    let gameScores = new scores();
     let ui = gameUI();
 
     function getQuestionNavigator() {
@@ -31,22 +33,10 @@ export default function createGame(createQuestionsNavigator, client) {
         }
     }
 
-    function handlerEventOnEnterName(name){
-        console.log("NOMBRE RECIBIDO-->",name);
-        let scoresExample = [
-            {
-                name: "Maria",
-                score: 13
-            },
-            {
-                name: "Pepe",
-                score: 10
-            },
-            {
-                name: "Juan",
-                score: 9
-            }
-        ];
+
+    function handlerEventOnEnterName(name){//TODO Guardar Name y devolver array ordenado
+        gameScores.addScore({name:name,score:gameScore.getScore()});
+
 
         let statisticsExample = [
             {
@@ -62,7 +52,8 @@ export default function createGame(createQuestionsNavigator, client) {
                 score: 9
             }
         ];
-        ui.gameOverState(scoresExample,statisticsExample);
+
+        ui.gameOverState(gameScores.getScores(),statisticsExample);
     }
 
     function handlerEventOnStartGame() {
