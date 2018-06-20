@@ -59,7 +59,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
 
     function handlerEventOnStartGame() {
         theQuestionNavigator.restartQuestions();
-        ui.startedState(theQuestionNavigator.getCurrentQuestion());
+        ui.startGameState(theQuestionNavigator.getCurrentQuestion());
         questionTimer.restart();
         gameScore.restart();
         updateUIScore();
@@ -108,7 +108,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
             questionTimer.restart();
 
         } else {
-            finishedAllQuestions();
+            allQuestionsCompleted();
         }
     }
 
@@ -143,16 +143,16 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         gameScore.decrement(gameRules().pointsToSubtractNoReply);
     }
 
-    function finishedAllQuestions() {
+    function allQuestionsCompleted() {
         questionTimer.stop();
-        ui.finishAllQuestionState();
+        ui.allQuestionsCompletedState();
         // ui.finishState();
     }
 
 
     return {
         init,
-        finishedAllQuestions,//only for test??
+        allQuestionsCompleted,//only for test??
         getQuestionNavigator,
     }
 };

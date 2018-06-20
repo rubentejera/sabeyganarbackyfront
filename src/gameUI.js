@@ -22,7 +22,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         renderIntro(actionToStartButton);
     }
 
-    function startedState(question) {
+    function startGameState(question) {
         deleteAllChildrenOf(intro);
         deleteAllChildrenOf(main);
         renderScore();
@@ -37,7 +37,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         renderNextQuestion(question);
     }
 
-    function finishAllQuestionState() {
+    function allQuestionsCompletedState() {
         deleteAllChildrenOf(main);
         renderEnterName(actionToEnterName);
     }
@@ -298,9 +298,9 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
 
     return {
         initialState,
-        startedState,
+        startGameState,
         nextQuestionState,
-        finishAllQuestionState,
+        allQuestionsCompletedState,
         gameOverState,
         setClock,
         setScore,
