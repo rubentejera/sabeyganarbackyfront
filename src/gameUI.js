@@ -9,9 +9,6 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
     let score;
     let intro = document.getElementById('intro');
     let main = document.getElementsByTagName('main')[0];
-    // let actionToNextQuestion;
-    // let actionToStartButton;
-    // let actionToEnterName;
     let actionToStartButton = startButtonAction;
     let actionToNextQuestion = onNextQuestionAction;
     let actionToEnterName = onEnterName;
@@ -20,11 +17,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         element.addEventListener('click', action);
     }
 
-    // function initialState(startButtonAction, onNextQuestionAction, onEnterName) {
     function initialState() {
-        // actionToStartButton = startButtonAction;
-        // actionToNextQuestion = onNextQuestionAction;
-        // actionToEnterName = onEnterName;
         deleteAllChildrenOf(main);
         renderIntro(actionToStartButton);
     }

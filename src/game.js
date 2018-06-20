@@ -4,7 +4,7 @@ import score from './score.js';
 import scores from './scores.js';
 import gameRules from './gameRules.js';
 
-export default function createGame(createQuestionsNavigator, client) {
+export default function createGame(createQuestionsNavigator, serverQuestions) {
 
     let theQuestionNavigator;
     let secondsPerQuestion = gameRules().secondsPerQuestion;
@@ -18,10 +18,9 @@ export default function createGame(createQuestionsNavigator, client) {
     }
 
     function init() {
-        // ui.initialState(handlerEventOnStartGame, handlerEventOnNextQuestion, handlerEventOnEnterName);
         ui.initialState();
 
-        client.getQuestions(function (questions) {
+        serverQuestions.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);
         });
     }
