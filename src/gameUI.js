@@ -21,53 +21,46 @@ export default function gameUI() {
         actionToStartButton = startButtonAction;
         actionToNextQuestion = onNextQuestionAction;
         actionToEnterName = onEnterName;
-        deleteAllChildrenOfMain();
+        deleteAllChildrenOf(main);
         renderIntro();
-        renderStartButton();
-        setOnStart(actionToStartButton);
+        renderStartButton(actionToStartButton);
     }
 
     function startedState(question) {
-        deleteAllChildrenOfIntro();
-        deleteAllChildrenOfMain();
-
+        deleteAllChildrenOf(intro);
+        deleteAllChildrenOf(main);
         renderScore();
         renderClock();
         renderQuestions();
-        renderNextQuestionButton();
-        setOnNextQuestion(actionToNextQuestion);
+        renderNextQuestionButton(actionToNextQuestion);
         nextQuestionState(question);
     }
 
-    function finishAllQuestionState(){
-        deleteAllChildrenOfMain();
-        renderEnterName();
-        setOnEnterName(actionToEnterName);
+    function nextQuestionState(question) {
+        deleteAllChildrenOf(questionsContainer);
+        renderNextQuestion(question);
     }
 
-    // function gameOverState() {
-    function gameOverState(scores,statistics) {
-        deleteAllChildrenOfMain();
+    function finishAllQuestionState() {
+        deleteAllChildrenOf(main);
+        renderEnterName(actionToEnterName);
+    }
+
+    function gameOverState(scores, statistics) {
+        deleteAllChildrenOf(main);
         renderPlayAgain();
-        setOnPlayAgain();
 
-/*        renderScores();
-        renderStatistics();*/
-
-        //TODO
-        if(scores){
+        if (scores) {
             renderScores(scores);
         }
 
-        if(statistics){
+        if (statistics) {
             renderStatistics(statistics);
         }
 
     }
 
-    function nextQuestionState(question) {
-        deleteAllChildrenOfQuestions();
-
+    function renderNextQuestion(question){
         let questionTitle = document.createElement("H3");
         questionTitle.setAttribute('id', question.id);
         questionTitle.setAttribute('class', 'question--title');
@@ -107,21 +100,6 @@ export default function gameUI() {
         questionsContainer.appendChild(description);
     }
 
-    function setOnStart(action) {
-        setClickEventListener(startButton, action);
-    }
-
-    function setOnNextQuestion(action) {
-        setClickEventListener(nextQuestionButton, action);
-    }
-
-    function setOnEnterName(action){
-        setClickEventListener(enterNameButton, function(){
-            let user = getUserNameIntroduced();
-            action(user);
-        });
-    }
-
 
     function setElementText(element, text) {
         element.innerHTML = text;
@@ -130,6 +108,7 @@ export default function gameUI() {
     function setClock(text) {
         setElementText(clock, text);
     }
+
 
     function setScore(actualScore) {
         setElementText(score, actualScore);
@@ -154,19 +133,6 @@ export default function gameUI() {
     }
 
 
-    function deleteAllChildrenOfIntro() {
-        deleteAllChildrenOf(intro);
-    }
-
-    function deleteAllChildrenOfMain() {
-        deleteAllChildrenOf(main);
-    }
-
-
-    function deleteAllChildrenOfQuestions() {
-        deleteAllChildrenOf(questionsContainer);
-    }
-
     function renderClock() {
         let title = document.createElement("H3");
         setElementText(title, "TIEMPO RESTANTE:");
@@ -180,8 +146,6 @@ export default function gameUI() {
 
         clock = document.getElementById('clock');
     }
-
-
 
     function renderQuestions() {
         let boxQuestions = document.createElement("div");
@@ -212,14 +176,15 @@ export default function gameUI() {
         setElementText(button, "Volver a Jugar");
 
         main.appendChild(button);
-    }
 
-    function setOnPlayAgain() {
         playAgainButton = document.getElementById('retry--start--button');
-        setClickEventListener(playAgainButton, () => initialState(actionToStartButton, actionToNextQuestion, actionToEnterName));
+
+        setClickEventListener(playAgainButton, () =>
+            initialState(actionToStartButton, actionToNextQuestion, actionToEnterName)
+        );
     }
 
-    function renderNextQuestionButton() {
+    function renderNextQuestionButton(action) {
         let button = document.createElement("button");
         button.setAttribute("id", "next--question--button");
         setElementText(button, "Pasa a la siguiente pregunta");
@@ -227,21 +192,23 @@ export default function gameUI() {
         main.appendChild(button);
 
         nextQuestionButton = document.getElementById('next--question--button');
+
+        setClickEventListener(nextQuestionButton, action);
     }
 
-    function renderEnterName(){
+    function renderEnterName(action) {
         let boxEnterName = document.createElement("div");
         boxEnterName.setAttribute("id", "entername__container");
 
         let title = document.createElement("H2");
-        setElementText(title,"Completa tu Nombre Para Ver Los Resultados");
+        setElementText(title, "Completa tu Nombre Para Ver Los Resultados");
         boxEnterName.appendChild(title);
 
         let input = document.createElement("input");
         input.setAttribute("id", "enter--name--input");
-        input.setAttribute("type","text");
-        input.setAttribute("maxlength","30");
-        input.setAttribute("placeholder","Introduce Aquí Tu Nombre");
+        input.setAttribute("type", "text");
+        input.setAttribute("maxlength", "30");
+        input.setAttribute("placeholder", "Introduce Aquí Tu Nombre");
         boxEnterName.appendChild(input);
 
         let button = document.createElement("button");
@@ -255,13 +222,17 @@ export default function gameUI() {
         userNameIntroduced = document.getElementById("enter--name--input");
         enterNameButton = document.getElementById('enter--name--button');
 
-        //TODO
-        // setClickEventListener(enterNameButton, () => gameOverState());
+
+        setClickEventListener(enterNameButton, function () {
+            let user = getUserNameIntroduced();
+            action(user);
+        });
     }
 
-    function getUserNameIntroduced(){
+    function getUserNameIntroduced() {
         return userNameIntroduced.value;
     }
+
     function renderStatistics() {
         let boxStatistic = document.createElement("div");
         boxStatistic.setAttribute("id", "statistics__container");
@@ -283,13 +254,13 @@ export default function gameUI() {
 
         boxScores.appendChild(title);
 
-        if(scores){
+        if (scores) {
             let orderList = document.createElement('lo')
 
-            scores.forEach(function(score) {
+            scores.forEach(function (score) {
                 let element = document.createElement('li');
                 let text = score.score + " - " + score.name;
-                setElementText(element,text);
+                setElementText(element, text);
 
                 orderList.appendChild(element);
             });
@@ -318,7 +289,7 @@ export default function gameUI() {
         intro.appendChild(ul);
     }
 
-    function renderStartButton(){
+    function renderStartButton(action) {
         let buttonStart = document.createElement("button");
         buttonStart.setAttribute("type", "button");
         buttonStart.setAttribute("id", "start--button");
@@ -327,6 +298,8 @@ export default function gameUI() {
         intro.appendChild(buttonStart);
 
         startButton = document.getElementById('start--button');
+
+        setClickEventListener(startButton, action);
     }
 
     return {
@@ -338,6 +311,5 @@ export default function gameUI() {
         setClock,
         setScore,
         getSelectedAnswer,
-
     }
 }

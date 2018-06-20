@@ -35,6 +35,7 @@ export default function createGame(createQuestionsNavigator, client) {
 
 
     function handlerEventOnEnterName(name){//TODO Guardar Name y devolver array ordenado
+
         gameScores.addScore({name:name,score:gameScore.getScore()});
 
 
