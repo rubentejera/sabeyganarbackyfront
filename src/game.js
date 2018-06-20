@@ -11,14 +11,15 @@ export default function createGame(createQuestionsNavigator, client) {
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let gameScore = new score();
     let gameScores = new scores();
-    let ui = gameUI();
+    let ui = gameUI(handlerEventOnStartGame, handlerEventOnNextQuestion, handlerEventOnEnterName);
 
     function getQuestionNavigator() {
         return theQuestionNavigator;
     }
 
     function init() {
-        ui.initialState(handlerEventOnStartGame, handlerEventOnNextQuestion, handlerEventOnEnterName);
+        // ui.initialState(handlerEventOnStartGame, handlerEventOnNextQuestion, handlerEventOnEnterName);
+        ui.initialState();
 
         client.getQuestions(function (questions) {
             theQuestionNavigator = createQuestionsNavigator(questions);

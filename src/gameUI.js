@@ -1,4 +1,4 @@
-export default function gameUI() {
+export default function gameUI(startButtonAction, onNextQuestionAction, onEnterName) {
     let questionsContainer;
     let startButton;
     let nextQuestionButton;
@@ -9,21 +9,24 @@ export default function gameUI() {
     let score;
     let intro = document.getElementById('intro');
     let main = document.getElementsByTagName('main')[0];
-    let actionToNextQuestion;
-    let actionToStartButton;
-    let actionToEnterName;//TODO falta parametro name
+    // let actionToNextQuestion;
+    // let actionToStartButton;
+    // let actionToEnterName;
+    let actionToStartButton = startButtonAction;
+    let actionToNextQuestion = onNextQuestionAction;
+    let actionToEnterName = onEnterName;
 
     function setClickEventListener(element, action) {
         element.addEventListener('click', action);
     }
 
-    function initialState(startButtonAction, onNextQuestionAction, onEnterName) {
-        actionToStartButton = startButtonAction;
-        actionToNextQuestion = onNextQuestionAction;
-        actionToEnterName = onEnterName;
+    // function initialState(startButtonAction, onNextQuestionAction, onEnterName) {
+    function initialState() {
+        // actionToStartButton = startButtonAction;
+        // actionToNextQuestion = onNextQuestionAction;
+        // actionToEnterName = onEnterName;
         deleteAllChildrenOf(main);
-        renderIntro();
-        renderStartButton(actionToStartButton);
+        renderIntro(actionToStartButton);
     }
 
     function startedState(question) {
@@ -60,11 +63,11 @@ export default function gameUI() {
 
     }
 
-    function renderNextQuestion(question){
+    function renderNextQuestion(question) {
         let questionTitle = document.createElement("H3");
         questionTitle.setAttribute('id', question.id);
         questionTitle.setAttribute('class', 'question--title');
-        setElementText(questionTitle, question.title);
+        setTextToDomElement(questionTitle, question.title);
 
         let ul = document.createElement("ul");
         ul.setAttribute("id", "answer--list");
@@ -93,7 +96,7 @@ export default function gameUI() {
         }
 
         let description = document.createElement("p");
-        setElementText(description, "Selecciona la respuesta que creas correcta");
+        setTextToDomElement(description, "Selecciona la respuesta que creas correcta");
 
         questionsContainer.appendChild(questionTitle);
         questionsContainer.appendChild(ul);
@@ -101,17 +104,17 @@ export default function gameUI() {
     }
 
 
-    function setElementText(element, text) {
+    function setTextToDomElement(element, text) {
         element.innerHTML = text;
     }
 
     function setClock(text) {
-        setElementText(clock, text);
+        setTextToDomElement(clock, text);
     }
 
 
     function setScore(actualScore) {
-        setElementText(score, actualScore);
+        setTextToDomElement(score, actualScore);
     }
 
 
@@ -135,11 +138,11 @@ export default function gameUI() {
 
     function renderClock() {
         let title = document.createElement("H3");
-        setElementText(title, "TIEMPO RESTANTE:");
+        setTextToDomElement(title, "TIEMPO RESTANTE:");
 
         let clockValue = document.createElement("span");
         clockValue.setAttribute("id", "clock");
-        setElementText(clockValue, 12);
+        setTextToDomElement(clockValue, 12);
 
         main.appendChild(title);
         main.appendChild(clockValue);
@@ -158,11 +161,11 @@ export default function gameUI() {
 
     function renderScore() {
         let title = document.createElement("H3");
-        setElementText(title, "Puntuacion:");
+        setTextToDomElement(title, "Puntuacion:");
 
         let scoreValue = document.createElement("H3");
         scoreValue.setAttribute("class", "result--score");
-        setElementText(scoreValue, 0);
+        setTextToDomElement(scoreValue, 0);
 
         main.appendChild(title);
         main.appendChild(scoreValue);
@@ -173,7 +176,7 @@ export default function gameUI() {
     function renderPlayAgain() {
         let button = document.createElement("button");
         button.setAttribute("id", "retry--start--button");
-        setElementText(button, "Volver a Jugar");
+        setTextToDomElement(button, "Volver a Jugar");
 
         main.appendChild(button);
 
@@ -187,7 +190,7 @@ export default function gameUI() {
     function renderNextQuestionButton(action) {
         let button = document.createElement("button");
         button.setAttribute("id", "next--question--button");
-        setElementText(button, "Pasa a la siguiente pregunta");
+        setTextToDomElement(button, "Pasa a la siguiente pregunta");
 
         main.appendChild(button);
 
@@ -201,7 +204,7 @@ export default function gameUI() {
         boxEnterName.setAttribute("id", "entername__container");
 
         let title = document.createElement("H2");
-        setElementText(title, "Completa tu Nombre Para Ver Los Resultados");
+        setTextToDomElement(title, "Completa tu Nombre Para Ver Los Resultados");
         boxEnterName.appendChild(title);
 
         let input = document.createElement("input");
@@ -213,7 +216,7 @@ export default function gameUI() {
 
         let button = document.createElement("button");
         button.setAttribute("id", "enter--name--button");
-        setElementText(button, "Ok");
+        setTextToDomElement(button, "Ok");
 
         boxEnterName.appendChild(button);
         main.appendChild(boxEnterName);
@@ -238,7 +241,7 @@ export default function gameUI() {
         boxStatistic.setAttribute("id", "statistics__container");
 
         let title = document.createElement("H2");
-        setElementText(title, "ESTADISTICAS");
+        setTextToDomElement(title, "ESTADISTICAS");
         boxStatistic.appendChild(title);
 
         main.appendChild(boxStatistic);
@@ -250,7 +253,7 @@ export default function gameUI() {
         boxScores.setAttribute("id", "scores__container");
 
         let title = document.createElement("H2");
-        setElementText(title, "MARCADORES");
+        setTextToDomElement(title, "MARCADORES");
 
         boxScores.appendChild(title);
 
@@ -260,40 +263,37 @@ export default function gameUI() {
             scores.forEach(function (score) {
                 let element = document.createElement('li');
                 let text = score.score + " - " + score.name;
-                setElementText(element, text);
+                setTextToDomElement(element, text);
 
                 orderList.appendChild(element);
             });
 
             boxScores.appendChild(orderList);
         }
-
         main.appendChild(boxScores);
     }
 
-    function renderIntro() {
+    function renderIntro(action) {
         const INTROTEXTS = [
             "Tienes 12 segundos para responder cada pregunta",
             "La puntuación depende del tiempo que tardes en contestar",
             "Las respuestas incorrectas y las preguntas que no se respondan restan puntos"
-        ]
+        ];
 
         let ul = document.createElement("ul");
 
         for (let numText = 0; numText < INTROTEXTS.length; numText++) {
             let li = document.createElement("li");
-            setElementText(li, INTROTEXTS[numText]);
+            setTextToDomElement(li, INTROTEXTS[numText]);
             ul.appendChild(li);
         }
 
         intro.appendChild(ul);
-    }
 
-    function renderStartButton(action) {
         let buttonStart = document.createElement("button");
         buttonStart.setAttribute("type", "button");
         buttonStart.setAttribute("id", "start--button");
-        setElementText(buttonStart, "Comenzar a Jugar");
+        setTextToDomElement(buttonStart, "Comenzar a Jugar");
 
         intro.appendChild(buttonStart);
 
@@ -301,6 +301,7 @@ export default function gameUI() {
 
         setClickEventListener(startButton, action);
     }
+
 
     return {
         initialState,
