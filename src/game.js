@@ -76,7 +76,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
                     recalculateScoreIfSuccess(currentTimer);
 
                 } else {
-                    recalculateScoreIfFails(currentTimer);
+                    recalculateScoreIfFail(currentTimer);
                 }
 
                 goToNextQuestion();
@@ -86,7 +86,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
             }
 
         } else {
-            recalculateScoreIfDontAnswer();
+            recalculateScoreIfNoReply();
             goToNextQuestion();
         }
 
@@ -129,24 +129,22 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         }
     }
 
-    function recalculateScoreIfFails(time) {
+    function recalculateScoreIfFail(time) {
         if (time <= gameRules().maxTimeQuickReply) {
             gameScore.decrement(gameRules().pointsToSubtractQuickReplyFail);
 
         } else {
             gameScore.decrement(gameRules().pointsToSubtractNormalReplyFail);
-
         }
     }
 
-    function recalculateScoreIfDontAnswer() {
+    function recalculateScoreIfNoReply() {
         gameScore.decrement(gameRules().pointsToSubtractNoReply);
     }
 
     function allQuestionsCompleted() {
         questionTimer.stop();
         ui.allQuestionsCompletedState();
-        // ui.finishState();
     }
 
 
