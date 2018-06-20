@@ -42,12 +42,12 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         renderEnterName(actionToEnterName);
     }
 
-    function gameOverState(scores, statistics) {
+    function gameOverState(ranking, statistics) {
         deleteAllChildrenOf(main);
         renderPlayAgain();
 
-        if (scores) {
-            renderScores(scores);
+        if (ranking) {
+            renderRanking(ranking);
         }
 
         if (statistics) {
@@ -157,13 +157,13 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         setTextToDomElement(title, "Puntuacion:");
 
         let scoreValue = document.createElement("H3");
-        scoreValue.setAttribute("class", "result--score");
+        scoreValue.setAttribute("id", "result--score");
         setTextToDomElement(scoreValue, 0);
 
         main.appendChild(title);
         main.appendChild(scoreValue);
 
-        score = document.querySelector('.result--score');
+        score = document.getElementById('result--score');
     }
 
     function renderPlayAgain() {
@@ -241,29 +241,29 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
     }
 
 
-    function renderScores(scores) {
-        let boxScores = document.createElement("div");
-        boxScores.setAttribute("id", "scores__container");
+    function renderRanking(ranking) {
+        let boxRanking = document.createElement("div");
+        boxRanking.setAttribute("id", "ranking__container");
 
         let title = document.createElement("H2");
-        setTextToDomElement(title, "MARCADORES");
+        setTextToDomElement(title, "RANKING");
 
-        boxScores.appendChild(title);
+        boxRanking.appendChild(title);
 
-        if (scores) {
+        if (ranking) {
             let orderList = document.createElement('lo')
 
-            scores.forEach(function (score) {
-                let element = document.createElement('li');
-                let text = score.score + " - " + score.name;
-                setTextToDomElement(element, text);
+            ranking.forEach(function (position) {
+                let listItem = document.createElement('li');
+                let text = position.score + " - " + position.name;
+                setTextToDomElement(listItem, text);
 
-                orderList.appendChild(element);
+                orderList.appendChild(listItem);
             });
 
-            boxScores.appendChild(orderList);
+            boxRanking.appendChild(orderList);
         }
-        main.appendChild(boxScores);
+        main.appendChild(boxRanking);
     }
 
     function renderIntro(action) {

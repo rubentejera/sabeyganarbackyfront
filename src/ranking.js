@@ -1,13 +1,13 @@
-export default function scores() {
-    let scores = [];
+export default function ranking() {
+    let ranking = [];
 
-    function getScores() {
-        return scores;
+    function getRanking() {
+        return ranking;
     }
 
     function addScore(score){
-        scores.push(score);
-        scores = scores.sort(sortFromHighestToLowestByProperty('score'));
+        ranking.push(score);
+        ranking = ranking.sort(sortFromHighestToLowestByProperty('score'));
     }
 
 
@@ -18,7 +18,7 @@ export default function scores() {
     };
 
     return {
-        getScores,
+        getRanking,
         addScore,
     }
 }

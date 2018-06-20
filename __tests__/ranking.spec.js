@@ -1,41 +1,41 @@
-import scores from "../src/scores";
+import ranking from "../src/ranking";
 
-describe("Scores", function () {
-    let scoresTest;
+describe("Ranking", function () {
+    let rankingTest;
 
     beforeEach(function () {
-        scoresTest = new scores();
-        addRandomScores();
+        rankingTest = new ranking();
+        addRandomScoresToRanking();
     });
 
 
     it("should return some scores", function () {
-        expect(scoresTest.getScores()).not.toBe(null);
+        expect(rankingTest.getRanking()).not.toBe(null);
     });
 
     it("should return some scores ordered", function () {
-        expect(scoresTest.getScores()).toEqual(scoresOrderedByScore);
+        expect(rankingTest.getRanking()).toEqual(rankingOrderedByScore);
     });
 
 
-    function addRandomScores() {
-        scoresTest.addScore({
+    function addRandomScoresToRanking() {
+        rankingTest.addScore({
             name: "Pepe",
             score: 10
         });
 
-        scoresTest.addScore({
+        rankingTest.addScore({
             name: "Juan",
             score: 9
         });
 
-        scoresTest.addScore({
+        rankingTest.addScore({
             name: "Maria",
             score: 13
         });
     }
 
-    let scoresOrderedByScore = [
+    let rankingOrderedByScore = [
         {
             name: "Maria",
             score: 13

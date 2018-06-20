@@ -205,24 +205,24 @@ describe("the game", function () {
         });
     });
 
-    describe("scores", function () {
+    describe("ranking", function () {
 
-        it("shouldn't be show the scores if the game is started", function () {
+        it("shouldn't be show the ranking if the game is started", function () {
             startGame();
-            expect(getScores()).toBe(null);
+            expect(getRanking()).toBe(null);
         });
 
-        it("should be show the scores if the game is finished", function () {
+        it("should be show the ranking if the game is finished", function () {
             startGame();
             application.allQuestionsCompleted();
-            expect(getScores()).not.toBe(null);
+            expect(getRanking()).not.toBe(null);
         });
 
-        it("should be show the current game on the scores", function () {
+        it("should be show the current game on the ranking", function () {
             startGame();
             completeAllAnswer();
             enterNameAtTheEndOfTheGame('Rubén');
-            expect(getNumberOfScoresShowing()).toEqual(1);
+            expect(getNumberOfElementOnRanking()).toEqual(1);
         });
 
 
@@ -287,19 +287,19 @@ describe("the game", function () {
     }
 
     function getScore() {
-        return document.querySelector(".result--score");
+        return document.getElementById("result--score");
     }
 
     function getStatistics() {
         return document.getElementById("statistics__container");
     }
 
-    function getScores() {
-        return document.getElementById("scores__container");
+    function getRanking() {
+        return document.getElementById("ranking__container");
     }
 
-    function getNumberOfScoresShowing(){
-        return document.getElementById("scores__container").childElementCount;
+    function getNumberOfElementOnRanking(){
+        return document.getElementById("ranking__container").childElementCount;
     }
 
     function selectAnswer(num) {
@@ -319,11 +319,7 @@ describe("the game", function () {
     }
 
     function checkAnswer(currentQuestion, selectedAnswer) {
-        if (currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id)) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
     }
 
     function goToNextQuestion() {
