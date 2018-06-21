@@ -112,6 +112,8 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         }
     }
 
+
+
     function isAnswerCorrect(currentQuestion, selectedAnswer) {
         return currentQuestion.correctAnswer.id === parseInt(selectedAnswer.id);
     }

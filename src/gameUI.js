@@ -252,6 +252,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
 
         if (ranking) {
             let orderList = document.createElement('lo')
+            orderList.setAttribute("id","order--list--ranking");
 
             ranking.forEach(function (position) {
                 let listItem = document.createElement('li');

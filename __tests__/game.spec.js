@@ -190,7 +190,8 @@ describe("the game", function () {
             });
 
             it("should be show the statistics if the game is finished", function () {
-                application.allQuestionsCompleted();
+                completeAllAnswer();
+                completeNameToRanking("Ruben");
                 expect(getStatistics()).not.toBe(null);
             });
         });
@@ -202,18 +203,33 @@ describe("the game", function () {
             });
 
             it("should be show the ranking if the game is finished", function () {
-                application.allQuestionsCompleted();
+                completeAllAnswer();
+                completeNameToRanking("Ruben");
                 expect(getRanking()).not.toBe(null);
             });
 
             it("should be show the current game on the ranking", function () {
                 completeAllAnswer();
-                enterNameAtTheEndOfTheGame('Rubén');
-                expect(getNumberOfElementOnRanking()).toEqual(1);
+                completeNameToRanking("Ruben");
+                expect(getNumberOfElementOnRankingList()).toEqual(1);
             });
 
 
         });
+
+
+
+        function setTextToDomElement(element, text) {
+            element.innerHTML = text;
+        }
+
+        function completeNameToRanking(name){
+            let inputName = document.getElementById('enter--name--input');
+            setTextToDomElement(inputName,name);
+
+            let buttonConfirmName = document.getElementById('enter--name--button');
+            buttonConfirmName.click();
+        }
 
         function completeAllAnswer() {
             selectFirstCorrectAnswer();
@@ -285,8 +301,8 @@ describe("the game", function () {
             return document.getElementById("ranking__container");
         }
 
-        function getNumberOfElementOnRanking() {
-            return document.getElementById("ranking__container").childElementCount;
+        function getNumberOfElementOnRankingList() {
+            return document.getElementById("order--list--ranking").childElementCount;
         }
 
         function selectAnswer(num) {
