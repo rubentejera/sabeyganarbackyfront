@@ -203,21 +203,38 @@ describe("the game", function () {
             });
 
             it("should be show the ranking if the game is finished", function () {
-                completeAllAnswer();
-                completeNameToRanking("Ruben");
+                completeGameOnce("Ruben");
                 expect(getRanking()).not.toBe(null);
             });
 
             it("should be show the current game on the ranking", function () {
-                completeAllAnswer();
-                completeNameToRanking("Ruben");
+                completeGameOnce("Ruben");
                 expect(getNumberOfElementOnRankingList()).toEqual(1);
+            });
+
+            it("should be show two results on the ranking", function () {
+                completeGameOnce("Ruben");
+                playAgain();
+                startGame();
+                completeGameOnce("Pepe");
+                expect(getNumberOfElementOnRankingList()).toEqual(2);
             });
 
 
         });
 
 
+        function completeGameOnce(name){
+            completeAllAnswer();
+            completeNameToRanking(name);
+        }
+
+        function playAgain(){
+            let buttonPlayAgain = document.getElementById('retry--start--button');
+            buttonPlayAgain.click();
+
+
+        }
 
         function setTextToDomElement(element, text) {
             element.innerHTML = text;
