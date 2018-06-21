@@ -194,6 +194,16 @@ describe("the game", function () {
                 completeNameToRanking("Ruben");
                 expect(getStatistics()).not.toBe(null);
             });
+
+            it("should be show the current game on the statistics", function () {
+                completeGameOnce("Ruben");
+                expect(getCorrectQuestionOnStatistics()).not.toEqual(null);
+                expect(getPercentageCorrectQuestionOnStatistics()).not.toEqual(null);
+                expect(getWrongQuestionOnStatistics()).not.toEqual(null);
+                expect(getPercentageWrongQuestionOnStatistics()).not.toEqual(null);
+                expect(getAverageTimePerQuestionOnStatistics()).not.toEqual(null);
+                expect(getTotalTimeAllGameOnStatistics()).not.toEqual(null);
+            });
         });
 
         describe("ranking", function () {
@@ -224,25 +234,23 @@ describe("the game", function () {
         });
 
 
-        function completeGameOnce(name){
+        function completeGameOnce(name) {
             completeAllAnswer();
             completeNameToRanking(name);
         }
 
-        function playAgain(){
+        function playAgain() {
             let buttonPlayAgain = document.getElementById('retry--start--button');
             buttonPlayAgain.click();
-
-
         }
 
         function setTextToDomElement(element, text) {
             element.innerHTML = text;
         }
 
-        function completeNameToRanking(name){
+        function completeNameToRanking(name) {
             let inputName = document.getElementById('enter--name--input');
-            setTextToDomElement(inputName,name);
+            setTextToDomElement(inputName, name);
 
             let buttonConfirmName = document.getElementById('enter--name--button');
             buttonConfirmName.click();
