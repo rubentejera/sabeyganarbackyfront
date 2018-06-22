@@ -195,14 +195,14 @@ describe("the game", function () {
                 expect(getStatistics()).not.toBe(null);
             });
 
-            it("should be show the current game on the statistics", function () {
+            fit("should be show the current game on the statistics", function () {
                 completeGameOnce("Ruben");
                 expect(getSuccessAnswerOnStatistics()).not.toEqual(null);
                 expect(getPercentageSuccessAnswerOnStatistics()).not.toEqual(null);
-                // expect(getFailAnswersOnStatistics()).not.toEqual(null);
-                // expect(getPercentageFailAnswerOnStatistics()).not.toEqual(null);
-                // expect(getAverageTimePerQuestionOnStatistics()).not.toEqual(null);
-                // expect(getTotalTimeAllGameOnStatistics()).not.toEqual(null);
+                expect(getFailAnswersOnStatistics()).not.toEqual(null);
+                expect(getPercentageFailAnswerOnStatistics()).not.toEqual(null);
+                expect(getAverageTimePerQuestionOnStatistics()).not.toEqual(null);
+                expect(getTotalTimeAllGameOnStatistics()).not.toEqual(null);
             });
         });
 
@@ -233,7 +233,6 @@ describe("the game", function () {
 
         });
 
-
         function getSuccessAnswerOnStatistics() {
             return document.getElementById("success-answers").innerText;
         }
@@ -245,18 +244,18 @@ describe("the game", function () {
         function getFailAnswersOnStatistics(){
             return document.getElementById("fail-answers").innerText;
         }
-        //
-        // function getPercentageFailAnswerOnStatistics(){
-        //
-        // }
-        //
-        // function getAverageTimePerQuestionOnStatistics(){
-        //
-        // }
-        //
-        // function getTotalTimeAllGameOnStatistics(){
-        //
-        // }
+
+        function getPercentageFailAnswerOnStatistics(){
+            return document.getElementById("percent-fail-answers").innerText;
+        }
+
+        function getAverageTimePerQuestionOnStatistics(){
+            return document.getElementById("avg-per-question").innerText;
+        }
+
+        function getTotalTimeAllGameOnStatistics(){
+            return document.getElementById("total-time").innerText;
+        }
 
         function completeGameOnce(name) {
             completeAllAnswer();
