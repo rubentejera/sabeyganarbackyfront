@@ -34,7 +34,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
     }
 
 
-    function handlerEventOnEnterName(name) {//TODO Guardar Name y devolver array ordenado
+    function handlerEventOnEnterName(name) {//TODO Statistics
 
         gameRanking.addScore({name: name, score: gameScore.getScore()});
 
@@ -71,6 +71,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         let currentTimer = getTimeElapsed();
 
         if (recalculateScore(currentQuestion, selectedAnswer, currentTimer)) {
+            // recalculateStatistic(preguntaAcertadaOIncorrecta, )
             goToNextQuestion();
         } else {
             //TODO Manejar Error
