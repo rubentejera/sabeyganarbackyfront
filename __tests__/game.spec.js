@@ -32,7 +32,7 @@ describe("the game", function () {
 
     describe("before start game", function () {
         it('should show the start button when start game', function () {
-            expect(document.getElementById('start--button')).not.toBeNull();
+            expect(document.getElementById('start-button')).not.toBeNull();
         });
     });
 
@@ -195,11 +195,11 @@ describe("the game", function () {
                 expect(getStatistics()).not.toBe(null);
             });
 
-            fit("should be show the current game on the statistics", function () {
+            it("should be show the current game on the statistics", function () {
                 completeGameOnce("Ruben");
                 expect(getSuccessAnswerOnStatistics()).not.toEqual(null);
-                // expect(getPercentageSuccessAnswerOnStatistics()).not.toEqual(null);
-                // expect(getFailAnswerOnStatistics()).not.toEqual(null);
+                expect(getPercentageSuccessAnswerOnStatistics()).not.toEqual(null);
+                // expect(getFailAnswersOnStatistics()).not.toEqual(null);
                 // expect(getPercentageFailAnswerOnStatistics()).not.toEqual(null);
                 // expect(getAverageTimePerQuestionOnStatistics()).not.toEqual(null);
                 // expect(getTotalTimeAllGameOnStatistics()).not.toEqual(null);
@@ -235,16 +235,16 @@ describe("the game", function () {
 
 
         function getSuccessAnswerOnStatistics() {
-            return document.getElementById("correct--answer").innerText;
+            return document.getElementById("success-answers").innerText;
         }
 
-        // function getPercentageSuccessAnswerOnStatistics(){
-        //
-        // }
-        //
-        // function getFailAnswerOnStatistics(){
-        //
-        // }
+        function getPercentageSuccessAnswerOnStatistics(){
+            return document.getElementById("percent-success-answers").innerText;
+        }
+
+        function getFailAnswersOnStatistics(){
+            return document.getElementById("fail-answers").innerText;
+        }
         //
         // function getPercentageFailAnswerOnStatistics(){
         //
@@ -264,7 +264,7 @@ describe("the game", function () {
         }
 
         function playAgain() {
-            let buttonPlayAgain = document.getElementById('retry--start--button');
+            let buttonPlayAgain = document.getElementById('retry-start-button');
             buttonPlayAgain.click();
         }
 
@@ -273,10 +273,10 @@ describe("the game", function () {
         }
 
         function completeNameToRanking(name) {
-            let inputName = document.getElementById('enter--name--input');
+            let inputName = document.getElementById('enter-name-input');
             setTextToDomElement(inputName, name);
 
-            let buttonConfirmName = document.getElementById('enter--name--button');
+            let buttonConfirmName = document.getElementById('enter-name-button');
             buttonConfirmName.click();
         }
 
@@ -320,7 +320,7 @@ describe("the game", function () {
         }
 
         function getQuestionTitleElement() {
-            return document.querySelector('.question--title');
+            return document.querySelector('.question-title');
         }
 
         function expectFirstQuestionToBeRendered() {
@@ -329,7 +329,7 @@ describe("the game", function () {
         }
 
         function startGame() {
-            let buttonStart = document.getElementById('start--button');
+            let buttonStart = document.getElementById('start-button');
             buttonStart.click();
             expectFirstQuestionToBeRendered();
         }
@@ -339,19 +339,19 @@ describe("the game", function () {
         }
 
         function getScore() {
-            return document.getElementById("result--score");
+            return document.getElementById("result-score");
         }
 
         function getStatistics() {
-            return document.getElementById("statistics__container");
+            return document.getElementById("statistics-container");
         }
 
         function getRanking() {
-            return document.getElementById("ranking__container");
+            return document.getElementById("ranking-container");
         }
 
         function getNumberOfElementOnRankingList() {
-            return document.getElementById("order--list--ranking").childElementCount;
+            return document.getElementById("order-list-ranking").childElementCount;
         }
 
         function selectAnswer(num) {
@@ -375,7 +375,7 @@ describe("the game", function () {
         }
 
         function goToNextQuestion() {
-            let nextQuestionButton = document.getElementById('next--question--button');
+            let nextQuestionButton = document.getElementById('next-question-button');
             nextQuestionButton.click();
         }
 

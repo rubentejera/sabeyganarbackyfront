@@ -59,15 +59,15 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
     function renderNextQuestion(question) {
         let questionTitle = document.createElement("H3");
         questionTitle.setAttribute('id', question.id);
-        questionTitle.setAttribute('class', 'question--title');
+        questionTitle.setAttribute('class', 'question-title');
         setTextToDomElement(questionTitle, question.title);
 
         let ul = document.createElement("ul");
-        ul.setAttribute("id", "answer--list");
+        ul.setAttribute("id", "answer-list");
 
         for (let i = 0; i < question.answers.length; i++) {
             let li = document.createElement("li");
-            li.setAttribute("class", "answer--option");
+            li.setAttribute("class", "answer-option");
 
             let input = document.createElement("input");
             input.setAttribute("type", "radio");
@@ -78,7 +78,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
 
 
             let label = document.createElement("label");
-            label.setAttribute("class", "question--answer");
+            label.setAttribute("class", "question-answer");
 
             let answerText = document.createTextNode(question.answers[i].answer);
 
@@ -145,11 +145,11 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
 
     function renderQuestions() {
         let boxQuestions = document.createElement("div");
-        boxQuestions.setAttribute("id", "questions__container");
+        boxQuestions.setAttribute("id", "questions-container");
 
         main.appendChild(boxQuestions);
 
-        questionsContainer = document.getElementById("questions__container");
+        questionsContainer = document.getElementById("questions-container");
     }
 
     function renderScore() {
@@ -157,23 +157,23 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         setTextToDomElement(title, "Puntuacion:");
 
         let scoreValue = document.createElement("H3");
-        scoreValue.setAttribute("id", "result--score");
+        scoreValue.setAttribute("id", "result-score");
         setTextToDomElement(scoreValue, 0);
 
         main.appendChild(title);
         main.appendChild(scoreValue);
 
-        score = document.getElementById('result--score');
+        score = document.getElementById('result-score');
     }
 
     function renderPlayAgain() {
         let button = document.createElement("button");
-        button.setAttribute("id", "retry--start--button");
+        button.setAttribute("id", "retry-start-button");
         setTextToDomElement(button, "Volver a Jugar");
 
         main.appendChild(button);
 
-        playAgainButton = document.getElementById('retry--start--button');
+        playAgainButton = document.getElementById('retry-start-button');
 
         setClickEventListener(playAgainButton, () =>
             initialState(actionToStartButton, actionToNextQuestion, actionToEnterName)
@@ -182,41 +182,41 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
 
     function renderNextQuestionButton(action) {
         let button = document.createElement("button");
-        button.setAttribute("id", "next--question--button");
+        button.setAttribute("id", "next-question-button");
         setTextToDomElement(button, "Pasa a la siguiente pregunta");
 
         main.appendChild(button);
 
-        nextQuestionButton = document.getElementById('next--question--button');
+        nextQuestionButton = document.getElementById('next-question-button');
 
         setClickEventListener(nextQuestionButton, action);
     }
 
     function renderEnterName(action) {
         let boxEnterName = document.createElement("div");
-        boxEnterName.setAttribute("id", "entername__container");
+        boxEnterName.setAttribute("id", "entername-container");
 
         let title = document.createElement("H2");
         setTextToDomElement(title, "Completa tu Nombre Para Ver Los Resultados");
         boxEnterName.appendChild(title);
 
         let input = document.createElement("input");
-        input.setAttribute("id", "enter--name--input");
+        input.setAttribute("id", "enter-name-input");
         input.setAttribute("type", "text");
         input.setAttribute("maxlength", "30");
         input.setAttribute("placeholder", "Introduce Aquí Tu Nombre");
         boxEnterName.appendChild(input);
 
         let button = document.createElement("button");
-        button.setAttribute("id", "enter--name--button");
+        button.setAttribute("id", "enter-name-button");
         setTextToDomElement(button, "Ok");
 
         boxEnterName.appendChild(button);
         main.appendChild(boxEnterName);
 
 
-        userNameIntroduced = document.getElementById("enter--name--input");
-        enterNameButton = document.getElementById('enter--name--button');
+        userNameIntroduced = document.getElementById("enter-name-input");
+        enterNameButton = document.getElementById('enter-name-button');
 
 
         setClickEventListener(enterNameButton, function () {
@@ -230,38 +230,42 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
     }
 
     function renderStatistics() {
-        let boxStatistic = document.createElement("div");
-        boxStatistic.setAttribute("id", "statistics__container");
+        let boxStatistics = document.createElement("div");
+        boxStatistics.setAttribute("id", "statistics-container");
 
         let title = document.createElement("H2");
         setTextToDomElement(title, "ESTADISTICAS");
-        boxStatistic.appendChild(title);
+        boxStatistics.appendChild(title);
 
-        renderCorrectAnswersStatistics(boxStatistic);//TODO
-        main.appendChild(boxStatistic);
+
+
+        renderDetailsStatistics("success-answers","PREGUNTAS CORRECTAS","valor de prueba",boxStatistics);//TODO
+        renderDetailsStatistics("percent-success-answers","% PREGUNTAS CORRECTAS","valor de prueba",boxStatistics);//TODO
+
+        main.appendChild(boxStatistics);
     }
 
-    function renderCorrectAnswersStatistics(boxStatistic){
-        let boxCorrectAnswer = document.createElement("div");
-        boxCorrectAnswer.setAttribute("id", "correct__answer__statistics__container");
+    function renderDetailsStatistics(nameDetail,titleValue,dataValue,boxStatistics){
+        let boxPercentSucessAnswers = document.createElement("div");
+        boxPercentSucessAnswers.setAttribute("id", `${nameDetail}__statistics-container`);
 
-        let title = document.createElement("H4");
-        setTextToDomElement(title, "PREGUNTAS CORRECTAS");
-        boxCorrectAnswer.appendChild(title);
+        let title = document.createElement("H5");
+        setTextToDomElement(title, `${titleValue}`);
+        boxPercentSucessAnswers.appendChild(title);
 
         let value = document.createElement("p");
-        boxCorrectAnswer.setAttribute("id", "correct--answer");
+        boxPercentSucessAnswers.setAttribute("id",`${nameDetail}`);
 
-        setTextToDomElement(value, "valor de prueba");//TODO get Correct Answer
-        boxCorrectAnswer.appendChild(value);
+        setTextToDomElement(value, `${dataValue}`);
+        boxPercentSucessAnswers.appendChild(value);
 
-        boxStatistic.appendChild(boxCorrectAnswer);
+        boxStatistics.appendChild(boxPercentSucessAnswers);
     }
 
 
     function renderRanking(ranking) {
         let boxRanking = document.createElement("div");
-        boxRanking.setAttribute("id", "ranking__container");
+        boxRanking.setAttribute("id", "ranking-container");
 
         let title = document.createElement("H2");
         setTextToDomElement(title, "RANKING");
@@ -270,7 +274,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
 
         if (ranking) {
             let orderList = document.createElement('lo')
-            orderList.setAttribute("id","order--list--ranking");
+            orderList.setAttribute("id","order-list-ranking");
 
             ranking.forEach(function (position) {
                 let listItem = document.createElement('li');
@@ -304,12 +308,12 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
 
         let buttonStart = document.createElement("button");
         buttonStart.setAttribute("type", "button");
-        buttonStart.setAttribute("id", "start--button");
+        buttonStart.setAttribute("id", "start-button");
         setTextToDomElement(buttonStart, "Comenzar a Jugar");
 
         intro.appendChild(buttonStart);
 
-        startButton = document.getElementById('start--button');
+        startButton = document.getElementById('start-button');
 
         setClickEventListener(startButton, action);
     }
