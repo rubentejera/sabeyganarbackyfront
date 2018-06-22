@@ -14,6 +14,11 @@ describe("Statistic", function () {
     });
 
 
+    it("should not return any data", function () {
+        statisticTest.restart();
+        expect(statisticTest.getAllData()).not.toBe(null);
+    });
+
     function addRandomDataToStatistic() {
         statisticTest.addData({
             idQuestion:1,
