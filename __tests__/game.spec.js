@@ -195,7 +195,7 @@ describe("the game", function () {
                 expect(getStatistics()).not.toBe(null);
             });
 
-            fit("should be show the current game on the statistics", function () {
+            it("should be show the current game on the statistics", function () {
                 completeGameOnce("Ruben");
                 expect(getSuccessAnswerOnStatistics()).not.toEqual(null);
                 expect(getPercentageSuccessAnswerOnStatistics()).not.toEqual(null);

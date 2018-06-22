@@ -34,9 +34,9 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
     }
 
 
-    function handlerEventOnEnterName(name){//TODO Guardar Name y devolver array ordenado
+    function handlerEventOnEnterName(name) {//TODO Guardar Name y devolver array ordenado
 
-        gameRanking.addScore({name:name,score:gameScore.getScore()});
+        gameRanking.addScore({name: name, score: gameScore.getScore()});
 
 
         let statisticsExample = [
@@ -54,7 +54,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
             }
         ];
 
-        ui.gameOverState(gameRanking.getRanking(),statisticsExample);
+        ui.gameOverState(gameRanking.getRanking(), statisticsExample);
     }
 
     function handlerEventOnStartGame() {
@@ -70,6 +70,16 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
 
+        if (recalculateScore(currentQuestion, selectedAnswer, currentTimer)) {
+            goToNextQuestion();
+        } else {
+            //TODO Manejar Error
+        }
+
+    }
+
+
+    function recalculateScore(currentQuestion, selectedAnswer, currentTimer) {
         if (questionTimer.get() !== 0) {
             if (selectedAnswer) {
                 if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
@@ -78,19 +88,19 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
                 } else {
                     recalculateScoreIfFail(currentTimer);
                 }
-
-                goToNextQuestion();
+                return true;
 
             } else {
                 console.log("NO DEBERIA PODER ENTRAR AQUI SIN SELECCIONAR UNA OPCION");
+                return false;
             }
 
         } else {
             recalculateScoreIfNoReply();
-            goToNextQuestion();
+            return true;
         }
-
     }
+
 
     function updateUIScore() {
         ui.setScore(gameScore.getScore());
@@ -111,7 +121,6 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
             allQuestionsCompleted();
         }
     }
-
 
 
     function isAnswerCorrect(currentQuestion, selectedAnswer) {

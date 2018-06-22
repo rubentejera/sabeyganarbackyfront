@@ -238,7 +238,6 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         boxStatistics.appendChild(title);
 
 
-
         renderDetailsStatistics("success-answers","PREGUNTAS CORRECTAS","valor de prueba",boxStatistics);//TODO
         renderDetailsStatistics("percent-success-answers","% PREGUNTAS CORRECTAS","valor de prueba",boxStatistics);//TODO
         renderDetailsStatistics("fail-answers","PREGUNTAS INCORRECTAS","valor de prueba",boxStatistics);//TODO
