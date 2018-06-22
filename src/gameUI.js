@@ -237,7 +237,25 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         setTextToDomElement(title, "ESTADISTICAS");
         boxStatistic.appendChild(title);
 
+        renderCorrectAnswersStatistics(boxStatistic);//TODO
         main.appendChild(boxStatistic);
+    }
+
+    function renderCorrectAnswersStatistics(boxStatistic){
+        let boxCorrectAnswer = document.createElement("div");
+        boxCorrectAnswer.setAttribute("id", "correct__answer__statistics__container");
+
+        let title = document.createElement("H4");
+        setTextToDomElement(title, "PREGUNTAS CORRECTAS");
+        boxCorrectAnswer.appendChild(title);
+
+        let value = document.createElement("p");
+        boxCorrectAnswer.setAttribute("id", "correct--answer");
+
+        setTextToDomElement(value, "valor de prueba");//TODO get Correct Answer
+        boxCorrectAnswer.appendChild(value);
+
+        boxStatistic.appendChild(boxCorrectAnswer);
     }
 
 

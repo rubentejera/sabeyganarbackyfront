@@ -195,14 +195,14 @@ describe("the game", function () {
                 expect(getStatistics()).not.toBe(null);
             });
 
-            it("should be show the current game on the statistics", function () {
+            fit("should be show the current game on the statistics", function () {
                 completeGameOnce("Ruben");
-                expect(getCorrectQuestionOnStatistics()).not.toEqual(null);
-                expect(getPercentageCorrectQuestionOnStatistics()).not.toEqual(null);
-                expect(getWrongQuestionOnStatistics()).not.toEqual(null);
-                expect(getPercentageWrongQuestionOnStatistics()).not.toEqual(null);
-                expect(getAverageTimePerQuestionOnStatistics()).not.toEqual(null);
-                expect(getTotalTimeAllGameOnStatistics()).not.toEqual(null);
+                expect(getSuccessAnswerOnStatistics()).not.toEqual(null);
+                // expect(getPercentageSuccessAnswerOnStatistics()).not.toEqual(null);
+                // expect(getFailAnswerOnStatistics()).not.toEqual(null);
+                // expect(getPercentageFailAnswerOnStatistics()).not.toEqual(null);
+                // expect(getAverageTimePerQuestionOnStatistics()).not.toEqual(null);
+                // expect(getTotalTimeAllGameOnStatistics()).not.toEqual(null);
             });
         });
 
@@ -233,6 +233,30 @@ describe("the game", function () {
 
         });
 
+
+        function getSuccessAnswerOnStatistics() {
+            return document.getElementById("correct--answer").innerText;
+        }
+
+        // function getPercentageSuccessAnswerOnStatistics(){
+        //
+        // }
+        //
+        // function getFailAnswerOnStatistics(){
+        //
+        // }
+        //
+        // function getPercentageFailAnswerOnStatistics(){
+        //
+        // }
+        //
+        // function getAverageTimePerQuestionOnStatistics(){
+        //
+        // }
+        //
+        // function getTotalTimeAllGameOnStatistics(){
+        //
+        // }
 
         function completeGameOnce(name) {
             completeAllAnswer();
