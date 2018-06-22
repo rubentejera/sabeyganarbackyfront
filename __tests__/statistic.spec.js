@@ -16,7 +16,7 @@ describe("Statistic", function () {
 
     it("should not return any data", function () {
         statisticTest.restart();
-        expect(statisticTest.getAllData()).not.toBe(null);
+        expect(statisticTest.getAllData()).toEqual([]);
     });
 
     function addRandomDataToStatistic() {

@@ -1,6 +1,11 @@
 export default function statistic() {
     let data = [];
 
+
+    function restart(){
+        data = [];
+    }
+
     function getAllData() {
         return data;
     }
@@ -12,5 +17,6 @@ export default function statistic() {
     return {
         addData,
         getAllData,
+        restart,
     }
 }
