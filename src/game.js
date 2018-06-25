@@ -81,30 +81,21 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
 
 
     function updateStatistic(currentQuestion, selectedAnswer, currentTimer) {
-
-        // console.log("currentQuestion-->",currentQuestion);
-        // console.log("selectedAnswer-->",selectedAnswer);
-
-        let data = {};
-        data['idQuestion'] = currentQuestion.id;
-        data['idCorrectAnswer'] = currentQuestion.correctAnswer.id;
-
+        let newInputToAddOnStatistic = {};
+        newInputToAddOnStatistic['idQuestion'] = currentQuestion.id;
+        newInputToAddOnStatistic['idCorrectAnswer'] = currentQuestion.correctAnswer.id;
 
         if (selectedAnswer) {
-            data['isAnswered'] = true;
-            data['isCorrect'] = isAnswerCorrect(currentQuestion, selectedAnswer);
-            data['idAnswerSelected'] = parseInt(selectedAnswer.id);
+            newInputToAddOnStatistic['isAnswered'] = true;
+            newInputToAddOnStatistic['isCorrect'] = isAnswerCorrect(currentQuestion, selectedAnswer);
+            newInputToAddOnStatistic['idAnswerSelected'] = parseInt(selectedAnswer.id);
         } else {
-            data['isAnswered'] = false;
+            newInputToAddOnStatistic['isAnswered'] = false;
         }
 
+        newInputToAddOnStatistic['elapsedSeconds'] = currentTimer;
 
-        data['score'] = "";//TODO
-
-        data['elapsedSeconds'] = currentTimer;
-
-        // console.log("data-->",data);
-        gameStatistic.addData(data);
+        gameStatistic.addData(newInputToAddOnStatistic);
     }
 
 
