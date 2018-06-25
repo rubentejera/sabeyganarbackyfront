@@ -36,9 +36,9 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
     }
 
 
-    function handlerEventOnEnterName(name) {//TODO Statistics
+    function handlerEventOnEnterName(name) {
         gameRanking.addScore(name, gameScore.getScore());
-
+        //TODO Add Save Statistic with Name --> gameStatistic.save(name)
         ui.gameOverState(gameRanking.getRanking(), gameStatistic.getStatistic());
     }
 
@@ -47,6 +47,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         ui.startGameState(theQuestionNavigator.getCurrentQuestion());
         questionTimer.restart();
         gameScore.restart();
+        gameStatistic.restart();
         updateUIScore();
     }
 
