@@ -229,7 +229,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         return userNameIntroduced.value;
     }
 
-    function renderStatistics() {
+    function renderStatistics(statistic) {//TODO
         let boxStatistics = document.createElement("div");
         boxStatistics.setAttribute("id", "statistics-container");
 
@@ -238,12 +238,12 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         boxStatistics.appendChild(title);
 
 
-        renderDetailsStatistics("success-answers","PREGUNTAS CORRECTAS","valor de prueba",boxStatistics);//TODO
-        renderDetailsStatistics("percent-success-answers","% PREGUNTAS CORRECTAS","valor de prueba",boxStatistics);//TODO
-        renderDetailsStatistics("fail-answers","PREGUNTAS INCORRECTAS","valor de prueba",boxStatistics);//TODO
-        renderDetailsStatistics("percent-fail-answers","% PREGUNTAS INCORRECTAS","valor de prueba",boxStatistics);//TODO
-        renderDetailsStatistics("avg-per-question","TIEMPO MEDIO POR PREGUNTA","valor de prueba",boxStatistics);//TODO
-        renderDetailsStatistics("total-time","TIEMPO TOTAL","valor de prueba",boxStatistics);//TODO
+        renderDetailsStatistics("success-answers","PREGUNTAS CORRECTAS",statistic.successAnswer,boxStatistics);
+        renderDetailsStatistics("percent-success-answers","% PREGUNTAS CORRECTAS",`${statistic.percentSuccessAnswer}%`,boxStatistics);
+        renderDetailsStatistics("fail-answers","PREGUNTAS INCORRECTAS",statistic.failAnswer,boxStatistics);
+        renderDetailsStatistics("percent-fail-answers","% PREGUNTAS INCORRECTAS",`${statistic.percentFailAnswer}%`,boxStatistics);
+        renderDetailsStatistics("avg-per-question","TIEMPO MEDIO POR PREGUNTA",`${statistic.averageTimePerQuestion} seg`,boxStatistics);
+        renderDetailsStatistics("total-time","TIEMPO TOTAL",`${statistic.totalTime} seg`,boxStatistics);
 
         main.appendChild(boxStatistics);
     }
@@ -257,8 +257,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         boxPercentSucessAnswers.appendChild(title);
 
         let value = document.createElement("p");
-        boxPercentSucessAnswers.setAttribute("id",`${nameDetail}`);
-
+        value.setAttribute("id",`${nameDetail}`);
         setTextToDomElement(value, `${dataValue}`);
         boxPercentSucessAnswers.appendChild(value);
 

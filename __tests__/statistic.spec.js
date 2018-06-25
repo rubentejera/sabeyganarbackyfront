@@ -21,7 +21,8 @@ describe("Statistic", function () {
     });
 
     it("should return number of success answers", function () {
-        expect(statisticTest.getSuccessAnswers()).toEqual(3);
+        // expect(statisticTest.getSuccessAnswers()).toEqual(3);
+        expect(statisticTest.getStatistic().successAnswer).toEqual(3);
     });
 
 

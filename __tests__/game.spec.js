@@ -190,8 +190,7 @@ describe("the game", function () {
             });
 
             it("should be show the statistics if the game is finished", function () {
-                completeAllAnswer();
-                completeNameToRanking("Ruben");
+                completeGameOnce("Ruben");
                 expect(getStatistics()).not.toBe(null);
             });
 
@@ -204,6 +203,8 @@ describe("the game", function () {
                 expect(getAverageTimePerQuestionOnStatistics()).not.toEqual(null);
                 expect(getTotalTimeAllGameOnStatistics()).not.toEqual(null);
             });
+
+
         });
 
         describe("ranking", function () {
@@ -237,23 +238,23 @@ describe("the game", function () {
             return document.getElementById("success-answers").innerText;
         }
 
-        function getPercentageSuccessAnswerOnStatistics(){
+        function getPercentageSuccessAnswerOnStatistics() {
             return document.getElementById("percent-success-answers").innerText;
         }
 
-        function getFailAnswersOnStatistics(){
+        function getFailAnswersOnStatistics() {
             return document.getElementById("fail-answers").innerText;
         }
 
-        function getPercentageFailAnswerOnStatistics(){
+        function getPercentageFailAnswerOnStatistics() {
             return document.getElementById("percent-fail-answers").innerText;
         }
 
-        function getAverageTimePerQuestionOnStatistics(){
+        function getAverageTimePerQuestionOnStatistics() {
             return document.getElementById("avg-per-question").innerText;
         }
 
-        function getTotalTimeAllGameOnStatistics(){
+        function getTotalTimeAllGameOnStatistics() {
             return document.getElementById("total-time").innerText;
         }
 

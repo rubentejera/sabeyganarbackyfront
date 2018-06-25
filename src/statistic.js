@@ -1,9 +1,6 @@
 export default function statistic() {
     let allData = [];
 
-    let statistic;
-
-
     function restart() {
         allData = [];
     }
@@ -17,33 +14,49 @@ export default function statistic() {
     }
 
 
-    function analyzeData() {
+    function getStatistic() {
+
         let successAnswer = 0;
+        let failAnswer = 0;
+        let totalTime = 0;
 
         allData.forEach(data => {
-            if (data.isCorrect) {
-                successAnswer++;
+
+            if (data.isAnswered) {
+                if (data.isCorrect) {
+                    successAnswer++;
+                } else {
+                    failAnswer++;
+                }
+            } else {
+                //TODO Preguntas sin contestar
             }
-            //TODO Resto de comprobaciones
+
+            totalTime += data.elapsedSeconds;
         });
 
-        statistic = {
+        let numberOfQuestion = allData.length;
+
+        let percentSuccessAnswer = (successAnswer * 100) / numberOfQuestion;
+        let percentFailAnswer = (failAnswer * 100) / numberOfQuestion;
+
+        let avgTimePerQuestion = totalTime / numberOfQuestion;
+
+
+        return {
             successAnswer: successAnswer,
+            percentSuccessAnswer: percentSuccessAnswer,
+            failAnswer: failAnswer,
+            percentFailAnswer: percentFailAnswer,
+            averageTimePerQuestion: avgTimePerQuestion,
+            totalTime: totalTime
         }
-    }
-
-
-    function getSuccessAnswers() {
-        if(statistic == null){
-            analyzeData();
-        }
-        return statistic.successAnswer;
     }
 
     return {
+        getAllData,//TODO only for test?
         addData,
-        getAllData,
         restart,
-        getSuccessAnswers,
+        getStatistic,
     }
 }

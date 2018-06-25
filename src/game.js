@@ -2,6 +2,7 @@ import timer from './timer.js';
 import gameUI from './gameUI.js';
 import score from './score.js';
 import ranking from './ranking.js';
+import statistic from './statistic.js';
 import gameRules from './gameRules.js';
 
 export default function createGame(createQuestionsNavigator, serverQuestions) {
@@ -11,6 +12,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
     let questionTimer = new timer(secondsPerQuestion, handlerEventTime);
     let gameScore = new score();
     let gameRanking = new ranking();
+    let gameStatistic = new statistic();
     let ui = gameUI(handlerEventOnStartGame, handlerEventOnNextQuestion, handlerEventOnEnterName);
 
     function getQuestionNavigator() {
@@ -38,23 +40,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
 
         gameRanking.addScore({name: name, score: gameScore.getScore()});
 
-
-        let statisticsExample = [
-            {
-                name: "Maria",
-                score: 13
-            },
-            {
-                name: "Pepe",
-                score: 10
-            },
-            {
-                name: "Juan",
-                score: 9
-            }
-        ];
-
-        ui.gameOverState(gameRanking.getRanking(), statisticsExample);
+        ui.gameOverState(gameRanking.getRanking(), gameStatistic.getStatistic());
     }
 
     function handlerEventOnStartGame() {
@@ -70,8 +56,8 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
 
-        if (recalculateScore(currentQuestion, selectedAnswer, currentTimer)) {
-            // recalculateStatistic(preguntaAcertadaOIncorrecta, )
+        if (updateScore(currentQuestion, selectedAnswer, currentTimer)) {
+            updateStatistic(currentQuestion, selectedAnswer, currentTimer);
             goToNextQuestion();
         } else {
             //TODO Manejar Error
@@ -80,7 +66,34 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
     }
 
 
-    function recalculateScore(currentQuestion, selectedAnswer, currentTimer) {
+    function updateStatistic(currentQuestion, selectedAnswer, currentTimer) {
+
+        // console.log("currentQuestion-->",currentQuestion);
+        // console.log("selectedAnswer-->",selectedAnswer);
+
+        let data = {};
+        data['idQuestion'] = currentQuestion.id;
+        data['idCorrectAnswer'] = currentQuestion.correctAnswer.id;
+
+
+        if (selectedAnswer) {
+            data['isAnswered'] = true;
+            data['isCorrect'] = isAnswerCorrect(currentQuestion, selectedAnswer);
+            data['idAnswerSelected'] = parseInt(selectedAnswer.id);
+        } else {
+            data['isAnswered'] = false;
+        }
+
+
+        data['score'] = "";//TODO
+
+        data['elapsedSeconds'] = currentTimer;
+
+        // console.log("data-->",data);
+        gameStatistic.addData(data);
+    }
+
+    function updateScore(currentQuestion, selectedAnswer, currentTimer) {
         if (questionTimer.get() !== 0) {
             if (selectedAnswer) {
                 if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
