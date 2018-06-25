@@ -31,7 +31,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         ui.setClock(time);
 
         if (time <= 0) {
-            handlerEventOnNextQuestion();
+            handlerEventOnFinishQuestionTimer();
         }
     }
 
@@ -55,13 +55,28 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         let selectedAnswer = ui.getSelectedAnswer();
         let currentTimer = getTimeElapsed();
 
-        if (updateScore(currentQuestion, selectedAnswer, currentTimer)) {
+        if (selectedAnswer) {
+            if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
+                recalculateScoreIfSuccess(currentTimer);
+            } else {
+                recalculateScoreIfFail(currentTimer);
+            }
+
             updateStatistic(currentQuestion, selectedAnswer, currentTimer);
             goToNextQuestion();
         } else {
-            //TODO Manejar Error
+            console.log("Debe elegir una opcion para que pase algo...");
         }
+    }
 
+    function handlerEventOnFinishQuestionTimer() {
+        let currentQuestion = theQuestionNavigator.getCurrentQuestion();
+        let selectedAnswer = ui.getSelectedAnswer();
+        let currentTimer = getTimeElapsed();
+
+        recalculateScoreIfFinishTimer();
+        updateStatistic(currentQuestion, selectedAnswer, currentTimer);
+        goToNextQuestion();
     }
 
 
@@ -90,28 +105,6 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
 
         // console.log("data-->",data);
         gameStatistic.addData(data);
-    }
-
-    function updateScore(currentQuestion, selectedAnswer, currentTimer) {
-        if (questionTimer.get() !== 0) {
-            if (selectedAnswer) {
-                if (isAnswerCorrect(currentQuestion, selectedAnswer)) {
-                    recalculateScoreIfSuccess(currentTimer);
-
-                } else {
-                    recalculateScoreIfFail(currentTimer);
-                }
-                return true;
-
-            } else {
-                console.log("NO DEBERIA PODER ENTRAR AQUI SIN SELECCIONAR UNA OPCION");
-                return false;
-            }
-
-        } else {
-            recalculateScoreIfNoReply();
-            return true;
-        }
     }
 
 
@@ -162,7 +155,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
         }
     }
 
-    function recalculateScoreIfNoReply() {
+    function recalculateScoreIfFinishTimer() {
         gameScore.decrement(gameRules().pointsToSubtractNoReply);
     }
 
