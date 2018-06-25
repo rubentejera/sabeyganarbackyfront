@@ -229,7 +229,7 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         return userNameIntroduced.value;
     }
 
-    function renderStatistics(statistic) {//TODO
+    function renderStatistics(statistic) {
         let boxStatistics = document.createElement("div");
         boxStatistics.setAttribute("id", "statistics-container");
 
@@ -242,6 +242,8 @@ export default function gameUI(startButtonAction, onNextQuestionAction, onEnterN
         renderDetailsStatistics("percent-success-answers","% PREGUNTAS CORRECTAS",`${statistic.percentSuccessAnswer}%`,boxStatistics);
         renderDetailsStatistics("fail-answers","PREGUNTAS INCORRECTAS",statistic.failAnswer,boxStatistics);
         renderDetailsStatistics("percent-fail-answers","% PREGUNTAS INCORRECTAS",`${statistic.percentFailAnswer}%`,boxStatistics);
+        renderDetailsStatistics("noreply","PREGUNTAS SIN RESPUESTA",statistic.noReply,boxStatistics);
+        renderDetailsStatistics("percent-noreply","% PREGUNTAS SIN RESPUESTA",`${statistic.percentNoReply}%`,boxStatistics);
         renderDetailsStatistics("avg-per-question","TIEMPO MEDIO POR PREGUNTA",`${statistic.averageTimePerQuestion} seg`,boxStatistics);
         renderDetailsStatistics("total-time","TIEMPO TOTAL",`${statistic.totalTime} seg`,boxStatistics);
 

@@ -18,6 +18,7 @@ export default function statistic() {
 
         let successAnswer = 0;
         let failAnswer = 0;
+        let noReply = 0
         let totalTime = 0;
 
         allData.forEach(data => {
@@ -29,7 +30,7 @@ export default function statistic() {
                     failAnswer++;
                 }
             } else {
-                //TODO Preguntas sin contestar
+                noReply++;
             }
 
             totalTime += data.elapsedSeconds;
@@ -39,6 +40,7 @@ export default function statistic() {
 
         let percentSuccessAnswer = (successAnswer * 100) / numberOfQuestion;
         let percentFailAnswer = (failAnswer * 100) / numberOfQuestion;
+        let percentNoReply = (noReply * 100) / numberOfQuestion;
 
         let avgTimePerQuestion = totalTime / numberOfQuestion;
 
@@ -48,6 +50,8 @@ export default function statistic() {
             percentSuccessAnswer: percentSuccessAnswer,
             failAnswer: failAnswer,
             percentFailAnswer: percentFailAnswer,
+            noReply: noReply,
+            percentNoReply: percentNoReply,
             averageTimePerQuestion: avgTimePerQuestion,
             totalTime: totalTime
         }
