@@ -5,8 +5,8 @@ export default function ranking() {
         return ranking;
     }
 
-    function addScore(score){
-        ranking.push(score);
+    function addScore(name, score){
+        ranking.push({name,score});
         ranking = ranking.sort(sortFromHighestToLowestByProperty('score'));
     }
 

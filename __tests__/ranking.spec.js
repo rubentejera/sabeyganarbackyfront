@@ -19,20 +19,23 @@ describe("Ranking", function () {
 
 
     function addRandomScoresToRanking() {
-        rankingTest.addScore({
-            name: "Pepe",
-            score: 10
-        });
-
-        rankingTest.addScore({
-            name: "Juan",
-            score: 9
-        });
-
-        rankingTest.addScore({
-            name: "Maria",
-            score: 13
-        });
+        // rankingTest.addScore({
+        //     name: "Pepe",
+        //     score: 10
+        // });
+        //
+        // rankingTest.addScore({
+        //     name: "Juan",
+        //     score: 9
+        // });
+        //
+        // rankingTest.addScore({
+        //     name: "Maria",
+        //     score: 13
+        // });
+        rankingTest.addScore("Pepe",10);
+        rankingTest.addScore("Juan",9);
+        rankingTest.addScore("Maria",13);
     }
 
     let rankingOrderedByScore = [

@@ -37,8 +37,7 @@ export default function createGame(createQuestionsNavigator, serverQuestions) {
 
 
     function handlerEventOnEnterName(name) {//TODO Statistics
-
-        gameRanking.addScore({name: name, score: gameScore.getScore()});
+        gameRanking.addScore(name, gameScore.getScore());
 
         ui.gameOverState(gameRanking.getRanking(), gameStatistic.getStatistic());
     }
